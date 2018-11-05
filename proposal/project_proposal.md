@@ -1,6 +1,5 @@
 P8105 Project Proposal
 ================
-Nick Williams
 November 5, 2018
 
 Name & Uni:
