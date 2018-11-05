@@ -24,7 +24,7 @@ https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-En
 
 ### The motivation for this project
 
-Organ donor shortage is a public health crisis in New York state. In 2015 New York had  lower donor registration rate other states in the US (https://www.nytimes.com/2018/07/11/nyregion/organ-donation-is-desperate-in-new-york.html). Although people waiting for organs from deceased donors can register on other states' registries, there are often difficulties in doing this, especially for people of lower socio-economic status, leaving hundreds of New Yorkers to die while waiting for an organ each year. 
+Organ donor shortage is a public health crisis in New York state. In 2015 New York had the lowest donor registration in the US and in general, New York is known for its low registration rate. (https://www.nytimes.com/2018/07/11/nyregion/organ-donation-is-desperate-in-new-york.html). Although people waiting for organs from deceased donors can register on other states' registries, there are often difficulties in doing this, especially for people of lower socio-economic status, leaving hundreds of New Yorkers to die while waiting for an organ each year. 
 
 The govenor of New York has taken measures to inrease the donor registration rate such as adding the option to register on health insurance applications as well as better wording the donation registration option on drivers license applications.(https://www.governor.ny.gov/news/governor-cuomo-announces-over-5-million-new-yorkers-enrolled-states-donate-life-registry-organ) 
 
