@@ -2,7 +2,7 @@
 title: "P8105 Project Proposal"
 author: "Nick Williams"
 date: "November 5, 2018"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
