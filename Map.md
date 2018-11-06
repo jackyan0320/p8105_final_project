@@ -8,9 +8,10 @@ ny = map_data("state") %>%
 ny_county = map_data("county")  %>% 
   filter(region == "new york")
 
-ggplot() + geom_polygon(data = ny, aes(x=long, y = lat, group = group), fill = "gray") + 
-  geom_polygon(data = ny_county, aes(x=long, y = lat, group = group), fill = NA, color = "white") +
-  theme_bw()
+ggplot() + 
+  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "gray") + 
+  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
+  theme_void()
 ```
 
-![](Map_files/figure-markdown_github/unnamed-chunk-1-1.png)
+![](map_files/figure-markdown_github/unnamed-chunk-1-1.png)

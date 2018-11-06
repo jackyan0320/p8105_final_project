@@ -5,6 +5,7 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 library(tidyverse)
 library(ggplot2)
 library(ggmap)
@@ -19,9 +20,9 @@ ny = map_data("state") %>%
 ny_county = map_data("county")  %>% 
   filter(region == "new york")
 
-ggplot() + geom_polygon(data = ny, aes(x=long, y = lat, group = group), fill = "gray") + 
-  geom_polygon(data = ny_county, aes(x=long, y = lat, group = group), fill = NA, color = "white") +
-  theme_bw()
-  
+ggplot() + 
+  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "gray") + 
+  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
+  theme_void()
 ```
 
