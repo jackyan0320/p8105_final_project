@@ -2,11 +2,13 @@ P8105 Project Proposal
 ================
 November 5, 2018
 
-Name & Uni:
-Shuliang Deng - sd3258
-Nick Williams - ntw2117
-Sijia Yue - sy2824
-Jack Yan - xy2395
+| Name          | Uni     |
+|---------------|---------|
+| Shuliang Deng | sd3258  |
+| Nick Williams | ntw2117 |
+| Sijia Yue     | sy2824  |
+| Jack Yan      | xy2395  |
+| Alina Levine  | al3851  |
 
 ### Title: Analyzing trends in organ donor registration in New York State
 
