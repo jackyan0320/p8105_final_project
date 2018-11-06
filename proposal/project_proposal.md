@@ -15,7 +15,7 @@ November 5, 2018
 ### Data sources:
 
 -   [New York State Organ and Tissue Donor Counts](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE)
--   United States Census information supplied by Area health resources file and SAIPE
+-   United States Census information supplied by Area Health Resources File and Small Area Income and Poverty Estimates datasets
 
 ### The motivation for this project
 
@@ -38,7 +38,7 @@ To identify regions that need more attention, it is important that we compare do
 In this project, we will:
 
 -   Compare county wide donor registration rates in New York to see if there are counties that are lacking in donor registration. This will include making a choropleth map to visualize differences in registration rate across New York state counties.
--   Explore possible correlations between county wide factors (such as median income level) and organ donor registration rate. If the data is sufficient, we wil explore using a mixed-effects regression model to test if specific county level variables influence changes in registration prevalence.
+-   Explore possible correlations between county wide factors (such as median income level) and organ donor registration rate. If the data is sufficient, we will explore using a mixed-effects regression model to test if specific county level variables influence changes in registration prevalence.
 -   Compare donor registration rate trends across counties using an animated plot.
 
 We anticipate the largest coding challenge to come from the choropleth map and the animated plot.
