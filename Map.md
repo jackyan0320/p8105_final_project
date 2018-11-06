@@ -1,4 +1,4 @@
-Map
+New York State County Map
 ================
 
 ``` r
@@ -9,7 +9,7 @@ ny_county = map_data("county")  %>%
   filter(region == "new york")
 
 ggplot() + 
-  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "gray") + 
+  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgray") + 
   geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
   theme_void()
 ```
