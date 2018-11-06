@@ -40,13 +40,15 @@ To identify regions that need more attention, it is important that we compare do
 *  A webpage
 *  A screencast
 
-### Analyses
+### Analyses, visualizations, and challenges
 
 In this project, we will:
 
-* Compare county wide donor registration rates in New York to see if there are counties that are lacking in donor registration. We will map the registration rate on to a New York state map using `ggmap`.
-* Explore possible correlations between county wide factors (such as median income level) and organ donor registration rate. 
+* Compare county wide donor registration rates in New York to see if there are counties that are lacking in donor registration. This will include making a choropleth map to visualize differences in registration rate across New York state counties.
+* Explore possible correlations between county wide factors (such as median income level) and organ donor registration rate. If the data is sufficient, we wil explore using a mixed-effects regression model to test if specific county level variables influence changes in registration prevalence.
 * Compare donor registration rate trends across counties using an animated plot. 
+
+We anticipate the largest coding challenge to come from the choropleth map and the animated plot.
 
 ### Timeline
 
@@ -55,6 +57,7 @@ In this project, we will:
 |November 12 - 16  | Have project approved by instructor team           |
 |November 19       | All data to be used is tidied and ready for use    |
 |November 26       | All plots and webpage structure completed          |
+|November 30       | Have webpage completed                             |
 |December 1 - 5    | Work on project report and screencast              |
 |December 6        | Turn in report and screencast                      |
 |December 11       | Show off how awesome we are in class               |
