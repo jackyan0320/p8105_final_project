@@ -17,9 +17,9 @@ November 5, 2018
 -   [New York State Organ and Tissue Donor Counts](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE)
 -   United States Census information supplied by Area Health Resources File and Small Area Income and Poverty Estimates datasets
 
-### The motivation for this project
+### Motivation
 
-Organ donor shortage is a public health crisis in New York state. In 2015 New York had the lowest donor registration rate in the US and in general, New York is known for [its low registration rate](https://www.nytimes.com/2018/07/11/nyregion/organ-donation-is-desperate-in-new-york.html). Although people waiting for organs from deceased donors can register on other states' registries, there are often difficulties in doing this, especially for people of lower socio-economic status. Between June 2016 and June 2017 7.2 percent of waitlisted potential organ recipients died while waiting for an [organ at CUMC](https://www.srtr.org/transplant-centers/ny-presbyterian-hospitalcolumbia-univ-medical-center-nycp/?organ=kidney&recipientType=adult&donorType=). It is important that New York encourage its eligible pool of donors to register, so that life saving organs do not go to waste.
+Organ donor shortage is a [public health crisis in New York state](https://www.nytimes.com/2018/07/11/nyregion/organ-donation-is-desperate-in-new-york.html); in 2015 New York had the lowest donor registration rate in the US. Although people waiting for organs from deceased donors can register on other states' registries, there are often difficulties in doing this, especially for people of lower socio-economic status. Between June 2016 and June 2017 7.2% of waitlisted potential organ recipients died while waiting for an [organ at CUMC](https://www.srtr.org/transplant-centers/ny-presbyterian-hospitalcolumbia-univ-medical-center-nycp/?organ=kidney&recipientType=adult&donorType=). It is important that New York encourage its eligible pool of donors to register, so that life saving organs do not go to waste.
 
 [The govenor of New York has taken measures](https://www.governor.ny.gov/news/governor-cuomo-announces-over-5-million-new-yorkers-enrolled-states-donate-life-registry-organ) such as adding the option to register on health insurance applications as well as better wording the donation registration option on drivers license applications.
 
@@ -30,8 +30,8 @@ To identify regions that need more attention, it is important that we compare do
 ### Intended final product
 
 -   A final report
--   A webpage
--   A screencast
+-   A webpage containing visualizations and conclusions
+-   A screencast explaining the webpage and analysis
 
 ### Analyses, visualizations, and challenges
 
