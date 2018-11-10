@@ -1,5 +1,8 @@
 ---
-title: "Holy cow!"
+title: "P8105 Final Project - NY Organ Donation "
+output:
+  html_document:
+    theme:  united
 ---
 
 ### I have a webpage!
