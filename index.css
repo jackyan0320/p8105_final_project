@@ -18,11 +18,11 @@
   text-align: center;
 }
 
+
+
 .cd-fixed-bg.cd-fixed-bg--1 {
   background-image: url("website_img/hand_holding.jpg");
   padding: 1px 1px 1px;
-  
-
 }
 
 .cd-fixed-bg.cd-fixed-bg--2 {
@@ -33,6 +33,15 @@
 .cd-scrolling-bg {
   min-height: 100%;
 }
+
+.front-page-title{
+  padding-top:20%;
+  font-size: 6em;
+  color: white;
+  font-weight: bold;
+}
+
+
 
 .index_section {
   background-color: red;
