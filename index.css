@@ -1,0 +1,40 @@
+
+.container-fluid.main-container{
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  padding:0;
+  background-color: lightblue;
+}
+
+
+.cd-fixed-bg {  
+  min-height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width:100%;
+  text-align: center;
+}
+
+.cd-fixed-bg.cd-fixed-bg--1 {
+  background-image: url("website_img/hand_holding.jpg");
+  padding: 1px 1px 1px;
+  
+
+}
+
+.cd-fixed-bg.cd-fixed-bg--2 {
+  background-image: url("website_img/organ_donation.jpg");
+  padding: 1px 1px 1px;
+}
+
+.cd-scrolling-bg {
+  min-height: 100%;
+}
+
+.index_section {
+  background-color: red;
+
+}

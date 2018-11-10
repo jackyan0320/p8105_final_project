@@ -1,13 +1,28 @@
 ---
-title: "P8105 Final Project - NY Organ Donation "
 output:
   html_document:
     theme:  united
+    css: index.css
 ---
 
-### I have a webpage!
 
-And I can put all kinds of stuff on it!
+<div class="cd-fixed-bg cd-fixed-bg--1"> 
+  <h1>P8105 Final Project - NY Organ Donation <h1>
+</div> 
+
+<div class="cd-fixed-bg cd-fixed-bg--2"> 
+  section 2 
+</div> 
+
+<div class="cd-scrolling-bg cd-scrolling-bg--color-2">
+  <div class="cd-scrolling-bg__content">
+      <div class = "index_section">  
+        ### I have a webpage!
+        And I can put all kinds of stuff on it!
+      </div>
+  </div> 
+</div> 
+
 
 ```{r}
 
