@@ -14,4 +14,4 @@ ggplot() +
   theme_void()
 ```
 
-![](Map_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](Map_files/figure-markdown_github/unnamed-chunk-1-1.png)

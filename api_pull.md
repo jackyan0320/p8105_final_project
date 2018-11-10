@@ -1,9 +1,7 @@
 
 ### Pulling data from API
 
-This pulls all data from New York state’s API for organ donor
-proportions per county from 2008 to
-2018
+This pulls all data from New York state's API for organ donor proportions per county from 2008 to 2018
 
 ``` r
 organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %>% 
