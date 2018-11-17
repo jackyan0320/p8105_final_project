@@ -7,12 +7,18 @@ output:
 
 
 <div class="cd-fixed-bg cd-fixed-bg--1"> 
-  <h1 class = "front-page-title">P8105 Final Project - NY Organ Donation <h1>
+  <h1 class = "front-page-title" style = "padding-top:20%">
+    P8105 Final Project - NY Organ Donation 
+  <h1>
 </div> 
 
 <div class="cd-fixed-bg cd-fixed-bg--2"> 
-  section 2 
+  <h1 class = "front-page-title" style = "padding-top:5%">
+    In need of donation
+  <h1>
 </div> 
+
+
 
 <div class="cd-scrolling-bg cd-scrolling-bg--color-2">
   <div class="cd-scrolling-bg__content">
@@ -21,10 +27,17 @@ output:
         And I can put all kinds of stuff on it!
       </div>
   </div> 
+  
+  
+
 </div> 
 
 
 ```{r}
+
+1+1
+
+
 
 ```
 
