@@ -1,0 +1,24 @@
+---
+title: "State Comparisons"
+author: "Alina Levine"
+date: "November 19, 2018"
+output: html_document
+---
+
+
+```{r}
+
+library(dplyr)
+library(ggplot2)
+
+donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
+  janitor::clean_names() %>%
+  rename(state = x)
+
+ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
+  geom_point() +
+  geom_smooth()
+
+
+```
+
