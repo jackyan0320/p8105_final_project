@@ -19,9 +19,17 @@ ny = map_data("state") %>%
 ny_county = map_data("county")  %>% 
   filter(region == "new york")
 
-ggplot() + geom_polygon(data = ny, aes(x=long, y = lat, group = group), fill = "gray") + 
-  geom_polygon(data = ny_county, aes(x=long, y = lat, group = group), fill = NA, color = "white") +
+ggplot() + geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "gray") + 
+  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
   theme_bw()
   
+```
+
+```{r}
+us <- c(left = -125, bottom = 25.75, right = -67, top = 49)
+map <- get_stamenmap(us, zoom = 5, maptype = "toner-lite")
+ggmap(map)
+
+get_googlemap("waco texas", zoom = 12) %>% ggmap()
 ```
 
