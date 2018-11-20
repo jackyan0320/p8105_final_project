@@ -33,6 +33,4 @@ organ_sp <- organ %>%
          total_days = date - as.Date("2008-09-01"))
 ```
 
-
-
-
+Note that St. Lawrence County and Cattauragus county do not update their enrollment numbers until almost the end up the database time period
