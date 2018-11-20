@@ -308,9 +308,7 @@ variables_list =
 ## cols(
 ##   label = col_character()
 ## )</code></pre>
-<pre class="r"><code>  # filter(str_detect(label, &quot;Pop Hispanic/Latino Male&quot;) == TRUE)
-
-# Age
+<pre class="r"><code># Age
 variables_list = 
   read_csv(&quot;./data/ahrf_variables.csv&quot;) %&gt;%
   filter(str_detect(label, &quot;Median Age&quot;) == TRUE) %&gt;% 
@@ -333,6 +331,95 @@ variables_list =
 ## )</code></pre>
 <pre class="r"><code>variables_list %&gt;% 
   write_csv(path = &quot;./data/ahrf_selected_variables.csv&quot;)</code></pre>
+<pre class="r"><code># Standardzd PerCapita Medcr Cost Fee
+variables_list = 
+  read_csv(&quot;./data/ahrf_variables.csv&quot;) %&gt;%
+  filter(str_detect(label, &quot;Medcr Cost Fee&quot;) == TRUE|
+         str_detect(label, &quot;Medicare Enrollment&quot;) == TRUE) %&gt;% 
+  mutate(topic = &quot;Medical Cost &amp; Medicare Enrollment&quot;) %&gt;% 
+  filter(label == &quot;Standardzd PerCapita Medcr Cost Fee for Service 2015&quot;|
+         label == &#39;Medicare Enrollment, Aged Tot 2015&#39;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   label = col_character()
+## )</code></pre>
+<pre class="r"><code># Population Estimate &amp; Census Population
+variables_list = 
+  read_csv(&quot;./data/ahrf_variables.csv&quot;) %&gt;%
+  filter(str_detect(label, &quot;Population Estimate&quot;) == TRUE|
+          str_detect(label, &quot;Census Population 20&quot;) == TRUE,
+          str_detect(label, &quot;Veteran&quot;) == FALSE,
+          str_detect(label, &quot;65+&quot;) == FALSE) %&gt;% 
+  mutate(topic = &quot;Population Size&quot;) %&gt;%   
+  filter(label == &quot;Population Estimate 2016&quot;) %&gt;% 
+  bind_rows(variables_list, .)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   label = col_character()
+## )</code></pre>
+<pre class="r"><code># Gender &amp; Ethnicity
+variables_list = 
+  read_csv(&quot;./data/ahrf_variables.csv&quot;) %&gt;% 
+  mutate(no = 1:length(label)) %&gt;% 
+  filter(no %in% 4224:4687) %&gt;% 
+  mutate(topic = &quot;Gender &amp; Ethnicity&quot;) %&gt;% 
+  select(-no) %&gt;%
+  filter(str_detect(label, &quot;2015&quot;)) %&gt;% 
+  filter(label %in% c(&#39;Pop Total Male 2015&#39;,&#39;Pop Total Female 2015&#39;, &#39;Pop White Male 2015&#39;, &#39;Pop White Female 2015&#39;, &#39;Pop White Hispanic/Latino Male 2015&#39;, &#39;Pop Black/African Amer Male 2015&#39;, &#39;Pop Black/African Amer Female 2015&#39;, &#39;Pop Asian Male 2015&#39;, &#39;Pop Asian Female 2015&#39; ))  %&gt;% 
+  bind_rows(variables_list, .)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   label = col_character()
+## )</code></pre>
+<pre class="r"><code># Age
+variables_list =
+  read_csv(&quot;./data/ahrf_variables.csv&quot;) %&gt;%
+  filter(str_detect(label, &quot;Median Age&quot;) == TRUE) %&gt;% 
+  mutate(topic = &quot;Age&quot;) %&gt;% 
+  filter(str_detect(label, &quot;2010&quot;)) %&gt;% 
+    filter(label %in% c(&quot;Median Age 2010&quot;)) %&gt;% 
+  bind_rows(variables_list, .)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   label = col_character()
+## )</code></pre>
+<pre class="r"><code># Education
+variables_list =
+  read_csv(&quot;./data/ahrf_variables.csv&quot;) %&gt;% 
+  mutate(topic = &quot;Education&quot;) %&gt;%
+  filter(label %in% c(&quot;Percent Educ/HlthCare/Soc Asst 2011-15&quot;, &quot;% Persons 25+ w/&lt;HS Diploma 2011-15&quot;, &#39;% Persons 25+ w/4+ Yrs College 2011-15&#39; )) %&gt;% 
+  bind_rows(variables_list, .)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   label = col_character()
+## )</code></pre>
+<pre class="r"><code>variables_list %&gt;% 
+  write_csv(path = &quot;./data/ahrf_selected_variables.csv&quot;)</code></pre>
+<pre class="r"><code>read_csv(&quot;./data/ahrf_selected_variables.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   label = col_character(),
+##   topic = col_character()
+## )</code></pre>
+<pre><code>## # A tibble: 16 x 2
+##    label                                       topic                      
+##    &lt;chr&gt;                                       &lt;chr&gt;                      
+##  1 Standardzd PerCapita Medcr Cost Fee for Se… Medical Cost &amp; Medicare En…
+##  2 Medicare Enrollment, Aged Tot 2015          Medical Cost &amp; Medicare En…
+##  3 Population Estimate 2016                    Population Size            
+##  4 Pop Total Male 2015                         Gender &amp; Ethnicity         
+##  5 Pop Total Female 2015                       Gender &amp; Ethnicity         
+##  6 Pop White Male 2015                         Gender &amp; Ethnicity         
+##  7 Pop White Female 2015                       Gender &amp; Ethnicity         
+##  8 Pop White Hispanic/Latino Male 2015         Gender &amp; Ethnicity         
+##  9 Pop Black/African Amer Male 2015            Gender &amp; Ethnicity         
+## 10 Pop Black/African Amer Female 2015          Gender &amp; Ethnicity         
+## 11 Pop Asian Male 2015                         Gender &amp; Ethnicity         
+## 12 Pop Asian Female 2015                       Gender &amp; Ethnicity         
+## 13 Median Age 2010                             Age                        
+## 14 % Persons 25+ w/&lt;HS Diploma 2011-15         Education                  
+## 15 % Persons 25+ w/4+ Yrs College 2011-15      Education                  
+## 16 Percent Educ/HlthCare/Soc Asst 2011-15      Education</code></pre>
 </div>
 </div>
 
