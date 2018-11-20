@@ -8,30 +8,61 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Name & Uni:  
-Shuliang Deng - sd3258   
-Nick Williams - ntw2117  
-Sijia Yue - sy2824  
-Jack Yan - xy2395  
+|Name            | Uni       |
+|----------------|-----------|
+|Shuliang Deng   | sd3258    |
+|Nick Williams   | ntw2117   |
+|Sijia Yue       | sy2824    |
+|Jack Yan        | xy2395    |
+|Alina Levine    | al3851    |
 
 ### Title: Analyzing trends in organ donor registration in New York State
 
 ### Data sources: 
 
-- New York State Organ and Tissue Donor Counts:   
-https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE
-- United States Census information supplied by Area health resources file and SAIPE
+- [New York State Organ and Tissue Donor Counts](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE)
+- United States Census information supplied by Area Health Resources File and Small Area Income and Poverty Estimates datasets
 
-### The motivation for this project
+### Motivation
 
-Organ donor shortage is a public health crisis in New York state. In 2015 New York had the lowest donor registration in the US and in general, New York is known for its low registration rate. (https://www.nytimes.com/2018/07/11/nyregion/organ-donation-is-desperate-in-new-york.html). Although people waiting for organs from deceased donors can register on other states' registries, there are often difficulties in doing this, especially for people of lower socio-economic status, leaving hundreds of New Yorkers to die while waiting for an organ each year. 
+Organ donor shortage is a [public health crisis in New York state](https://www.nytimes.com/2018/07/11/nyregion/organ-donation-is-desperate-in-new-york.html); in 2015 New York had the lowest donor registration rate in the US. Although people waiting for organs from deceased donors can register on other states' registries, there are often difficulties in doing this, especially for people of lower socio-economic status. Between June 2016 and June 2017 7.2% of waitlisted potential organ recipients died while waiting for an [organ at CUMC](https://www.srtr.org/transplant-centers/ny-presbyterian-hospitalcolumbia-univ-medical-center-nycp/?organ=kidney&recipientType=adult&donorType=). It is important that New York encourage its eligible pool of donors to register, so that life saving organs do not go to waste.  
 
-The govenor of New York has taken measures to inrease the donor registration rate such as adding the option to register on health insurance applications as well as better wording the donation registration option on drivers license applications.(https://www.governor.ny.gov/news/governor-cuomo-announces-over-5-million-new-yorkers-enrolled-states-donate-life-registry-organ) 
+[The govenor of New York has taken measures](https://www.governor.ny.gov/news/governor-cuomo-announces-over-5-million-new-yorkers-enrolled-states-donate-life-registry-organ)  such as adding the option to register on health insurance applications as well as better wording the donation registration option on drivers license applications. 
 
-More targeted efforts could be benefitial for increasing organ donor registration rate in New York. Our group will compare county wide donor registration rates in New York to see if there are counties that are especially lacking in donor rate. We will look at different county wide factors such as median income level and will explore possible correlations with organ donor registration rate. 
+More targeted efforts could be beneficial for increasing organ donor registration rates in New York. Our group will compare county wide donor registration rates in New York to see if there are counties that are especially lacking in donor registration. We will look at different county wide factors such as median income level and education levels and will explore possible correlations with organ donor registration. 
 
-In addition to current county donor registration rates, to figure out where more efforts are needed it is important that we compare donor registration rate trends across counties. Are some counties with very low registration rates making progress while others are not? How did different counties respond to legislation put in place by Andrew Cuomo in 2016 and 2017?
+To identify regions that need more attention, it is important that we compare donor registration trends across counties. Are some counties with very low registration rates making progress while others are not? How did different counties respond to legislation put in place by Andrew Cuomo in 2016 and 2017? 
 
 
 ### Intended final product
+
+*  A final report
+*  A webpage containing visualizations and conclusions
+*  A screencast explaining the webpage and analysis
+
+### Analyses, visualizations, and challenges
+
+In this project, we will:
+
+* Compare county wide donor registration rates in New York to see if there are counties that are lacking in donor registration. This will include making a choropleth map to visualize differences in registration rate across New York state counties.
+* Explore possible correlations between county wide factors (such as median income level) and organ donor registration rate. If the data is sufficient, we will explore using a mixed-effects regression model to test if specific county level variables influence changes in registration prevalence.
+* Compare donor registration rate trends across counties using an animated plot. 
+
+We anticipate the largest coding challenge to come from the choropleth map and the animated plot.
+
+### Timeline
+
+|Date              | Completed tasks                                    |
+|------------------|----------------------------------------------------|
+|November 12 - 16  | Have project approved by instructor team           |
+|November 19       | All data to be used is tidied and ready for use    |
+|November 26       | All plots and webpage structure completed          |
+|November 30       | Have webpage completed                             |
+|December 1 - 5    | Work on project report and screencast              |
+|December 6        | Turn in report and screencast                      |
+|December 11       | Show off how awesome we are in class               |
+
+
+
+
 
