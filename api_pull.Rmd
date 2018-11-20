@@ -24,3 +24,4 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
   mutate(date = as.Date(date, "%Y-%m-%d"))
 ```
 
+Note that St. Lawrence County and Cattauragus county do not update their enrollment numbers until almost the end up the database time period
