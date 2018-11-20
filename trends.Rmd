@@ -31,15 +31,16 @@ ny_donor = read_csv("data/Donate_Life_Organ_and_Tissue_Donor_Registry_Enrollment
 
 
 ```{r}
-ny_donor %>%
+ny_donor = ny_donor %>%
+  filter(county != "TOTAL NYS" & county!="Out of State" & county !="Unknown") %>%
   mutate(year = as.character(year)) %>%
   mutate(month = as.character(month)) %>%
   mutate(dummy_day = as.character("01")) %>%
   mutate(date = (str_c(year, month, dummy_day, sep = "-"))) %>%
-  mutate(date = as.Date(date, "%Y-%m-%d")) %>% 
-  filter(county == "Bronx") %>%
-  ggplot(aes(x = date, y = percent_eligible_population_enrolled)) +
-    geom_line()
+  mutate(date = as.Date(date, "%Y-%m-%d"))
+
+  ggplot(ny_donor, aes(x = date, y = percent_eligible_population_enrolled, color = county)) +
+    geom_point()
 
 
   
@@ -48,4 +49,21 @@ ny_donor %>%
   ggplot(aes(x = ))
   
 ```
+
+
+I know I can't use standard errors because of non-independence, but I just want an estimate of the average slope for each county
+```{r}
+ny_donor_coef = ny_donor %>%
+  group_by(county) %>%
+  nest() %>% 
+  mutate(time_regression = map(data, ~lm(percent_eligible_population_enrolled ~ date, data = .x))) %>%
+  select(-data) %>%
+  mutate(time_regression = map(time_regression, broom::tidy)) %>%
+  unnest() %>%
+  select(county, estimate) %>%
+  arrange(estimate)
+
+```
+
+
 
