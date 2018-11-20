@@ -57,7 +57,6 @@ variables_list =
   mutate(topic = "Gender & Ethnicity") %>% 
   select(-no) %>% 
   bind_rows(variables_list, .)
-  # filter(str_detect(label, "Pop Hispanic/Latino Male") == TRUE)
 
 # Age
 variables_list = 
