@@ -245,7 +245,10 @@ $(document).ready(function () {
   mutate(year_sp_2012 = (date &gt; &quot;2012-10-1&quot;) * (date - as.Date(&quot;2012-10-1&quot;)), 
          year_sp_2016 = (date &gt; &quot;2016-5-1&quot;) * (date - as.Date(&quot;2016-5-1&quot;)), 
          total_days = date - as.Date(&quot;2008-09-01&quot;))</code></pre>
-<p>Note that St. Lawrence County and Cattauragus county do not update their enrollment numbers until almost the end up the database time period</p>
+<p>Exporting data for use in other files</p>
+<pre class="r"><code>write_csv(organ, &quot;data/organ.csv&quot;)
+write_csv(organ_sp, &quot;data/organ_spline.csv&quot;)</code></pre>
+<p>Note that St. Lawrence County and Cattauragus county do not update their enrollment numbers until almost the end up the database time period/</p>
 </div>
 
 
