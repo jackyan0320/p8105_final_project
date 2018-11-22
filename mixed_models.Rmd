@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, dpi = 300, out.width = "75%"
 library(tidyverse)
 library(lme4)
 library(modelr)
+library(kableExtra)
 #using data cleaned in api_pull.rmd file
 
 theme_set(theme_bw())
@@ -40,7 +41,8 @@ no_sp_model %>%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
-  knitr::kable(digits = 3)
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F)
 
 add_predictions(organ_sp, no_sp_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -61,7 +63,8 @@ sp_12_model %>%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
-  knitr::kable(digits = 3)
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F)
 
 add_predictions(organ_sp, sp_12_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -82,7 +85,8 @@ sp_16_model %>%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
-  knitr::kable(digits = 3)
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F)
 
 add_predictions(organ_sp, sp_16_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -104,7 +108,8 @@ sp_17_model %>%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
-  knitr::kable()
+  knitr::kable() %>% 
+  kable_styling(full_width = F)
 
 add_predictions(organ_sp, sp_17_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -126,7 +131,8 @@ all_sp_model %>%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
-  knitr::kable(digits = 3)
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F)
 
 add_predictions(organ_sp, all_sp_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -138,17 +144,36 @@ add_predictions(organ_sp, all_sp_model) %>%
 Comparing nested models
 
 ```{r}
-anova(no_sp_model, sp_17_model)
+mods <- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)
+
+names(mods) <- c("no_sp_model", "sp_12_model", "sp_16_model", "sp_17_model", "all_sp_model")
+
+rmse_fun <- function(model) {
+  rmse(model, organ_sp)
+}
+
+map(mods, rmse_fun) %>% 
+  as_tibble() %>% 
+  gather(key = "model", 
+         value = "rmse") %>% 
+  knitr::kable() %>% 
+  kable_styling(full_width = F)
+
+anova(no_sp_model, sp_17_model) %>% 
+  broom::tidy() %>% 
+  knitr::kable() %>% 
+  kable_styling(full_width = F)
 
 anova(no_sp_model, all_sp_model) %>% 
   broom::tidy() %>% 
-  knitr::kable()
+  knitr::kable() %>% 
+  kable_styling(full_width = F)
 
-anova(sp_17_model, all_sp_model)
+anova(sp_17_model, all_sp_model) %>% 
+  broom::tidy() %>% 
+  knitr::kable() %>% 
+  kable_styling(full_width = F)
 ```
-
-
-
 
 Random intercept and random slope models
 

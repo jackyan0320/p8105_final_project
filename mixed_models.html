@@ -24,6 +24,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
 <script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
 <script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
@@ -232,26 +233,51 @@ no_sp_model %&gt;%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %&gt;% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">estimate_year</th>
-<th align="right">se_year</th>
-<th align="right">ci_low</th>
-<th align="right">ci_upper</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+estimate_year
+</th>
+<th style="text-align:right;">
+se_year
+</th>
+<th style="text-align:right;">
+ci_low
+</th>
+<th style="text-align:right;">
+ci_upper
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">total_days</td>
-<td align="right">347.987</td>
-<td align="right">2.675</td>
-<td align="right">0.008</td>
-<td align="right">2.66</td>
-<td align="right">2.69</td>
+<tr>
+<td style="text-align:left;">
+total_days
+</td>
+<td style="text-align:right;">
+347.987
+</td>
+<td style="text-align:right;">
+2.675
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+2.66
+</td>
+<td style="text-align:right;">
+2.69
+</td>
 </tr>
 </tbody>
 </table>
@@ -272,34 +298,71 @@ sp_12_model %&gt;%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %&gt;% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">estimate_year</th>
-<th align="right">se_year</th>
-<th align="right">ci_low</th>
-<th align="right">ci_upper</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+estimate_year
+</th>
+<th style="text-align:right;">
+se_year
+</th>
+<th style="text-align:right;">
+ci_low
+</th>
+<th style="text-align:right;">
+ci_upper
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">total_days</td>
-<td align="right">131.426</td>
-<td align="right">2.883</td>
-<td align="right">0.022</td>
-<td align="right">2.840</td>
-<td align="right">2.926</td>
+<tr>
+<td style="text-align:left;">
+total_days
+</td>
+<td style="text-align:right;">
+131.426
+</td>
+<td style="text-align:right;">
+2.883
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+<td style="text-align:right;">
+2.840
+</td>
+<td style="text-align:right;">
+2.926
+</td>
 </tr>
-<tr class="even">
-<td align="left">year_sp_2012</td>
-<td align="right">-10.090</td>
-<td align="right">-0.326</td>
-<td align="right">0.032</td>
-<td align="right">-0.389</td>
-<td align="right">-0.262</td>
+<tr>
+<td style="text-align:left;">
+year_sp_2012
+</td>
+<td style="text-align:right;">
+-10.090
+</td>
+<td style="text-align:right;">
+-0.326
+</td>
+<td style="text-align:right;">
+0.032
+</td>
+<td style="text-align:right;">
+-0.389
+</td>
+<td style="text-align:right;">
+-0.262
+</td>
 </tr>
 </tbody>
 </table>
@@ -320,34 +383,71 @@ sp_16_model %&gt;%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %&gt;% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">estimate_year</th>
-<th align="right">se_year</th>
-<th align="right">ci_low</th>
-<th align="right">ci_upper</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+estimate_year
+</th>
+<th style="text-align:right;">
+se_year
+</th>
+<th style="text-align:right;">
+ci_low
+</th>
+<th style="text-align:right;">
+ci_upper
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">total_days</td>
-<td align="right">247.746</td>
-<td align="right">2.563</td>
-<td align="right">0.01</td>
-<td align="right">2.542</td>
-<td align="right">2.583</td>
+<tr>
+<td style="text-align:left;">
+total_days
+</td>
+<td style="text-align:right;">
+247.746
+</td>
+<td style="text-align:right;">
+2.563
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+2.542
+</td>
+<td style="text-align:right;">
+2.583
+</td>
 </tr>
-<tr class="even">
-<td align="left">year_sp_2016</td>
-<td align="right">15.935</td>
-<td align="right">0.789</td>
-<td align="right">0.05</td>
-<td align="right">0.692</td>
-<td align="right">0.886</td>
+<tr>
+<td style="text-align:left;">
+year_sp_2016
+</td>
+<td style="text-align:right;">
+15.935
+</td>
+<td style="text-align:right;">
+0.789
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.692
+</td>
+<td style="text-align:right;">
+0.886
+</td>
 </tr>
 </tbody>
 </table>
@@ -369,34 +469,71 @@ sp_17_model %&gt;%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %&gt;% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
+  knitr::kable() %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">estimate_year</th>
-<th align="right">se_year</th>
-<th align="right">ci_low</th>
-<th align="right">ci_upper</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+estimate_year
+</th>
+<th style="text-align:right;">
+se_year
+</th>
+<th style="text-align:right;">
+ci_low
+</th>
+<th style="text-align:right;">
+ci_upper
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">total_days</td>
-<td align="right">281.60416</td>
-<td align="right">2.560855</td>
-<td align="right">0.0090938</td>
-<td align="right">2.543031</td>
-<td align="right">2.578679</td>
+<tr>
+<td style="text-align:left;">
+total_days
+</td>
+<td style="text-align:right;">
+281.60416
+</td>
+<td style="text-align:right;">
+2.560855
+</td>
+<td style="text-align:right;">
+0.0090938
+</td>
+<td style="text-align:right;">
+2.543031
+</td>
+<td style="text-align:right;">
+2.578679
+</td>
 </tr>
-<tr class="even">
-<td align="left">year_sp_2017</td>
-<td align="right">21.89155</td>
-<td align="right">1.700213</td>
-<td align="right">0.0776653</td>
-<td align="right">1.547989</td>
-<td align="right">1.852437</td>
+<tr>
+<td style="text-align:left;">
+year_sp_2017
+</td>
+<td style="text-align:right;">
+21.89155
+</td>
+<td style="text-align:right;">
+1.700213
+</td>
+<td style="text-align:right;">
+0.0776653
+</td>
+<td style="text-align:right;">
+1.547989
+</td>
+<td style="text-align:right;">
+1.852437
+</td>
 </tr>
 </tbody>
 </table>
@@ -418,50 +555,111 @@ all_sp_model %&gt;%
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %&gt;% 
   select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  knitr::kable(digits = 3)</code></pre>
-<table>
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">statistic</th>
-<th align="right">estimate_year</th>
-<th align="right">se_year</th>
-<th align="right">ci_low</th>
-<th align="right">ci_upper</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+estimate_year
+</th>
+<th style="text-align:right;">
+se_year
+</th>
+<th style="text-align:right;">
+ci_low
+</th>
+<th style="text-align:right;">
+ci_upper
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">total_days</td>
-<td align="right">140.903</td>
-<td align="right">3.088</td>
-<td align="right">0.022</td>
-<td align="right">3.045</td>
-<td align="right">3.131</td>
+<tr>
+<td style="text-align:left;">
+total_days
+</td>
+<td style="text-align:right;">
+140.903
+</td>
+<td style="text-align:right;">
+3.088
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+<td style="text-align:right;">
+3.045
+</td>
+<td style="text-align:right;">
+3.131
+</td>
 </tr>
-<tr class="even">
-<td align="left">year_sp_2012</td>
-<td align="right">-23.805</td>
-<td align="right">-0.982</td>
-<td align="right">0.041</td>
-<td align="right">-1.063</td>
-<td align="right">-0.902</td>
+<tr>
+<td style="text-align:left;">
+year_sp_2012
+</td>
+<td style="text-align:right;">
+-23.805
+</td>
+<td style="text-align:right;">
+-0.982
+</td>
+<td style="text-align:right;">
+0.041
+</td>
+<td style="text-align:right;">
+-1.063
+</td>
+<td style="text-align:right;">
+-0.902
+</td>
 </tr>
-<tr class="odd">
-<td align="left">year_sp_2016</td>
-<td align="right">2.219</td>
-<td align="right">0.333</td>
-<td align="right">0.150</td>
-<td align="right">0.039</td>
-<td align="right">0.627</td>
+<tr>
+<td style="text-align:left;">
+year_sp_2016
+</td>
+<td style="text-align:right;">
+2.219
+</td>
+<td style="text-align:right;">
+0.333
+</td>
+<td style="text-align:right;">
+0.150
+</td>
+<td style="text-align:right;">
+0.039
+</td>
+<td style="text-align:right;">
+0.627
+</td>
 </tr>
-<tr class="even">
-<td align="left">year_sp_2017</td>
-<td align="right">11.579</td>
-<td align="right">2.465</td>
-<td align="right">0.213</td>
-<td align="right">2.048</td>
-<td align="right">2.883</td>
+<tr>
+<td style="text-align:left;">
+year_sp_2017
+</td>
+<td style="text-align:right;">
+11.579
+</td>
+<td style="text-align:right;">
+2.465
+</td>
+<td style="text-align:right;">
+0.213
+</td>
+<td style="text-align:right;">
+2.048
+</td>
+<td style="text-align:right;">
+2.883
+</td>
 </tr>
 </tbody>
 </table>
@@ -472,71 +670,365 @@ all_sp_model %&gt;%
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="mixed_models_files/figure-html/all%20splines-1.png" width="75%" /></p>
 <p>Comparing nested models</p>
-<pre class="r"><code>anova(no_sp_model, sp_17_model)</code></pre>
-<pre><code>## Data: .
-## Models:
-## no_sp_model: eligible_population_enrolled ~ total_days + opo + (1 | county)
-## sp_17_model: eligible_population_enrolled ~ total_days + year_sp_2017 + opo + 
-## sp_17_model:     (1 | county)
-##             Df   AIC   BIC logLik deviance  Chisq Chi Df Pr(&gt;Chisq)    
-## no_sp_model  7 30769 30817 -15378    30755                             
-## sp_17_model  8 30307 30362 -15145    30291 464.08      1  &lt; 2.2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>anova(no_sp_model, all_sp_model) %&gt;% 
-  broom::tidy() %&gt;% 
-  knitr::kable()</code></pre>
-<table>
+<pre class="r"><code>mods &lt;- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)
+
+names(mods) &lt;- c(&quot;no_sp_model&quot;, &quot;sp_12_model&quot;, &quot;sp_16_model&quot;, &quot;sp_17_model&quot;, &quot;all_sp_model&quot;)
+
+rmse_fun &lt;- function(model) {
+  rmse(model, organ_sp)
+}
+
+map(mods, rmse_fun) %&gt;% 
+  as_tibble() %&gt;% 
+  gather(key = &quot;model&quot;, 
+         value = &quot;rmse&quot;) %&gt;% 
+  knitr::kable() %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">df</th>
-<th align="right">AIC</th>
-<th align="right">BIC</th>
-<th align="right">logLik</th>
-<th align="right">deviance</th>
-<th align="right">statistic</th>
-<th align="right">Chi.Df</th>
-<th align="right">p.value</th>
+<tr>
+<th style="text-align:left;">
+model
+</th>
+<th style="text-align:right;">
+rmse
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">no_sp_model</td>
-<td align="right">7</td>
-<td align="right">30768.94</td>
-<td align="right">30817.23</td>
-<td align="right">-15377.47</td>
-<td align="right">30754.94</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
+<tr>
+<td style="text-align:left;">
+no_sp_model
+</td>
+<td style="text-align:right;">
+1.915246
+</td>
 </tr>
-<tr class="even">
-<td align="left">all_sp_model</td>
-<td align="right">10</td>
-<td align="right">29630.95</td>
-<td align="right">29699.93</td>
-<td align="right">-14805.47</td>
-<td align="right">29610.95</td>
-<td align="right">1143.996</td>
-<td align="right">3</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+sp_12_model
+</td>
+<td style="text-align:right;">
+1.901947
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sp_16_model
+</td>
+<td style="text-align:right;">
+1.882593
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sp_17_model
+</td>
+<td style="text-align:right;">
+1.854991
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+all_sp_model
+</td>
+<td style="text-align:right;">
+1.770119
+</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>anova(sp_17_model, all_sp_model)</code></pre>
-<pre><code>## Data: .
-## Models:
-## sp_17_model: eligible_population_enrolled ~ total_days + year_sp_2017 + opo + 
-## sp_17_model:     (1 | county)
-## all_sp_model: eligible_population_enrolled ~ total_days + year_sp_2012 + year_sp_2016 + 
-## all_sp_model:     year_sp_2017 + opo + (1 | county)
-##              Df   AIC   BIC logLik deviance  Chisq Chi Df Pr(&gt;Chisq)    
-## sp_17_model   8 30307 30362 -15145    30291                             
-## all_sp_model 10 29631 29700 -14806    29611 679.91      2  &lt; 2.2e-16 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>anova(no_sp_model, sp_17_model) %&gt;% 
+  broom::tidy() %&gt;% 
+  knitr::kable() %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+Chi.Df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+no_sp_model
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+30768.94
+</td>
+<td style="text-align:right;">
+30817.23
+</td>
+<td style="text-align:right;">
+-15377.47
+</td>
+<td style="text-align:right;">
+30754.94
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sp_17_model
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+30306.86
+</td>
+<td style="text-align:right;">
+30362.05
+</td>
+<td style="text-align:right;">
+-15145.43
+</td>
+<td style="text-align:right;">
+30290.86
+</td>
+<td style="text-align:right;">
+464.084
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(no_sp_model, all_sp_model) %&gt;% 
+  broom::tidy() %&gt;% 
+  knitr::kable() %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+Chi.Df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+no_sp_model
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+30768.94
+</td>
+<td style="text-align:right;">
+30817.23
+</td>
+<td style="text-align:right;">
+-15377.47
+</td>
+<td style="text-align:right;">
+30754.94
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+all_sp_model
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+29630.95
+</td>
+<td style="text-align:right;">
+29699.93
+</td>
+<td style="text-align:right;">
+-14805.47
+</td>
+<td style="text-align:right;">
+29610.95
+</td>
+<td style="text-align:right;">
+1143.996
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(sp_17_model, all_sp_model) %&gt;% 
+  broom::tidy() %&gt;% 
+  knitr::kable() %&gt;% 
+  kable_styling(full_width = F)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+BIC
+</th>
+<th style="text-align:right;">
+logLik
+</th>
+<th style="text-align:right;">
+deviance
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+Chi.Df
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+sp_17_model
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+30306.86
+</td>
+<td style="text-align:right;">
+30362.05
+</td>
+<td style="text-align:right;">
+-15145.43
+</td>
+<td style="text-align:right;">
+30290.86
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+all_sp_model
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+29630.95
+</td>
+<td style="text-align:right;">
+29699.93
+</td>
+<td style="text-align:right;">
+-14805.47
+</td>
+<td style="text-align:right;">
+29610.95
+</td>
+<td style="text-align:right;">
+679.912
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 <p>Random intercept and random slope models</p>
 <pre class="r"><code># convergence issues with random slope, most likely not needed
 
