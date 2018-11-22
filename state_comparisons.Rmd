@@ -24,7 +24,7 @@ ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, colo
 
 
 ```{r}
-ny_donor = read_csv("data/Donate_Life_Organ_and_Tissue_Donor_Registry_Enrollment_by_County__Beginning_September_2008.csv") %>%
+ny_donor = read_csv("data/organ.csv") %>%
   janitor::clean_names()
 
 ```
