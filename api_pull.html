@@ -244,6 +244,7 @@ $(document).ready(function () {
 <pre class="r"><code>organ_sp &lt;- organ %&gt;% 
   mutate(year_sp_2012 = (date &gt; &quot;2012-10-1&quot;) * (date - as.Date(&quot;2012-10-1&quot;)), 
          year_sp_2016 = (date &gt; &quot;2016-5-1&quot;) * (date - as.Date(&quot;2016-5-1&quot;)), 
+         year_sp_2017 = (date &gt; &quot;2017-2-14&quot;) * (date - as.Date(&quot;2017-2-14&quot;)),
          total_days = date - as.Date(&quot;2008-09-01&quot;))</code></pre>
 <p>Exporting data for use in other files</p>
 <pre class="r"><code>write_csv(organ, &quot;data/organ.csv&quot;)

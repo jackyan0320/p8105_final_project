@@ -30,6 +30,7 @@ Creating spline
 organ_sp <- organ %>% 
   mutate(year_sp_2012 = (date > "2012-10-1") * (date - as.Date("2012-10-1")), 
          year_sp_2016 = (date > "2016-5-1") * (date - as.Date("2016-5-1")), 
+         year_sp_2017 = (date > "2017-2-14") * (date - as.Date("2017-2-14")),
          total_days = date - as.Date("2008-09-01"))
 ```
 
