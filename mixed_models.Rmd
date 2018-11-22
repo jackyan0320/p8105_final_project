@@ -2,11 +2,11 @@
 title: "Mixed Model"
 author: "Nick Williams"
 date: "November 21, 2018"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, dpi = 300, out.width = "75%")
 
 library(tidyverse)
 library(lme4)
@@ -25,43 +25,54 @@ organ_sp <- read_csv("data/organ_spline.csv") %>%
                            "Finger Lakes Donor Recovery Network"))
 ```
 
+Random intercept models
+
 ```{r overall time}
 no_sp_model <- organ_sp %>% 
-  lmer(eligible_population_enrolled ~ total_days + (1 | county), data = .) %>% 
-  broom::tidy()
+  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = ., 
+       REML = FALSE)
 
 no_sp_model %>% 
+  broom::tidy() %>% 
   filter(term == "total_days") %>% 
   mutate(estimate_year = estimate * 365, 
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
-         ci_upper = estimate_year + 1.96*se_year)
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  knitr::kable(digits = 3)
 
-organ_sp %>% 
-  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = .) %>% 
-  broom::tidy() %>% 
-  mutate(ci_low = estimate - 1.96*std.error, 
-         ci_upper = estimate + 1.96*std.error)
-
-opo_time <- 
-  organ_sp %>% 
-  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = .)
+add_predictions(organ_sp, no_sp_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() + 
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
 ```
 
 ```{r spline 2012}
 sp_12_model <- organ_sp %>% 
   lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + (1 | county), data = .)
 
-sp_12_model
+sp_12_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2012")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  knitr::kable(digits = 3)
 
 add_predictions(organ_sp, sp_12_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
-  geom_line()
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
 ```
 
 ```{r spline 2016}
 sp_16_model <- organ_sp %>% 
-  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + (1 | county), data = .) 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + opo + (1 | county), data = .) 
 
 sp_16_model %>% 
   broom::tidy() %>% 
@@ -69,30 +80,88 @@ sp_16_model %>%
   mutate(estimate_year = estimate * 365, 
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
-         ci_upper = estimate_year + 1.96*se_year)
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  knitr::kable(digits = 3)
 
 add_predictions(organ_sp, sp_16_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
-  geom_line()
-
-sp_16_opo <- organ_sp %>% 
-  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + opo + (1 | county), data = .)
-
-sp_16_opo %>% 
-  broom::tidy() %>% 
-    mutate(ci_low = estimate - 1.96*std.error, 
-         ci_upper = estimate + 1.96*std.error)
+  geom_line() + 
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
 ```
+
+```{r spline 2017}
+sp_17_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2017 + opo + (1 | county), data = ., 
+       REML = FALSE)
+
+sp_17_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2017")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  knitr::kable()
+
+add_predictions(organ_sp, sp_17_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
+```
+
+```{r all splines}
+all_sp_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + year_sp_2016 + year_sp_2017 + opo + 
+         (1 | county), data = ., REML = FALSE)
+
+all_sp_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2012", "year_sp_2016", "year_sp_2017")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  knitr::kable(digits = 3)
+
+add_predictions(organ_sp, all_sp_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
+```
+
+Comparing nested models
 
 ```{r}
-add_predictions(organ_sp, opo_time) %>% 
-  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
-  geom_line()
+anova(no_sp_model, sp_17_model)
 
-organ_sp %>% 
-  arrange(date) %>% View()
+anova(no_sp_model, all_sp_model) %>% 
+  broom::tidy() %>% 
+  knitr::kable()
+
+anova(sp_17_model, all_sp_model)
 ```
 
+
+
+
+Random intercept and random slope models
+
+```{r overall time random slope}
+# convergence issues with random slope, most likely not needed
+
+# rs <- organ_sp %>% 
+#   lmer(eligible_population_enrolled ~ total_days + (1 + total_days | county), data = .) 
+# 
+# coef(rs)$county %>% 
+#   rownames_to_column(var = "county") %>% 
+#   mutate(year = total_days * 365)
+```
 
 
 
