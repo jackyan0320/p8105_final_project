@@ -1,0 +1,103 @@
+---
+title: "Mixed Model"
+author: "Nick Williams"
+date: "November 21, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lme4)
+library(modelr)
+#using data cleaned in api_pull.rmd file
+
+theme_set(theme_bw())
+
+organ_sp <- read_csv("data/organ_spline.csv") %>% 
+  filter(!(county %in% c("TOTAL NYS", "Cattauragus", "St Lawrence"))) %>% 
+  mutate(opo = as_factor(opo), 
+         opo = fct_relevel(opo, 
+                           "New York Organ Donor Network", 
+                           "Center for Donation and Transplant in New York", 
+                           "UNYTS", 
+                           "Finger Lakes Donor Recovery Network"))
+```
+
+```{r overall time}
+no_sp_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + (1 | county), data = .) %>% 
+  broom::tidy()
+
+no_sp_model %>% 
+  filter(term == "total_days") %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year)
+
+organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = .) %>% 
+  broom::tidy() %>% 
+  mutate(ci_low = estimate - 1.96*std.error, 
+         ci_upper = estimate + 1.96*std.error)
+
+opo_time <- 
+  organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = .)
+```
+
+```{r spline 2012}
+sp_12_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + (1 | county), data = .)
+
+sp_12_model
+
+add_predictions(organ_sp, sp_12_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line()
+```
+
+```{r spline 2016}
+sp_16_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + (1 | county), data = .) 
+
+sp_16_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2016")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year)
+
+add_predictions(organ_sp, sp_16_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line()
+
+sp_16_opo <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + opo + (1 | county), data = .)
+
+sp_16_opo %>% 
+  broom::tidy() %>% 
+    mutate(ci_low = estimate - 1.96*std.error, 
+         ci_upper = estimate + 1.96*std.error)
+```
+
+```{r}
+add_predictions(organ_sp, opo_time) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line()
+
+organ_sp %>% 
+  arrange(date) %>% View()
+```
+
+
+
+
+
+
+
+
+
