@@ -4,7 +4,6 @@ author: "Jack Yan"
 date: "11/19/2018"
 output: github_document
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -19,7 +18,6 @@ read_csv("./data/ahrf_variables.csv") %>%
   filter(str_detect(label, "Code") == FALSE) %>% 
   filter(str_detect(label, "M.D.") == F) %>% 
   filter(str_detect(label, "MD") == F) 
-
 # Screen for variable names of interest
 read_csv("./data/ahrf_variables.csv") %>%
   filter(str_detect(label, "Code") == FALSE) %>% 
@@ -38,7 +36,6 @@ variables_list =
   filter(str_detect(label, "Medcr Cost Fee") == TRUE|
          str_detect(label, "Medicare Enrollment") == TRUE) %>% 
   mutate(topic = "Medical Cost & Medicare Enrollment")
-
 # Population Estimate & Census Population
 variables_list = 
   read_csv("./data/ahrf_variables.csv") %>%
@@ -48,7 +45,6 @@ variables_list =
           str_detect(label, "65+") == FALSE) %>% 
   mutate(topic = "Population Size") %>%   
   bind_rows(variables_list, .)
-
 # Gender & Ethnicity
 variables_list = 
   read_csv("./data/ahrf_variables.csv") %>% 
@@ -57,15 +53,12 @@ variables_list =
   mutate(topic = "Gender & Ethnicity") %>% 
   select(-no) %>% 
   bind_rows(variables_list, .)
-  # filter(str_detect(label, "Pop Hispanic/Latino Male") == TRUE)
-
 # Age
 variables_list = 
   read_csv("./data/ahrf_variables.csv") %>%
   filter(str_detect(label, "Median Age") == TRUE) %>% 
   mutate(topic = "Age") %>% 
   bind_rows(variables_list, .)
-
 # Education
 variables_list = 
   read_csv("./data/ahrf_variables.csv") %>%
@@ -73,11 +66,63 @@ variables_list =
           str_detect(label, "Pers 25+") == TRUE) %>% 
   mutate(topic = "Education") %>% 
   bind_rows(variables_list, .)
-
 variables_list %>% 
   write_csv(path = "./data/ahrf_selected_variables.csv")
 ```
 
 
+
+```{r}
+# Standardzd PerCapita Medcr Cost Fee
+variables_list = 
+  read_csv("./data/ahrf_variables.csv") %>%
+  filter(str_detect(label, "Medcr Cost Fee") == TRUE|
+         str_detect(label, "Medicare Enrollment") == TRUE) %>% 
+  mutate(topic = "Medical Cost & Medicare Enrollment") %>% 
+  filter(label == "Standardzd PerCapita Medcr Cost Fee for Service 2015"|
+         label == 'Medicare Enrollment, Aged Tot 2015')
+# Population Estimate & Census Population
+variables_list = 
+  read_csv("./data/ahrf_variables.csv") %>%
+  filter(str_detect(label, "Population Estimate") == TRUE|
+          str_detect(label, "Census Population 20") == TRUE,
+          str_detect(label, "Veteran") == FALSE,
+          str_detect(label, "65+") == FALSE) %>% 
+  mutate(topic = "Population Size") %>%   
+  filter(label == "Population Estimate 2016") %>% 
+  bind_rows(variables_list, .)
+# Gender & Ethnicity
+variables_list = 
+  read_csv("./data/ahrf_variables.csv") %>% 
+  mutate(no = 1:length(label)) %>% 
+  filter(no %in% 4224:4687) %>% 
+  mutate(topic = "Gender & Ethnicity") %>% 
+  select(-no) %>%
+  filter(str_detect(label, "2015")) %>% 
+  filter(label %in% c('Pop Total Male 2015','Pop Total Female 2015', 'Pop White Male 2015', 'Pop White Female 2015', 'Pop White Hispanic/Latino Male 2015', 'Pop Black/African Amer Male 2015', 'Pop Black/African Amer Female 2015', 'Pop Asian Male 2015', 'Pop Asian Female 2015' ))  %>% 
+  bind_rows(variables_list, .)
+# Age
+variables_list =
+  read_csv("./data/ahrf_variables.csv") %>%
+  filter(str_detect(label, "Median Age") == TRUE) %>% 
+  mutate(topic = "Age") %>% 
+  filter(str_detect(label, "2010")) %>% 
+    filter(label %in% c("Median Age 2010")) %>% 
+  bind_rows(variables_list, .)
+# Education
+variables_list =
+  read_csv("./data/ahrf_variables.csv") %>% 
+  mutate(topic = "Education") %>%
+  filter(label %in% c("Percent Educ/HlthCare/Soc Asst 2011-15", "% Persons 25+ w/<HS Diploma 2011-15", '% Persons 25+ w/4+ Yrs College 2011-15' )) %>% 
+  bind_rows(variables_list, .)
+  
+  
+variables_list %>% 
+  write_csv(path = "./data/ahrf_selected_variables.csv")
+```
+
+```{r}
+read_csv("./data/ahrf_selected_variables.csv")
+```
 
 
