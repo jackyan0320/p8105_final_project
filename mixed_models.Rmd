@@ -40,7 +40,13 @@ no_sp_model %>%
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
-  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "Estimate" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
@@ -62,7 +68,14 @@ sp_12_model %>%
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
-  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2012", "2012 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "Estimate" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
@@ -84,7 +97,14 @@ sp_16_model %>%
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
-  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2016", "2016 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "Estimate" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
@@ -107,8 +127,15 @@ sp_17_model %>%
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
-  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
-  knitr::kable() %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2017", "2017 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "Estimate" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
 add_predictions(organ_sp, sp_17_model) %>% 
@@ -130,7 +157,16 @@ all_sp_model %>%
          se_year = std.error * 365, 
          ci_low = estimate_year - 1.96*se_year, 
          ci_upper = estimate_year + 1.96*se_year) %>% 
-  select(term, statistic, estimate_year, se_year, ci_low, ci_upper) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2012", "2012 spline", term), 
+         term = ifelse(term == "year_sp_2016", "2016 spline", term), 
+         term = ifelse(term == "year_sp_2017", "2017 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "Estimate" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
@@ -156,7 +192,14 @@ map(mods, rmse_fun) %>%
   as_tibble() %>% 
   gather(key = "model", 
          value = "rmse") %>% 
-  knitr::kable() %>% 
+  mutate(model = ifelse(model == "no_sp_model", "No spline", model), 
+         model = ifelse(model == "sp_12_model", "2012 spline", model), 
+         model = ifelse(model == "sp_16_model", "2016 spline", model), 
+         model = ifelse(model == "sp_17_model", "2017 spline", model), 
+         model = ifelse(model == "all_sp_model", "All splines", model)) %>% 
+  rename("Model" = model, 
+         "RMSE" = rmse) %>% 
+  knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
 anova(no_sp_model, sp_17_model) %>% 
