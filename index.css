@@ -1,10 +1,11 @@
 
+
 .container-fluid.main-container{
   margin-left: 0;
   margin-right: 0;
   max-width: 100%;
   padding:0;
-  background-color: lightblue;
+  background-color: white;
 }
 
 
@@ -44,5 +45,27 @@
 
 .index_section {
   background-color: red;
-
 }
+
+.plot_description {
+  text-align: center;
+}
+
+.plotting_main {
+    width: 80%;
+    height: 200px;
+    background: clear;
+    margin: auto;
+    padding: 10px;
+}
+
+.plot_1_plot {
+    float: left;
+}
+.plot_1_description {
+    float: right;
+    background: clear;
+    text-align: center;
+}
+  
+
