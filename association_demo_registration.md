@@ -1,11 +1,12 @@
-
-### Pulling data from API
-
-This pulls all data from New York state’s API for organ donor
-proportions per county from 2008 to
-2018
+association\_demo\_registration
+================
+Jack Yan
+11/20/2018
 
 ``` r
+# load demo data
+demo_df = read.csv("./data/ahrf_select_data.csv") %>% as.tibble()
+# load registration data
 organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %>% 
   content("parsed") %>%
   janitor::clean_names() %>%
@@ -31,23 +32,3 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
     ##   registry_enrollments = col_integer(),
     ##   year = col_integer()
     ## )
-
-Creating spline
-
-``` r
-organ_sp <- organ %>% 
-  mutate(year_sp_2012 = (date > "2012-10-1") * (date - as.Date("2012-10-1")), 
-         year_sp_2016 = (date > "2016-5-1") * (date - as.Date("2016-5-1")), 
-         year_sp_2017 = (date > "2017-2-14") * (date - as.Date("2017-2-14")),
-         total_days = date - as.Date("2008-09-01"))
-```
-
-Exporting data for use in other files
-
-``` r
-write_csv(organ, "data/organ.csv")
-write_csv(organ_sp, "data/organ_spline.csv")
-```
-
-Note that St. Lawrence County and Cattauragus county do not update their
-enrollment numbers until almost the end up the database time period/

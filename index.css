@@ -1,3 +1,9 @@
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
 
 
 .container-fluid.main-container{
@@ -52,20 +58,37 @@
 }
 
 .plotting_main {
-    width: 80%;
-    height: 200px;
+    width: 90%;
     background: clear;
     margin: auto;
     padding: 10px;
+    border:0px; 
 }
 
 .plot_1_plot {
     float: left;
+    width:60%;
 }
 .plot_1_description {
+    height: 100%;
+    width:40%;
     float: right;
     background: clear;
     text-align: center;
+    vertical-align: middle;
 }
   
+  
+.plot_2_plot {
+    float: right;
+    width:60%;
+}
+.plot_2_description {
+    height: 100%;
+    width:40%;
+    float: left;
+    background: clear;
+    text-align: center;
+    vertical-align: middle;
+}
 
