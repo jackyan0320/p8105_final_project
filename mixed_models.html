@@ -235,20 +235,20 @@ no_sp_model %&gt;%
   mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term)) %&gt;% 
   select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
   rename(&quot;Term&quot; = term, 
-         &quot;Estimate&quot; = estimate_year, 
+         &quot;$\\beta$&quot; = estimate_year, 
          &quot;Standard error&quot; = se_year, 
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
-  knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  knitr::kable(digits = 3, escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
 Term
 </th>
 <th style="text-align:right;">
-Estimate
+<span class="math inline">\(\beta\)</span>
 </th>
 <th style="text-align:right;">
 Standard error
@@ -301,20 +301,20 @@ sp_12_model %&gt;%
          term = ifelse(term == &quot;year_sp_2012&quot;, &quot;2012 spline&quot;, term)) %&gt;% 
   select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
   rename(&quot;Term&quot; = term, 
-         &quot;Estimate&quot; = estimate_year, 
+         &quot;$\\beta$&quot; = estimate_year, 
          &quot;Standard error&quot; = se_year, 
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
 Term
 </th>
 <th style="text-align:right;">
-Estimate
+<span class="math inline">\(\beta\)</span>
 </th>
 <th style="text-align:right;">
 Standard error
@@ -384,20 +384,20 @@ sp_16_model %&gt;%
          term = ifelse(term == &quot;year_sp_2016&quot;, &quot;2016 spline&quot;, term)) %&gt;% 
   select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
   rename(&quot;Term&quot; = term, 
-         &quot;Estimate&quot; = estimate_year, 
+         &quot;$\\beta$&quot; = estimate_year, 
          &quot;Standard error&quot; = se_year, 
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
 Term
 </th>
 <th style="text-align:right;">
-Estimate
+<span class="math inline">\(\beta\)</span>
 </th>
 <th style="text-align:right;">
 Standard error
@@ -468,20 +468,20 @@ sp_17_model %&gt;%
          term = ifelse(term == &quot;year_sp_2017&quot;, &quot;2017 spline&quot;, term)) %&gt;% 
   select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
   rename(&quot;Term&quot; = term, 
-         &quot;Estimate&quot; = estimate_year, 
+         &quot;$\\beta$&quot; = estimate_year, 
          &quot;Standard error&quot; = se_year, 
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
 Term
 </th>
 <th style="text-align:right;">
-Estimate
+<span class="math inline">\(\beta\)</span>
 </th>
 <th style="text-align:right;">
 Standard error
@@ -554,20 +554,20 @@ all_sp_model %&gt;%
          term = ifelse(term == &quot;year_sp_2017&quot;, &quot;2017 spline&quot;, term)) %&gt;% 
   select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
   rename(&quot;Term&quot; = term, 
-         &quot;Estimate&quot; = estimate_year, 
+         &quot;$\\beta$&quot; = estimate_year, 
          &quot;Standard error&quot; = se_year, 
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
 Term
 </th>
 <th style="text-align:right;">
-Estimate
+<span class="math inline">\(\beta\)</span>
 </th>
 <th style="text-align:right;">
 Standard error
@@ -678,8 +678,8 @@ map(mods, rmse_fun) %&gt;%
   rename(&quot;Model&quot; = model, 
          &quot;RMSE&quot; = rmse) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -743,8 +743,8 @@ anova(no_sp_model, sp_17_model) %&gt;%
          p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;% 
   knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
                escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -815,8 +815,8 @@ No spline
          p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
   knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
                escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -887,8 +887,8 @@ All splines
          p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
   knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
                escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
-<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
