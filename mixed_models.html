@@ -240,8 +240,8 @@ no_sp_model %&gt;%
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -306,8 +306,8 @@ sp_12_model %&gt;%
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -389,8 +389,8 @@ sp_16_model %&gt;%
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -473,8 +473,8 @@ sp_17_model %&gt;%
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -559,8 +559,8 @@ all_sp_model %&gt;%
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -733,90 +733,67 @@ All splines
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>anova(no_sp_model, sp_17_model) %&gt;% 
+<pre class="r"><code>options(knitr.kable.NA = &#39;&#39;)
+
+anova(no_sp_model, sp_17_model) %&gt;% 
   broom::tidy() %&gt;% 
-  knitr::kable() %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
+  mutate(term = ifelse(term == &quot;no_sp_model&quot;, &quot;No spline&quot;, term), 
+         term = ifelse(term == &quot;sp_17_model&quot;, &quot;2017 spline&quot;, term), 
+         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;% 
+  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
+               escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-term
-</th>
-<th style="text-align:right;">
-df
+Model
 </th>
 <th style="text-align:right;">
 AIC
 </th>
 <th style="text-align:right;">
-BIC
+Log-like
 </th>
 <th style="text-align:right;">
-logLik
+<span class="math inline">\(\chi^2\)</span>
 </th>
 <th style="text-align:right;">
-deviance
+df
 </th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-Chi.Df
-</th>
-<th style="text-align:right;">
-p.value
+<th style="text-align:left;">
+p-value
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-no_sp_model
-</td>
-<td style="text-align:right;">
-7
+No spline
 </td>
 <td style="text-align:right;">
 30768.94
 </td>
 <td style="text-align:right;">
-30817.23
-</td>
-<td style="text-align:right;">
 -15377.47
 </td>
 <td style="text-align:right;">
-30754.94
 </td>
 <td style="text-align:right;">
-NA
 </td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-sp_17_model
-</td>
-<td style="text-align:right;">
-8
+2017 spline
 </td>
 <td style="text-align:right;">
 30306.86
 </td>
 <td style="text-align:right;">
-30362.05
-</td>
-<td style="text-align:right;">
 -15145.43
-</td>
-<td style="text-align:right;">
-30290.86
 </td>
 <td style="text-align:right;">
 464.084
@@ -824,96 +801,71 @@ sp_17_model
 <td style="text-align:right;">
 1
 </td>
-<td style="text-align:right;">
-0
+<td style="text-align:left;">
+&lt; 0.001
 </td>
 </tr>
 </tbody>
 </table>
 <pre class="r"><code>anova(no_sp_model, all_sp_model) %&gt;% 
   broom::tidy() %&gt;% 
-  knitr::kable() %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
+  mutate(term = ifelse(term == &quot;no_sp_model&quot;, &quot;No spline&quot;, term), 
+         term = ifelse(term == &quot;all_sp_model&quot;, &quot;All splines&quot;, term), 
+         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
+  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
+               escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-term
-</th>
-<th style="text-align:right;">
-df
+Model
 </th>
 <th style="text-align:right;">
 AIC
 </th>
 <th style="text-align:right;">
-BIC
+Log-like
 </th>
 <th style="text-align:right;">
-logLik
+<span class="math inline">\(\chi^2\)</span>
 </th>
 <th style="text-align:right;">
-deviance
+df
 </th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-Chi.Df
-</th>
-<th style="text-align:right;">
-p.value
+<th style="text-align:left;">
+p-value
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-no_sp_model
-</td>
-<td style="text-align:right;">
-7
+No spline
 </td>
 <td style="text-align:right;">
 30768.94
 </td>
 <td style="text-align:right;">
-30817.23
-</td>
-<td style="text-align:right;">
 -15377.47
 </td>
 <td style="text-align:right;">
-30754.94
 </td>
 <td style="text-align:right;">
-NA
 </td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-all_sp_model
-</td>
-<td style="text-align:right;">
-10
+All splines
 </td>
 <td style="text-align:right;">
 29630.95
 </td>
 <td style="text-align:right;">
-29699.93
-</td>
-<td style="text-align:right;">
 -14805.47
-</td>
-<td style="text-align:right;">
-29610.95
 </td>
 <td style="text-align:right;">
 1143.996
@@ -921,96 +873,71 @@ all_sp_model
 <td style="text-align:right;">
 3
 </td>
-<td style="text-align:right;">
-0
+<td style="text-align:left;">
+&lt; 0.001
 </td>
 </tr>
 </tbody>
 </table>
 <pre class="r"><code>anova(sp_17_model, all_sp_model) %&gt;% 
   broom::tidy() %&gt;% 
-  knitr::kable() %&gt;% 
-  kable_styling(full_width = F)</code></pre>
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
+  mutate(term = ifelse(term == &quot;sp_17_model&quot;, &quot;2017 Spline&quot;, term), 
+         term = ifelse(term == &quot;all_sp_model&quot;, &quot;All splines&quot;, term), 
+         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
+  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
+               escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = &quot;hover&quot;)</code></pre>
+<table class="table table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-term
-</th>
-<th style="text-align:right;">
-df
+Model
 </th>
 <th style="text-align:right;">
 AIC
 </th>
 <th style="text-align:right;">
-BIC
+Log-like
 </th>
 <th style="text-align:right;">
-logLik
+<span class="math inline">\(\chi^2\)</span>
 </th>
 <th style="text-align:right;">
-deviance
+df
 </th>
-<th style="text-align:right;">
-statistic
-</th>
-<th style="text-align:right;">
-Chi.Df
-</th>
-<th style="text-align:right;">
-p.value
+<th style="text-align:left;">
+p-value
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-sp_17_model
-</td>
-<td style="text-align:right;">
-8
+2017 Spline
 </td>
 <td style="text-align:right;">
 30306.86
 </td>
 <td style="text-align:right;">
-30362.05
-</td>
-<td style="text-align:right;">
 -15145.43
 </td>
 <td style="text-align:right;">
-30290.86
 </td>
 <td style="text-align:right;">
-NA
 </td>
-<td style="text-align:right;">
-NA
-</td>
-<td style="text-align:right;">
-NA
+<td style="text-align:left;">
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-all_sp_model
-</td>
-<td style="text-align:right;">
-10
+All splines
 </td>
 <td style="text-align:right;">
 29630.95
 </td>
 <td style="text-align:right;">
-29699.93
-</td>
-<td style="text-align:right;">
 -14805.47
-</td>
-<td style="text-align:right;">
-29610.95
 </td>
 <td style="text-align:right;">
 679.912
@@ -1018,8 +945,8 @@ all_sp_model
 <td style="text-align:right;">
 2
 </td>
-<td style="text-align:right;">
-0
+<td style="text-align:left;">
+&lt; 0.001
 </td>
 </tr>
 </tbody>

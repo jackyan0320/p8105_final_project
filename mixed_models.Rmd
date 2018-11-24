@@ -48,7 +48,7 @@ no_sp_model %>%
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F)
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 add_predictions(organ_sp, no_sp_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -77,7 +77,7 @@ sp_12_model %>%
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F)
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 add_predictions(organ_sp, sp_12_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -106,7 +106,7 @@ sp_16_model %>%
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F)
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 add_predictions(organ_sp, sp_16_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -136,7 +136,7 @@ sp_17_model %>%
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F)
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 add_predictions(organ_sp, sp_17_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -168,7 +168,7 @@ all_sp_model %>%
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F)
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 add_predictions(organ_sp, all_sp_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
@@ -202,20 +202,37 @@ map(mods, rmse_fun) %>%
   knitr::kable(digits = 3) %>% 
   kable_styling(full_width = F)
 
+options(knitr.kable.NA = '')
+
 anova(no_sp_model, sp_17_model) %>% 
   broom::tidy() %>% 
-  knitr::kable() %>% 
-  kable_styling(full_width = F)
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %>% 
+  mutate(term = ifelse(term == "no_sp_model", "No spline", term), 
+         term = ifelse(term == "sp_17_model", "2017 spline", term), 
+         p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>% 
+  knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
+               escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 anova(no_sp_model, all_sp_model) %>% 
   broom::tidy() %>% 
-  knitr::kable() %>% 
-  kable_styling(full_width = F)
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %>% 
+  mutate(term = ifelse(term == "no_sp_model", "No spline", term), 
+         term = ifelse(term == "all_sp_model", "All splines", term), 
+         p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>%
+  knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
+               escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = "hover")
 
 anova(sp_17_model, all_sp_model) %>% 
   broom::tidy() %>% 
-  knitr::kable() %>% 
-  kable_styling(full_width = F)
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %>% 
+  mutate(term = ifelse(term == "sp_17_model", "2017 Spline", term), 
+         term = ifelse(term == "all_sp_model", "All splines", term), 
+         p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>%
+  knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
+               escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = "hover")
 ```
 
 Random intercept and random slope models
