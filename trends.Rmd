@@ -66,4 +66,105 @@ ny_donor_coef = ny_donor %>%
 ```
 
 
+```{r}
+st_La = organ %>%
+  filter(year == 2008) %>%
+  filter(eligible_population_enrolled > 24 & eligible_population_enrolled <25)
+
+catta = organ %>%
+  filter(str_detect(county, "St La"))
+
+
+
+```
+
+
+
+trying to figure out strange jumps in data
+```{r}
+
+organ %>%
+  group_by(county) %>%
+  arrange(county, total_days) %>%
+  top_n(1) %>%
+  arrange(total_days) %>% View()
+  
+
+```
+
+
+plot examing the year 2012 to look for a change in percentage enrolled slope
+
+```{r}
+
+organ = read_csv("data/organ_spline.csv") 
+
+x = organ %>%
+  filter(!(county %in% c("TOTAL NYS", "St Lawrence", "Cattauragus"))) %>%
+  ggplot(aes(x = date, y = eligible_population_enrolled, color = county)) +
+    geom_line() + 
+  geom_vline(xintercept = (as.Date("2012-07-01"))) +
+  facet_wrap(~county)
+```
+
+It doesn't seem to show anything
+
+```{r}
+
+organ %>%
+  filter(date == as.Date("2014-07-01") | date == as.Date("2012-07-01") | date == as.Date("2010-07-01")) %>%
+  select(county, date, eligible_population_enrolled) %>%
+  group_by(county) %>%
+  spread(value = eligible_population_enrolled, key = date) %>%
+  janitor::clean_names() %>%
+  mutate(slope_2012_2010 = (x2012_07_01-x2010_07_01)/as.integer(as.Date("2012-07-01")-as.Date("2010-07-01")),
+         slope_2014_2012 = (x2014_07_01-x2012_07_01)/as.integer(as.Date("2014-07-01")-as.Date("2012-07-01")),
+         slope_diff = slope_2014_2012-slope_2012_2010) %>%
+  ungroup() %>%
+  mutate(county = fct_reorder(county, slope_diff)) %>%
+  ggplot(aes(x = county, y = slope_diff)) +
+    geom_point() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+based on this plot, it appears that most counties' slopes actually decreased following the 2012 law (I used the two year period before and after). The percent enrolled countinues to increase, but it does so at a smaller rate. 
+
+```{r}
+organ %>% 
+  filter(date == as.Date("2018-09-01")) %>% 
+  filter(county!= "TOTAL NYS") %>%
+  ggplot(aes( x = eligible_population_enrolled, y = population_18_estimate)) +
+    geom_point()
+
+#If you have a county that has a higher population of people, a higher percent enrolled is more helpful in terms of number of organs than if a county has a lower population of people, so New York should be taking advantage of larger counties, but this plot shows that larger counties tend to have lower percentages of eligible people enrolled. 
+
+#smaller counties have higher percentages enrolled
+
+  
+```
+
+
+```{r}
+
+organ_compare_change = organ %>%
+  select(county, eligible_population_enrolled,date) %>%
+  filter(date == as.Date("2018-09-01")| date == as.Date("2008-09-01"), county != "St Lawrence" & county != "Cattauragus") %>%
+  spread(value = eligible_population_enrolled, key = date) %>%
+  janitor::clean_names() %>%
+  mutate(diff = as.integer(x2018_09_01 - x2008_09_01 )) %>%
+  mutate(county = fct_relevel(county, "TOTAL NYS")) %>%        #nys will be first entry 
+  arrange(county) %>%                                       #so I will subtract from ny state
+  mutate(diff_from_state = diff - first(diff)) %>%
+  filter(county != "TOTAL NYS")
+
+organ %>%
+  filter(date == as.Date("2018-09-01")) %>%
+  select(county, population_18_estimate) %>%
+  right_join(organ_compare_change) %>%
+  ggplot(aes(x = population_18_estimate, y = diff_from_state)) +
+    geom_point()
+  
+
+```
+
 

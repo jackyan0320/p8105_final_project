@@ -1,0 +1,32 @@
+---
+title: "association_demo_registration"
+author: "Jack Yan"
+date: "11/20/2018"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(httr)
+```
+
+```{r}
+# load demo data
+demo_df = read.csv("./data/ahrf_select_data.csv") %>% as.tibble()
+# load registration data
+organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %>% 
+  content("parsed") %>%
+  janitor::clean_names() %>%
+  filter(county != "Out of State" & county != "Unknown") %>%
+  mutate(year = as.character(year)) %>%
+  mutate(month = as.character(month)) %>%
+  mutate(dummy_day = as.character("01")) %>%
+  mutate(date = (str_c(year, month, dummy_day, sep = "-"))) %>%
+  mutate(date = as.Date(date, "%Y-%m-%d")) %>% 
+  rename(pop_2012 = "x2012_census_population")
+
+
+
+```
+

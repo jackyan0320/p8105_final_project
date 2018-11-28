@@ -600,18 +600,21 @@ body {
 
 <body>
 
-<h3 id="pulling-data-from-api">Pulling data from API</h3>
-<p>This pulls all data from New York state’s API for organ donor proportions per county from 2008 to 2018</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">organ &lt;-<span class="st"> </span><span class="kw">GET</span>(<span class="st">&quot;https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="st">  </span><span class="kw">content</span>(<span class="st">&quot;parsed&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="st">  </span>janitor<span class="op">::</span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(county <span class="op">!=</span><span class="st"> &quot;Out of State&quot;</span> <span class="op">&amp;</span><span class="st"> </span>county <span class="op">!=</span><span class="st"> &quot;Unknown&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.character</span>(year)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">as.character</span>(month)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dummy_day =</span> <span class="kw">as.character</span>(<span class="st">&quot;01&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> (<span class="kw">str_c</span>(year, month, dummy_day, <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">as.Date</span>(date, <span class="st">&quot;%Y-%m-%d&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">pop_2012 =</span> <span class="st">&quot;x2012_census_population&quot;</span>)</a></code></pre></div>
+<h1 id="association_demo_registration">association_demo_registration</h1>
+<p>Jack Yan 11/20/2018</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># load demo data</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">demo_df =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;./data/ahrf_select_data.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">as.tibble</span>()</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># load registration data</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">organ &lt;-<span class="st"> </span><span class="kw">GET</span>(<span class="st">&quot;https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw">content</span>(<span class="st">&quot;parsed&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span>janitor<span class="op">::</span><span class="kw">clean_names</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw">filter</span>(county <span class="op">!=</span><span class="st"> &quot;Out of State&quot;</span> <span class="op">&amp;</span><span class="st"> </span>county <span class="op">!=</span><span class="st"> &quot;Unknown&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.character</span>(year)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">month =</span> <span class="kw">as.character</span>(month)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dummy_day =</span> <span class="kw">as.character</span>(<span class="st">&quot;01&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> (<span class="kw">str_c</span>(year, month, dummy_day, <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">date =</span> <span class="kw">as.Date</span>(date, <span class="st">&quot;%Y-%m-%d&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="st">  </span><span class="kw">rename</span>(<span class="dt">pop_2012 =</span> <span class="st">&quot;x2012_census_population&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   `_2012_census_population` = col_integer(),
@@ -626,16 +629,6 @@ body {
 ##   year = col_integer()
 ## )
 </code></pre>
-<p>Creating spline</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">organ_sp &lt;-<span class="st"> </span>organ <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year_sp_2012 =</span> (date <span class="op">&gt;</span><span class="st"> &quot;2012-10-1&quot;</span>) <span class="op">*</span><span class="st"> </span>(date <span class="op">-</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2012-10-1&quot;</span>)), </a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">         <span class="dt">year_sp_2016 =</span> (date <span class="op">&gt;</span><span class="st"> &quot;2016-5-1&quot;</span>) <span class="op">*</span><span class="st"> </span>(date <span class="op">-</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2016-5-1&quot;</span>)), </a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="dt">year_sp_2017 =</span> (date <span class="op">&gt;</span><span class="st"> &quot;2017-2-14&quot;</span>) <span class="op">*</span><span class="st"> </span>(date <span class="op">-</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2017-2-14&quot;</span>)),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">         <span class="dt">total_days =</span> date <span class="op">-</span><span class="st"> </span><span class="kw">as.Date</span>(<span class="st">&quot;2008-09-01&quot;</span>))</a></code></pre></div>
-<p>Exporting data for use in other files</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">write_csv</span>(organ, <span class="st">&quot;data/organ.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">write_csv</span>(organ_sp, <span class="st">&quot;data/organ_spline.csv&quot;</span>)</a></code></pre></div>
-<p>Note that St. Lawrence County and Cattauragus county do not update their enrollment numbers until almost the end up the database time period/</p>
 
 </body>
 </html>
