@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Nick Williams" />
+
+<meta name="date" content="2018-11-21" />
+
+<title>Mixed Model</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="mailto:&lt;you@youremail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/jackyan0320/p8105_final_project">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Mixed Model</h1>
+<h4 class="author"><em>Nick Williams</em></h4>
+<h4 class="date"><em>November 21, 2018</em></h4>
+
+</div>
+
+
+<p>Random intercept models</p>
+<pre class="r"><code>no_sp_model &lt;- organ_sp %&gt;% 
+  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = ., 
+       REML = FALSE)
+
+no_sp_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term == &quot;total_days&quot;) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3, escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\beta\)</span>
+</th>
+<th style="text-align:right;">
+Standard error
+</th>
+<th style="text-align:right;">
+Lower bound
+</th>
+<th style="text-align:right;">
+Upper bound
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Time (year)
+</td>
+<td style="text-align:right;">
+2.675
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+<td style="text-align:right;">
+2.66
+</td>
+<td style="text-align:right;">
+2.69
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>add_predictions(organ_sp, no_sp_model) %&gt;% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() + 
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="mixed_models_files/figure-html/overall%20time-1.png" width="75%" /></p>
+<pre class="r"><code>sp_12_model &lt;- organ_sp %&gt;% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + (1 | county), data = .)
+
+sp_12_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term %in% c(&quot;total_days&quot;, &quot;year_sp_2012&quot;)) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2012&quot;, &quot;2012 spline&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\beta\)</span>
+</th>
+<th style="text-align:right;">
+Standard error
+</th>
+<th style="text-align:right;">
+Lower bound
+</th>
+<th style="text-align:right;">
+Upper bound
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Time (year)
+</td>
+<td style="text-align:right;">
+2.883
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+<td style="text-align:right;">
+2.840
+</td>
+<td style="text-align:right;">
+2.926
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012 spline
+</td>
+<td style="text-align:right;">
+-0.326
+</td>
+<td style="text-align:right;">
+0.032
+</td>
+<td style="text-align:right;">
+-0.389
+</td>
+<td style="text-align:right;">
+-0.262
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>add_predictions(organ_sp, sp_12_model) %&gt;% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="mixed_models_files/figure-html/spline%202012-1.png" width="75%" /></p>
+<pre class="r"><code>sp_16_model &lt;- organ_sp %&gt;% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + opo + (1 | county), data = .) 
+
+sp_16_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term %in% c(&quot;total_days&quot;, &quot;year_sp_2016&quot;)) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2016&quot;, &quot;2016 spline&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\beta\)</span>
+</th>
+<th style="text-align:right;">
+Standard error
+</th>
+<th style="text-align:right;">
+Lower bound
+</th>
+<th style="text-align:right;">
+Upper bound
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Time (year)
+</td>
+<td style="text-align:right;">
+2.563
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+2.542
+</td>
+<td style="text-align:right;">
+2.583
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016 spline
+</td>
+<td style="text-align:right;">
+0.789
+</td>
+<td style="text-align:right;">
+0.05
+</td>
+<td style="text-align:right;">
+0.692
+</td>
+<td style="text-align:right;">
+0.886
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>add_predictions(organ_sp, sp_16_model) %&gt;% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() + 
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="mixed_models_files/figure-html/spline%202016-1.png" width="75%" /></p>
+<pre class="r"><code>sp_17_model &lt;- organ_sp %&gt;% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2017 + opo + (1 | county), data = ., 
+       REML = FALSE)
+
+sp_17_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term %in% c(&quot;total_days&quot;, &quot;year_sp_2017&quot;)) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2017&quot;, &quot;2017 spline&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\beta\)</span>
+</th>
+<th style="text-align:right;">
+Standard error
+</th>
+<th style="text-align:right;">
+Lower bound
+</th>
+<th style="text-align:right;">
+Upper bound
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Time (year)
+</td>
+<td style="text-align:right;">
+2.561
+</td>
+<td style="text-align:right;">
+0.009
+</td>
+<td style="text-align:right;">
+2.543
+</td>
+<td style="text-align:right;">
+2.579
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017 spline
+</td>
+<td style="text-align:right;">
+1.700
+</td>
+<td style="text-align:right;">
+0.078
+</td>
+<td style="text-align:right;">
+1.548
+</td>
+<td style="text-align:right;">
+1.852
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>add_predictions(organ_sp, sp_17_model) %&gt;% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="mixed_models_files/figure-html/spline%202017-1.png" width="75%" /></p>
+<pre class="r"><code>all_sp_model &lt;- organ_sp %&gt;% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + year_sp_2016 + year_sp_2017 + opo + 
+         (1 | county), data = ., REML = FALSE)
+
+all_sp_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term %in% c(&quot;total_days&quot;, &quot;year_sp_2012&quot;, &quot;year_sp_2016&quot;, &quot;year_sp_2017&quot;)) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2012&quot;, &quot;2012 spline&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2016&quot;, &quot;2016 spline&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2017&quot;, &quot;2017 spline&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Term
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\beta\)</span>
+</th>
+<th style="text-align:right;">
+Standard error
+</th>
+<th style="text-align:right;">
+Lower bound
+</th>
+<th style="text-align:right;">
+Upper bound
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Time (year)
+</td>
+<td style="text-align:right;">
+3.088
+</td>
+<td style="text-align:right;">
+0.022
+</td>
+<td style="text-align:right;">
+3.045
+</td>
+<td style="text-align:right;">
+3.131
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012 spline
+</td>
+<td style="text-align:right;">
+-0.982
+</td>
+<td style="text-align:right;">
+0.041
+</td>
+<td style="text-align:right;">
+-1.063
+</td>
+<td style="text-align:right;">
+-0.902
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016 spline
+</td>
+<td style="text-align:right;">
+0.333
+</td>
+<td style="text-align:right;">
+0.150
+</td>
+<td style="text-align:right;">
+0.039
+</td>
+<td style="text-align:right;">
+0.627
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017 spline
+</td>
+<td style="text-align:right;">
+2.465
+</td>
+<td style="text-align:right;">
+0.213
+</td>
+<td style="text-align:right;">
+2.048
+</td>
+<td style="text-align:right;">
+2.883
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>add_predictions(organ_sp, all_sp_model) %&gt;% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="mixed_models_files/figure-html/all%20splines-1.png" width="75%" /></p>
+<p>Comparing nested models</p>
+<pre class="r"><code>mods &lt;- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)
+
+names(mods) &lt;- c(&quot;no_sp_model&quot;, &quot;sp_12_model&quot;, &quot;sp_16_model&quot;, &quot;sp_17_model&quot;, &quot;all_sp_model&quot;)
+
+rmse_fun &lt;- function(model) {
+  rmse(model, organ_sp)
+}
+
+map(mods, rmse_fun) %&gt;% 
+  as_tibble() %&gt;% 
+  gather(key = &quot;model&quot;, 
+         value = &quot;rmse&quot;) %&gt;% 
+  mutate(model = ifelse(model == &quot;no_sp_model&quot;, &quot;No spline&quot;, model), 
+         model = ifelse(model == &quot;sp_12_model&quot;, &quot;2012 spline&quot;, model), 
+         model = ifelse(model == &quot;sp_16_model&quot;, &quot;2016 spline&quot;, model), 
+         model = ifelse(model == &quot;sp_17_model&quot;, &quot;2017 spline&quot;, model), 
+         model = ifelse(model == &quot;all_sp_model&quot;, &quot;All splines&quot;, model)) %&gt;% 
+  rename(&quot;Model&quot; = model, 
+         &quot;RMSE&quot; = rmse) %&gt;% 
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+RMSE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No spline
+</td>
+<td style="text-align:right;">
+1.915
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012 spline
+</td>
+<td style="text-align:right;">
+1.902
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016 spline
+</td>
+<td style="text-align:right;">
+1.883
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017 spline
+</td>
+<td style="text-align:right;">
+1.855
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All splines
+</td>
+<td style="text-align:right;">
+1.770
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>options(knitr.kable.NA = &#39;&#39;)
+
+anova(no_sp_model, sp_17_model) %&gt;% 
+  broom::tidy() %&gt;% 
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
+  mutate(term = ifelse(term == &quot;no_sp_model&quot;, &quot;No spline&quot;, term), 
+         term = ifelse(term == &quot;sp_17_model&quot;, &quot;2017 spline&quot;, term), 
+         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;% 
+  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
+               escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+Log-like
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\chi^2\)</span>
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:left;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No spline
+</td>
+<td style="text-align:right;">
+30768.94
+</td>
+<td style="text-align:right;">
+-15377.47
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2017 spline
+</td>
+<td style="text-align:right;">
+30306.86
+</td>
+<td style="text-align:right;">
+-15145.43
+</td>
+<td style="text-align:right;">
+464.084
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+&lt; 0.001
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(no_sp_model, all_sp_model) %&gt;% 
+  broom::tidy() %&gt;% 
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
+  mutate(term = ifelse(term == &quot;no_sp_model&quot;, &quot;No spline&quot;, term), 
+         term = ifelse(term == &quot;all_sp_model&quot;, &quot;All splines&quot;, term), 
+         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
+  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
+               escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+Log-like
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\chi^2\)</span>
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:left;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No spline
+</td>
+<td style="text-align:right;">
+30768.94
+</td>
+<td style="text-align:right;">
+-15377.47
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All splines
+</td>
+<td style="text-align:right;">
+29630.95
+</td>
+<td style="text-align:right;">
+-14805.47
+</td>
+<td style="text-align:right;">
+1143.996
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+&lt; 0.001
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>anova(sp_17_model, all_sp_model) %&gt;% 
+  broom::tidy() %&gt;% 
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
+  mutate(term = ifelse(term == &quot;sp_17_model&quot;, &quot;2017 Spline&quot;, term), 
+         term = ifelse(term == &quot;all_sp_model&quot;, &quot;All splines&quot;, term), 
+         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
+  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
+               escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Model
+</th>
+<th style="text-align:right;">
+AIC
+</th>
+<th style="text-align:right;">
+Log-like
+</th>
+<th style="text-align:right;">
+<span class="math inline">\(\chi^2\)</span>
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:left;">
+p-value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2017 Spline
+</td>
+<td style="text-align:right;">
+30306.86
+</td>
+<td style="text-align:right;">
+-15145.43
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:right;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All splines
+</td>
+<td style="text-align:right;">
+29630.95
+</td>
+<td style="text-align:right;">
+-14805.47
+</td>
+<td style="text-align:right;">
+679.912
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+&lt; 0.001
+</td>
+</tr>
+</tbody>
+</table>
+<p>Random intercept and random slope models</p>
+<pre class="r"><code># convergence issues with random slope, most likely not needed
+
+# rs &lt;- organ_sp %&gt;% 
+#   lmer(eligible_population_enrolled ~ total_days + (1 + total_days | county), data = .) 
+# 
+# coef(rs)$county %&gt;% 
+#   rownames_to_column(var = &quot;county&quot;) %&gt;% 
+#   mutate(year = total_days * 365)</code></pre>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
