@@ -101,8 +101,8 @@ ggplot() +
   geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "lightgrey") + 
   geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
   stat_density2d(data = organ_tidy, aes(x = long, y = lat, fill = ..level.., alpha = ..level..), geom = "polygon") +
-  scale_fill_gradient(low = "yellow", high = "red") +
   coord_fixed(1.4) +
-  theme_bw()
+  theme(strip.background = element_rect(fill="white", color="white")) +
+  viridis::scale_color_viridis(discrete = TRUE)
 ```
 
