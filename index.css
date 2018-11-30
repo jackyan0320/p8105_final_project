@@ -92,3 +92,16 @@ hr.style-two {
     vertical-align: middle;
 }
 
+
+.plot_3_plot {
+    display: block;
+    width:100%;
+}
+.plot_3_description {
+    height: 100%;
+    width:100%;
+    display: block;
+    background: clear;
+    text-align: center;
+    vertical-align: middle;
+}
