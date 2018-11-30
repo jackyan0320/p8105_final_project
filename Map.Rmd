@@ -77,7 +77,7 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
 
 organ_tidy = 
   organ %>% 
-  mutate(registry_prop = registry_enrollments / x2012_census_population) %>% 
+  mutate(registry_prop = registry_enrollments / population_18_estimate) %>% 
   separate(location, c("lat", "long"), sep = ",") %>% 
   mutate(long = str_replace(long, "\\)", ""),
          long = as.numeric(long)) %>% 
