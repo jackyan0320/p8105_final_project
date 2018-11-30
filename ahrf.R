@@ -36,10 +36,14 @@ for (i in 1:length(keep_names)) {
 }
 
 keep_names <- data.frame(keep_names) %>% 
-  gather(keep, label, lulz:lulz.15) %>% 
+  gather(keep, label, lulz:lulz.17) %>% 
   select(label)
 
 data.table::setnames(ahrf, old = keep_var, new = keep_names$label)
+
+ahrf <- ahrf %>% 
+  janitor::clean_names() %>% 
+  filter(state_name == "New York")
 
 ahrf %>% 
   write_csv("data/ahrf_select_data.csv")
