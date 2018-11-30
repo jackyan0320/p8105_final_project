@@ -98,11 +98,14 @@ ggplot() +
 Plot the registry proportion with heat map
 ```{r}
 ggplot() + 
-  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "lightgrey") + 
+  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgrey") + 
   geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  stat_density2d(data = organ_tidy, aes(x = long, y = lat, fill = ..level.., alpha = ..level..), geom = "polygon") +
+  stat_density2d(data = organ_tidy, aes(x = long, y = lat, fill = ..level.., alpha = 0.25), size = 0.2, bins = 10, geom = "polygon") +
+  geom_density2d(data = organ_tidy, aes(x = long, y = lat), size = 0.3) +
   coord_fixed(1.4) +
-  theme(strip.background = element_rect(fill="white", color="white")) +
-  viridis::scale_color_viridis(discrete = TRUE)
+  theme_bw() +
+  viridis::scale_color_viridis(discrete = TRUE) +
+  scale_fill_gradient(low = "light blue", high = "dark blue") 
+  
 ```
 
