@@ -85,7 +85,7 @@ organ_tidy =
          lat = as.numeric(lat)) 
 ```
 
- 
+Plot the registry proportion as points reflecting by size.
 ```{r}
 ggplot() + 
   geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgray") + 
@@ -93,5 +93,16 @@ ggplot() +
   geom_point(data = organ_tidy, aes(x = long, y = lat, size = registry_prop)) +
   theme_void()
 
+```
+
+Plot the registry proportion with heat map
+```{r}
+ggplot() + 
+  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "lightgrey") + 
+  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
+  stat_density2d(data = organ_tidy, aes(x = long, y = lat, fill = ..level.., alpha = ..level..), geom = "polygon") +
+  scale_fill_gradient(low = "yellow", high = "red") +
+  coord_fixed(1.4) +
+  theme_bw()
 ```
 
