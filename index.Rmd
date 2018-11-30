@@ -5,6 +5,21 @@ output:
     css: index.css
 ---
 
+```{r include=FALSE, warning = FALSE, message = FALSE }
+library(tidyverse)
+library(ggplot2)
+donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
+  janitor::clean_names() %>%
+  rename(state = x)
+plot_1 = 
+ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
+  geom_point() +
+  geom_smooth()
+```
+
+
+
+
 
 <div class="cd-fixed-bg cd-fixed-bg--1"> 
   <h1 class = "front-page-title" style = "padding-top:20%">
@@ -20,18 +35,8 @@ output:
 
 
 
-```{r include=FALSE, warning = FALSE, message = FALSE }
-library(tidyverse)
-library(ggplot2)
-donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
-  janitor::clean_names() %>%
-  rename(state = x)
-plot_1 = 
-ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
-  geom_point() +
-  geom_smooth()
 
-```
+
 
 <div class = "plot_description">
   <h1> Plot #1 Title </h1>
@@ -44,8 +49,8 @@ ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, colo
 <section class="plotting_main">
   <div class = "plot_1_plot">
 ```{r, warning = FALSE, message = FALSE, echo=FALSE}
-  # plot part 
-  plot_1   
+  # plot part
+plot_1
 ```
   </div>
   
