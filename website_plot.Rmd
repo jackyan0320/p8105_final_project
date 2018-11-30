@@ -1,0 +1,24 @@
+---
+title: "website_plots"
+author: "Alina Levine"
+date: "November 30, 2018"
+output: html_document
+---
+
+
+#Plotting Eligible Percent Enrolled Versus Population
+
+```{r}
+organ %>% 
+  filter(date == as.Date("2018-09-01")) %>% 
+  filter(county!= "TOTAL NYS") %>%
+  plot_ly(x = ~population_18_estimate, y = ~eligible_population_enrolled, type = "scatter", mode = "markers",
+          alpha = 0.5, 
+          text = ~county)
+
+#If you have a county that has a higher population of people, a higher percent enrolled is more helpful in terms of number of organs than if a county has a lower population of people, so New York should be taking advantage of larger counties, but this plot shows that larger counties tend to have lower percentages of eligible people enrolled. 
+
+#smaller counties have higher percentages enrolled
+
+  
+```
