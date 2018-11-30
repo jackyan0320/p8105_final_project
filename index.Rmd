@@ -124,7 +124,6 @@ test 11
 plot_1   
 ```
 </div>
-  
 </section>
 
 
@@ -146,5 +145,5 @@ Image sources :
 <br/>
 1: healthconceptsltd.com
 <br/>
-2: http://www.thejakartapost.com
+2: thejakartapost.com
 
