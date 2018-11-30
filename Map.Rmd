@@ -92,7 +92,6 @@ ggplot() +
   geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
   geom_point(data = organ_tidy, aes(x = long, y = lat, size = registry_prop)) +
   theme_void()
-
 ```
 
 Plot the registry proportion with heat map
@@ -104,7 +103,6 @@ ggplot() +
   geom_density2d(data = organ_tidy, aes(x = long, y = lat), size = 0.3) +
   coord_fixed(1.4) +
   theme_bw() +
-  viridis::scale_color_viridis(discrete = TRUE) +
   scale_fill_gradient(low = "light blue", high = "dark blue") 
   
 ```
