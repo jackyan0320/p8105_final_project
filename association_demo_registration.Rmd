@@ -11,14 +11,13 @@ library(tidyverse)
 library(httr)
 ```
 
-```{r}
-# load demo data
-demo_df = read.csv("./data/ahrf_select_data.csv") %>% as.tibble()
 # load registration data
+
+```{r}
 organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %>% 
   content("parsed") %>%
   janitor::clean_names() %>%
-  filter(county != "Out of State" & county != "Unknown") %>%
+  filter(county != "Out of State" & county != "Unknown" & county != "TOTAL NYS") %>%
   mutate(year = as.character(year)) %>%
   mutate(month = as.character(month)) %>%
   mutate(dummy_day = as.character("01")) %>%
@@ -26,7 +25,58 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
   mutate(date = as.Date(date, "%Y-%m-%d")) %>% 
   rename(pop_2012 = "x2012_census_population")
 
+```
+
+# load demo data
+
+```{r}
+demo_ny = 
+  read.csv("./data/ahrf_select_data.csv") %>% as.tibble() %>% 
+  janitor::clean_names() %>% 
+  rename(county = county_name) %>% 
+  filter(state_name_abbreviation == "NY") 
+```
+
+```{r}
+organ_df_sep = 
+  organ %>% 
+  group_by(county, year) %>% 
+  arrange(county, date) %>% 
+  mutate(prop_reg_enroll = registry_enrollments / population_18_estimate) %>% 
+  filter(month == 9) 
+ 
+organ_df_sep %>% 
+  ggplot(aes(x = year, y = prop_reg_enroll, group = county, color = county)) +
+  geom_line()
+```
+
+```{r}
+organ_df_2015 = 
+  organ %>%
+  mutate(prop_reg_enroll = registry_enrollments / population_18_estimate) %>% 
+  filter(year == 2015, month == 9) 
+
+joined_df = inner_join(by = 'county', organ_df_2015, demo_ny)
+
+```
+
+# plotting
+
+```{r}
+variables_list = read_csv("./data/ahrf_selected_variables.csv")$label
+
+regression_df = 
+  joined_df %>% 
+  select( prop_reg_enroll, opo, 
+         standardzd_per_capita_medcr_cost_fee_for_service_2015:percent_educ_hlth_care_soc_asst_2011_15) 
+
+regression_df %>% 
+  ggplot(aes(x = prop_reg_enroll, y = medicare_enrollment_aged_tot_2015)) +
+  geom_point()
 
 
+  fit1 = lm(prop_reg_enroll ~ medicare_enrollment_aged_tot_2015, data = regression_df)
+summary(fit1)
+names(regression_df)
 ```
 
