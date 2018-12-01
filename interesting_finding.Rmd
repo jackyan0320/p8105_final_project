@@ -1,30 +1,58 @@
 ---
-title: "interesting_finding"
+title: ""
 output: 
   html_document:
     theme:  united
+    css: interesting_finding.css
+    number_sections: TRUE
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+#install.packages("DT")
+library(DT)
+library(tidyverse)
 ```
+# Big Finding # 1 {.tabset .tabset-fade .tabset-pills}
+Follow by small sections
 
-## R Markdown
+## First
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+## Second
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Third
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
 
-```{r cars}
-summary(cars)
+## Fouth
+      L
+## Fifth
+      L
+## Sixth
+      L
+## Seventh
+      L
+  
+
+
+<br />
+<br />
+<br />
+<br />
+
+# Data Table   
+
+<br />
+<br />
+
+```{r echo=FALSE}
+
+donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
+  janitor::clean_names() %>%
+  rename(state = x)
+
+datatable(donor_share_time_compare, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+      
+      

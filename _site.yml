@@ -3,9 +3,9 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Fun"
+    - text: "Fun Part"
       href: interesting_finding.html
-    - text: "About Data"
+    - text: "Data Part"
       href: website_data_page.html
     - text: "Complex Part"
       href: nick_page.html
