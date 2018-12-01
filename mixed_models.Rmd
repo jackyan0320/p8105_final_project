@@ -50,9 +50,14 @@ no_sp_model %>%
   knitr::kable(digits = 3, escape = F) %>% 
   kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
 
+organ_sp %>% 
+  ggplot(aes(x = total_days, y = eligible_population_enrolled)) + 
+  geom_jitter()
+
 add_predictions(organ_sp, no_sp_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
   geom_line() + 
+  geom_jitter(aes(x = total_days, y = eligible_population_enrolled), color = "black", alpha = 0.1) +
   viridis::scale_color_viridis(discrete = TRUE) + 
   theme(legend.position = "bottom")
 ```
@@ -174,7 +179,18 @@ add_predictions(organ_sp, all_sp_model) %>%
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
   geom_line() +
   viridis::scale_color_viridis(discrete = TRUE) + 
-  theme(legend.position = "bottom")
+  geom_vline(xintercept = 1491, linetype = "dashed") + 
+  geom_vline(xintercept = 2799, linetype = "dashed") + 
+  geom_vline(xintercept = 3088, linetype = "dashed") + 
+  annotate(geom = "text", x = 1720, y = 5, label = "2012") +
+  annotate(geom = "text", x = 2600, y = 5, label = "2016") +
+  annotate(geom = "text", x = 3300, y = 9, label = "2017") +
+  theme(legend.position = "bottom", 
+        legend.title = element_blank()) + 
+  guides(color = guide_legend(ncol = 2)) + 
+  labs(title = "Proportion of organ donors in NY counties", 
+       x = "Days since start of data collection",
+       y = "% enrolled as donors")
 ```
 
 Comparing nested models
