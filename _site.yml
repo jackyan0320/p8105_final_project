@@ -10,7 +10,7 @@ navbar:
     - text: "Complex Part"
       href: nick_page.html
     - icon: fab fa-youtube
-      href: https://github.com/jackyan0320/p8105_final_project
+      href: website_screen_cast.html
     - icon: fa-github fa-lg
       href: https://github.com/jackyan0320/p8105_final_project
 output:
