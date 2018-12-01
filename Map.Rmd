@@ -77,7 +77,6 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
 
 organ_tidy = 
   organ %>% 
-  mutate(registry_prop = registry_enrollments / population_18_estimate) %>% 
   separate(location, c("lat", "long"), sep = ",") %>% 
   mutate(long = str_replace(long, "\\)", ""),
          long = as.numeric(long)) %>% 
@@ -90,7 +89,7 @@ Plot the registry proportion as points reflecting by size.
 ggplot() + 
   geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgray") + 
   geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  geom_point(data = organ_tidy, aes(x = long, y = lat, size = registry_prop)) +
+  geom_point(data = organ_tidy, aes(x = long, y = lat, size = eligible_population_enrolled, color = eligible_population_enrolled)) +
   theme_void()
 ```
 
@@ -104,6 +103,13 @@ ggplot() +
   coord_fixed(1.4) +
   theme_bw() +
   scale_fill_gradient(low = "light blue", high = "dark blue") 
+  
+```
+
+```{r}
+ggplot() + 
+  geom_polygon(data = organ_tidy, aes(fill = eligible_population_enrolled, x = long, y = lat) ) + 
+  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") 
   
 ```
 
