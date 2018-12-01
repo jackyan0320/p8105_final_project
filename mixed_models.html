@@ -281,12 +281,17 @@ Time (year)
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>organ_sp %&gt;% 
+  ggplot(aes(x = total_days, y = eligible_population_enrolled)) + 
+  geom_jitter()</code></pre>
+<p><img src="mixed_models_files/figure-html/overall%20time-1.png" width="75%" /></p>
 <pre class="r"><code>add_predictions(organ_sp, no_sp_model) %&gt;% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
   geom_line() + 
+  geom_jitter(aes(x = total_days, y = eligible_population_enrolled), color = &quot;black&quot;, alpha = 0.1) +
   viridis::scale_color_viridis(discrete = TRUE) + 
   theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="mixed_models_files/figure-html/overall%20time-1.png" width="75%" /></p>
+<p><img src="mixed_models_files/figure-html/overall%20time-2.png" width="75%" /></p>
 <pre class="r"><code>sp_12_model &lt;- organ_sp %&gt;% 
   lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + (1 | county), data = .)
 
@@ -655,7 +660,18 @@ Time (year)
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
   geom_line() +
   viridis::scale_color_viridis(discrete = TRUE) + 
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
+  geom_vline(xintercept = 1491, linetype = &quot;dashed&quot;) + 
+  geom_vline(xintercept = 2799, linetype = &quot;dashed&quot;) + 
+  geom_vline(xintercept = 3088, linetype = &quot;dashed&quot;) + 
+  annotate(geom = &quot;text&quot;, x = 1720, y = 5, label = &quot;2012&quot;) +
+  annotate(geom = &quot;text&quot;, x = 2600, y = 5, label = &quot;2016&quot;) +
+  annotate(geom = &quot;text&quot;, x = 3300, y = 9, label = &quot;2017&quot;) +
+  theme(legend.position = &quot;bottom&quot;, 
+        legend.title = element_blank()) + 
+  guides(color = guide_legend(ncol = 2)) + 
+  labs(title = &quot;Proportion of organ donors in NY counties&quot;, 
+       x = &quot;Days since start of data collection&quot;,
+       y = &quot;% enrolled as donors&quot;)</code></pre>
 <p><img src="mixed_models_files/figure-html/all%20splines-1.png" width="75%" /></p>
 <p>Comparing nested models</p>
 <pre class="r"><code>mods &lt;- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)

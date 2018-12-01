@@ -1,0 +1,28 @@
+---
+title: "Data page"
+output: 
+  html_document:
+    theme:  united
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("DT")
+library(DT)
+library(tidyverse)
+```
+
+## This is a page we describe Our Data 
+
+
+
+## Sample data 
+```{r echo=FALSE}
+
+donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
+  janitor::clean_names() %>%
+  rename(state = x)
+
+datatable(donor_share_time_compare, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+      

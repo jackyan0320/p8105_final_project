@@ -75,6 +75,10 @@ plot examing the year 2012 to look for a change in percentage enrolled slope. It
 
 organ = read_csv("data/organ_spline.csv") 
 
+
+```
+
+#difference of slope 2012
 organ %>%
   filter(!(county %in% c("TOTAL NYS", "St Lawrence", "Cattauragus"))) %>%
   group_by(county) %>%
@@ -90,10 +94,6 @@ organ %>%
   theme_classic() +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   theme(legend.position="none")
-
-```
-
-#difference of slope 2012
 
 ```{r}
 
@@ -160,7 +160,7 @@ diff_diff_organ_2017 = organ %>%
 organ %>% 
   filter(date == as.Date("2018-09-01")) %>% 
   filter(county!= "TOTAL NYS") %>%
-  plot_ly(x = ~eligible_population_enrolled, y = ~population_18_estimate, type = "scatter", mode = "markers",
+  plot_ly(x = ~population_18_estimate, y = ~eligible_population_enrolled, type = "scatter", mode = "markers",
           alpha = 0.5, 
           text = ~county)
 

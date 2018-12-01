@@ -95,6 +95,7 @@ ggplot() +
 
 Plot the registry proportion with heat map
 ```{r}
+ny_state_map = 
 ggplot() + 
   geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgrey") + 
   geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
@@ -103,7 +104,7 @@ ggplot() +
   coord_fixed(1.4) +
   theme_bw() +
   scale_fill_gradient(low = "light blue", high = "dark blue") 
-  
+ny_state_map 
 ```
 
 ```{r}

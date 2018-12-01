@@ -25,7 +25,29 @@ keep_var <- names(keep_var)
 ahrf <- ahrf %>% 
   select(keep_var)
 
+<<<<<<< HEAD
 data.table::setnames(ahrf, old = keep_var, new = ahrf_selected$label)
+=======
+keep_names <- list()
+
+for (i in 1:ncol(ahrf)) {
+  keep_names[[i]] <- attr(ahrf[[i]], "label")
+}
+
+for (i in 1:length(keep_names)) {
+  names(keep_names)[i] <- "lulz"
+}
+
+keep_names <- data.frame(keep_names) %>% 
+  gather(keep, label, lulz:lulz.17) %>% 
+  select(label)
+
+data.table::setnames(ahrf, old = keep_var, new = keep_names$label)
+>>>>>>> 552cbca9b4d51bf3aa73d83ff51f914f9fa736e7
+
+ahrf <- ahrf %>% 
+  janitor::clean_names() %>% 
+  filter(state_name == "New York")
 
 ahrf %>% 
   write_csv("data/ahrf_select_data.csv")
