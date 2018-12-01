@@ -3,6 +3,8 @@ title: "nick_page"
 output: 
   html_document:
     theme:  united
+    includes:
+      after_body: footer.html
 ---
 
 ```{r setup, include=FALSE}

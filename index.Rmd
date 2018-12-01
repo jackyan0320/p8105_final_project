@@ -3,6 +3,8 @@ output:
   html_document:
     theme:  united
     css: index.css
+    includes:
+      after_body: footer.html
 ---
 
 ```{r}
@@ -202,9 +204,8 @@ state_map
 </div>
 
 
-Image sources : 
-<br/>
-1: healthconceptsltd.com
-<br/>
-2: thejakartapost.com
-
+<div style = "text-align: left;">
+  <h6>Image sources :</h6> 
+  <h6>1: healthconceptsltd.com</h6> 
+  <h6>2: thejakartapost.com</h6> 
+</div>

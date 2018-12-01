@@ -5,6 +5,8 @@ output:
     theme:  united
     css: interesting_finding.css
     number_sections: TRUE
+    includes:
+      after_body: footer.html
 ---
 
 ```{r setup, include=FALSE}

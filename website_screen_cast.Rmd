@@ -3,6 +3,8 @@ output:
   html_document:
     theme:  united
     css: website_screen_cast.css
+    includes:
+      after_body: footer.html
 ---
 
 ```{r setup, include=FALSE}

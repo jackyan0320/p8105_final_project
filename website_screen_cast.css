@@ -5,6 +5,10 @@
 }
 .btn-default {
     color: #2ecc71;
-    background-color: #123456;
+    background-color: #ffffff;
     border-color: #ffffff;
+}
+
+.nav.nav-pills{
+    background-color: #ffffff
 }
