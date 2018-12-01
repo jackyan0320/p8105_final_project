@@ -3,12 +3,14 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
-      href: about.html
-    - text: "Nick's Part"
-      href: about.html
-    - text: "Finding"
-      href: about.html
+    - text: "Fun"
+      href: interesting_finding.html
+    - text: "About Data"
+      href: website_data_page.html
+    - text: "Complex Part"
+      href: nick_page.html
+    - icon: fab fa-youtube
+      href: https://github.com/jackyan0320/p8105_final_project
     - icon: fa-github fa-lg
       href: https://github.com/jackyan0320/p8105_final_project
 output:
