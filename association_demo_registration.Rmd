@@ -12,28 +12,27 @@ library(httr)
 library(plotly)
 ```
 
-# Load registration data
+# Data manipulation
+
+## Load organ registration data
 
 ```{r}
 organ =
-read_csv("./data/organ.csv") %>% 
-  filter(county != "TOTAL NYS") %>% 
-  mutate(
-    reg_rate = registry_enrollments / population_18_estimate
-  )
+  read_csv("./data/organ.csv") %>% 
+  filter(county != "TOTAL NYS") 
 
-# read_csv("./data/state_donor_share.csv") 
 ```
 
-# Load demographic data
+## Load demographic data
 
 ```{r}
 demo_ny = 
   read.csv("./data/ahrf_select_data.csv") %>% as.tibble() %>% 
   janitor::clean_names() %>% 
-  rename(county = county_name) %>% 
-  filter(state_name_abbreviation == "NY") 
+  rename(county = county_name) 
 ```
+
+Note that there is a sudden leap in registry enrollments at 2017-10-1:
 
 ```{r}
 county_enrollment_plot = 
@@ -44,7 +43,7 @@ ggplotly(county_enrollment_plot)
 
 county_enrollment_rate_plot = 
   organ %>% 
-  ggplot(aes(x = date, y = reg_rate, color = county)) +
+  ggplot(aes(x = date, y = eligible_population_enrolled, color = county)) +
     geom_line() 
 ggplotly(county_enrollment_rate_plot)
 
@@ -58,17 +57,22 @@ ggplotly(population_enrollment_plot)
 # There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
 organ %>%
   # only use data after 2017-10-01
-  filter(date >'2017-10-01') %>% 
+  filter(date > '2017-10-01') %>% 
   mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ', registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
   plot_ly(x = ~population_18_estimate, y = ~registry_enrollments, type = "scatter", mode = "markers",
           #alpha = 0.5, 
           color = ~county,
           text = ~text_label)
 
-# use the data of Sep 2018
+
+```
+
+
+To fit a regression model, use the data of Sep 2018 only.
+
+```{r}
 organ_2018_sep =
   organ %>%
-  # only use data after 2017-10-01
   filter(date > '2017-10-01') %>% 
   filter(month == 9) 
 
@@ -80,9 +84,6 @@ organ_2018_sep %>%
   add_trace(x = ~population_18_estimate, y = fitted(fit), mode = "lines") %>%
   layout(showlegend = F)
 
-
-
-  
 ```
 
 This plot doesn't show much information.
@@ -92,54 +93,50 @@ organ_df_sep =
   organ %>% 
   group_by(county, year) %>% 
   arrange(county, date) %>% 
-  mutate(prop_reg_enroll = registry_enrollments / population_18_estimate) #%>% 
- # filter(month == 9) 
+  mutate(prop_reg_enroll = registry_enrollments / population_18_estimate)
  
 organ_df_sep %>% 
   ggplot(aes(x = year, y = prop_reg_enroll, group = county, color = county)) +
   geom_line()
 ```
 
-```{r}
-organ_2018_sep
-
-joined_df = inner_join(by = 'county', organ_2018_sep, demo_ny)
-
-```
-
-# plotting
+# combine the demo and donor datasets.
 
 ```{r}
 variables_list = read_csv("./data/ahrf_selected_variables.csv")$label
 
 regression_df = 
-  joined_df %>% 
-  select(opo, population_18_estimate, registry_enrollments,
+  inner_join(by = 'county', organ_2018_sep, demo_ny) %>% 
+  select(opo, population_18_estimate, registry_enrollments, eligible_population_enrolled,
          standardzd_per_capita_medcr_cost_fee_for_service_2015:percent_educ_hlth_care_soc_asst_2011_15) %>% 
-  mutate(opo = as.factor(opo)) %>% 
-  mutate(pop_total_2015 = pop_total_female_2015 + pop_total_male_2015,
-         male_proportion_2015 = pop_total_male_2015 / pop_total_2015,
-         white_proportion_2015 = (pop_white_female_2015 + pop_white_male_2015) / pop_total_2015,
-         black_proportion_2015 = (pop_black_african_amer_female_2015 + pop_black_african_amer_male_2015) / pop_total_2015
-         
-  )
-plot = 
-  regression_df %>% 
-  ggplot(aes(y = registry_enrollments, x = pop_total_2015)) +
-  geom_point()
-ggplotly(plot)
-# medicare enrollment is strongly associated with donor registration rate
-regression_df %>% 
-  lm(registry_enrollments ~  population_18_estimate + pop_total_2015 * medicare_enrollment_aged_tot_2015 + x_persons_25_w_4_yrs_college_2011_15+ male_proportion_2015 + white_proportion_2015 + black_proportion_2015 + percent_educ_hlth_care_soc_asst_2011_15 + opo , data = .) %>% # broom::tidy()
-  summary()
+  mutate(opo = fct_relevel(opo, "New York Organ Donor Network")) %>% 
+  mutate(
+    pop_total_2015 =  (pop_total_female_2015 + pop_total_male_2015) ,
+    percent_male_2015 = (100 * (pop_total_male_2015 / pop_total_2015)) %>% round(., digits = 2),
+    percent_white_2015 = (100 * (pop_white_female_2015 + pop_white_male_2015) / pop_total_2015) %>% round(., digits = 2),
+    percent_black_2015 = (100 * (pop_black_african_amer_female_2015 + pop_black_african_amer_male_2015) / pop_total_2015) %>% round(., digits = 2) ,
+    percent_asian_2015 = (100 * (pop_asian_female_2015 + pop_asian_male_2015) / pop_total_2015) %>% round(., digits = 2),
+    percent_medicare_enrollment_2015 = (medicare_enrollment_aged_tot_2015 * 100 / pop_total_2015) %>% round(., digits = 2)
+  ) %>% 
+  select(-(pop_total_male_2015:pop_asian_female_2015), -population_estimate_2016, -medicare_enrollment_aged_tot_2015) %>% 
+  select(eligible_population_enrolled, everything()) %>% 
+  rename(percent_enrolled = eligible_population_enrolled)
 
+# regression_df %>% View
+# regression_df %>% str
+```
 
+# Fit a model
 
-
-
+```{r}
 regression_df %>% 
   select(-opo) %>% 
-  cor() 
+  cor()
+lm(percent_enrolled ~ ., regression_df) %>% summary
+  # use 'New York Organ Donor Network' as the reference group for opo
+lm(percent_enrolled ~ opo + percent_medicare_enrollment_2015 + percent_male_2015 + percent_white_2015*percent_persons_25_w_hs_diploma_2011_15 + percent_persons_25_w_4_yrs_college_2011_15, data = regression_df) %>% 
+  summary()
 
 ```
+
 
