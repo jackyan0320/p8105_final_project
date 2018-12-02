@@ -29,13 +29,11 @@ library(ggplot2)
 library(ggmap)
 library(maps)
 library(mapdata)
+library(leaflet)
 library(httr)
-
-ny = map_data("state") %>% 
-  filter(region == "new york")
-
-ny_county = map_data("county")  %>% 
-  filter(region == "new york")
+library(plotly)
+#install.packages(c("leaflet", "plotly"))
+# use the API to pull data
 
 organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %>% 
   content("parsed") %>%
@@ -47,13 +45,62 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
   mutate(date = (str_c(year, month, dummy_day, sep = "-"))) %>%
   mutate(date = as.Date(date, "%Y-%m-%d"))
 
+# Tidy the data for plot the donation map
+
 organ_tidy = 
   organ %>% 
   separate(location, c("lat", "long"), sep = ",") %>% 
   mutate(long = str_replace(long, "\\)", ""),
          long = as.numeric(long)) %>% 
   mutate(lat = str_replace(lat, "\\(", ""),
-         lat = as.numeric(lat))
+         lat = as.numeric(lat)) 
+
+ny = map_data("state") %>% 
+  filter(region == "new york")
+
+ny_county = map_data("county")  %>% 
+  filter(region == "new york") %>% 
+  as.tibble() %>% 
+  rename(county = subregion)
+
+organ_df = 
+  organ_tidy %>% 
+  select(eligible_population_enrolled, county) %>% 
+  mutate(county = tolower(county)) %>% 
+  mutate(county = recode(county,  'cattauragus' = 'cattaraugus'))
+
+ny_county_combined = 
+  full_join(organ_df, ny_county, by = 'county')
+
+df_1 = organ_df %>% distinct(county) 
+df_2 = ny_county %>% distinct(county) 
+
+
+# Mapping
+
+p = 
+  ggplot() + 
+  geom_polygon(data = ny_county_combined, 
+               aes(x = long, 
+                   y = lat, 
+                   group = group, 
+                   fill = eligible_population_enrolled)) +
+  geom_path(data = ny_county_combined, 
+            aes(x = long, 
+                y = lat,
+                group = group), 
+            color = "white", 
+            size = 0.1) +
+  geom_text(data = organ_tidy, 
+            aes(x = long, 
+                y = lat, 
+                label = county),
+            size = 2.5,
+            color = "white") +
+  labs(x = 'Longitude', y = 'Latitude', title = 'map', fill = '% Enrollment') +
+  coord_equal() +
+  viridis::scale_fill_viridis(option = "viridis", direction = -1)
+
 
 state_map = 
   ggplot() + 
@@ -113,6 +160,79 @@ state_map =
   <h2>divider.</h2>
   <hr class = "style-two"></hr>
 </div>
+
+<div>
+ <section class="plotting_main">
+  <div class = "plot_1_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+  # plot part
+plot_1
+```
+  </div>
+  
+  <div class = "plot_1_description">
+      <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus.
+      </h1>
+  </div>
+</section>
+ <div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <br><br>
+  <h2>divider.</h2>
+  <hr class = "style-two"></hr>
+</div>
+ <div class = "plot_description">
+  <h1> Plot #2 Title </h1>
+  <h2> Plot description <h2>
+<div>
+ <section class="plotting_main">
+  <div class = "plot_2_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+  # plot part 
+  plot_1   
+```
+  </div>
+  
+<div class = "plot_2_description" style = "border:none">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
+</div>
+</section>
+ test 11
+#test 2
+#test 3
+ <div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <br><br>
+  <h2>divider.</h2>
+  <hr class = "style-two"></hr>
+</div>
+ # plot #3 
+ </section>
+ <div class = "plot_description">
+  <h1> Plot #3 Title </h1>
+  <h2> Plot description <h2>
+<div>
+ <section class="plotting_main">
+   
+<div class = "plot_3_description" style = "border:none">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
+</div>
+ <div class = "plot_3_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 10, fig.width = 10}
+# plot part 
+p
+state_map
+```
+</div>
+</section>
 
 
 <div class="embed-responsive embed-responsive-16by9">
