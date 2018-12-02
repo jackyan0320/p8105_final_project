@@ -65,6 +65,13 @@ hr.style-two {
     border:0px; 
 }
 
+.single_map_plot{
+  display: block
+  width:100%;
+}
+
+
+
 .plot_1_plot {
     float: left;
     width:60%;
