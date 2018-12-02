@@ -1,5 +1,5 @@
 ---
-title: "Data page"
+title: ""
 output: 
   html_document:
      theme:  united
@@ -13,8 +13,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(DT)
 library(tidyverse)
 ```
+### About the data
+This is a page we describe Our Data. For our exploratory study we used two datasets.
 
-## This is a page we describe Our Data 
+* Data from [New York State organ donation data](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE) is used extract registry porportion of each county to do the model fitting.
+
+* Data from ... is used to extract the demographic data of the New York State.
+
+The following chart is a brief overview of the New York State organ donation data.
 ```{r ,include=FALSE}
 organ = read_csv("data/organ.csv")
 organ_tidy = 
@@ -23,12 +29,18 @@ organ_tidy =
   mutate(long = str_replace(long, "\\)", ""),
          long = as.numeric(long)) %>% 
   mutate(lat = str_replace(lat, "\\(", ""),
-         lat = as.numeric(lat))
+         lat = as.numeric(lat)) %>% 
+  select(date, county, eligible_population_enrolled, population_18_estimate, registry_enrollments, opo) %>% 
+  rename(registry_proportion = eligible_population_enrolled) %>% 
+  mutate(opo = as.factor(opo),
+         county = as.factor(county)) %>% 
+  rename(OPO = opo)
 ```
+<div class="cd-fixed-bg cd-fixed-bg--1"> 
+</br>
+</div>
 
-
-
-## Sample data 
+ 
 ```{r echo=FALSE, }
 
 donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
@@ -37,4 +49,4 @@ donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
 
 datatable(organ_tidy, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T, autoWidth = TRUE) )
 ```
-      
+     

@@ -57,15 +57,15 @@ ny_county = map_data("county")  %>%
 
 organ_df = 
   organ_tidy %>% 
+  filter(date == "2018-09-01") %>% 
   select(eligible_population_enrolled, county) %>% 
   mutate(county = tolower(county)) %>% 
   mutate(county = recode(county,  'cattauragus' = 'cattaraugus'))
 
+
 ny_county_combined = 
 full_join(organ_df, ny_county, by = 'county')
 
-df_1 = organ_df %>% distinct(county) 
-df_2 = ny_county %>% distinct(county) 
 
 ```
 
@@ -93,7 +93,7 @@ ggplot() +
   coord_equal() +
   viridis::scale_fill_viridis(option = "magma", direction = -1)
 
-ggplotly(p)
+p
 
 ```
 
