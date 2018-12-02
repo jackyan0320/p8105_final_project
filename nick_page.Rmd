@@ -4,6 +4,7 @@ output:
   html_document:
     code_folding: hide
     theme:  united
+    css: nick_page.css
     includes:
       after_body: footer.html
 ---
@@ -29,7 +30,6 @@ organ_sp <- read_csv("data/organ_spline.csv") %>%
                            "Finger Lakes Donor Recovery Network"))
 ```
 
-Random intercept models
 
 ```{r overall time, include=FALSE}
 no_sp_model <- organ_sp %>% 
@@ -52,7 +52,7 @@ tbl_no_sp_model =
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3, escape = F) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 
 plot_random_model = 
   organ_sp %>% 
@@ -72,6 +72,118 @@ plot_random_model_w_pred =
 sp_12_model <- organ_sp %>% 
   lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + (1 | county), data = .)
 
+
+
+plot_spline_2012 = 
+  add_predictions(organ_sp, sp_12_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
+```
+
+```{r spline 2016, include=FALSE}
+
+```
+
+```{r spline 2017, include=FALSE}
+
+```
+
+```{r all splines, include=FALSE}
+
+```
+
+
+<div class = "plot_description">
+  <h1>Fantastic Plots</h1>
+  <h2>Mixed Models and Where to Find Them </h2>
+</div>
+
+<div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <br><br>
+  <h2></h2>
+  <hr class = "style-two"></hr>
+</div>
+<div class = "plot_description">
+  <h1> Random Model </h1>
+  <h2> Plot description <h2>
+<div>
+### Random Model
+<div class="plotting_main">
+  <div class = "plot_1_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+  # plot part
+plot_random_model
+plot_random_model_w_pred
+```
+  </div>
+  
+  <div class = "plot_1_description">
+      <h2 style="font-size: 1.5em;">top plot description</h2>
+
+##bottom plot description
+      <div style= "text-align:left">
+```{r}
+tbl_no_sp_model = 
+  no_sp_model %>% 
+  broom::tidy() %>% 
+  filter(term == "total_days") %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "$\\beta$" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3, escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
+tbl_no_sp_model
+```
+      </div>
+  </div>
+  
+</div>
+
+
+
+<div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <br><br>
+  <h2>Spline 2012</h2>
+  <hr class = "style-two"></hr>
+</div>
+
+<div class = "plot_description">
+  <h1> Spline 2012 </h1>
+  <h2> Plot description <h2>
+<div>
+
+<section class="plotting_main">
+  <div class = "plot_2_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+  # plot part 
+plot_spline_2012
+```
+  </div>
+  
+<div class = "plot_2_description" style = "border:none">
+      describe plot 2012 
+<div class = "lm_table">
+```{r}
 tbl_spline_2012 = 
   sp_12_model %>% 
   broom::tidy() %>% 
@@ -89,17 +201,48 @@ tbl_spline_2012 =
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
-
-plot_spline_2012 = 
-  add_predictions(organ_sp, sp_12_model) %>% 
-  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
-  geom_line() +
-  viridis::scale_color_viridis(discrete = TRUE) + 
-  theme(legend.position = "bottom")
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
+tbl_spline_2012
 ```
+</div>
+</div>
+</section>
 
-```{r spline 2016, include=FALSE}
+
+
+
+<div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <br><br>
+  <h2>divider.</h2>
+  <hr class = "style-two"></hr>
+</div>
+
+
+Spline 2016  
+
+
+
+
+<div class = "plot_description">
+  <h1> Spline 2016 2017 </h1>
+  <h2> Plot description <h2>
+<div>
+
+<section class="plotting_main">
+
+  
+<div class = "plot_3_description" style = "border:none">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
+</div>
+
+<div class = "plot_3_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+# plot part 
 sp_16_model <- organ_sp %>% 
   lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + opo + (1 | county), data = .) 
 
@@ -120,7 +263,7 @@ tbl_spline_2016 =
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 
 plot_spline_2016 = 
   add_predictions(organ_sp, sp_16_model) %>% 
@@ -128,9 +271,14 @@ plot_spline_2016 =
   geom_line() + 
   viridis::scale_color_viridis(discrete = TRUE) + 
   theme(legend.position = "bottom")
+plot_spline_2016
+tbl_spline_2016
 ```
+</div>
 
-```{r spline 2017, include=FALSE}
+<div class = "plot_3_1_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+# plot part 
 sp_17_model <- organ_sp %>% 
   lmer(eligible_population_enrolled ~ total_days + year_sp_2017 + opo + (1 | county), data = ., 
        REML = FALSE)
@@ -152,7 +300,7 @@ tbl_spline_2017 =
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 
 plot_spline_2017 = 
   add_predictions(organ_sp, sp_17_model) %>% 
@@ -160,9 +308,46 @@ plot_spline_2017 =
   geom_line() +
   viridis::scale_color_viridis(discrete = TRUE) + 
   theme(legend.position = "bottom")
+plot_spline_2017
+tbl_spline_2017 
 ```
+</div>
+</section>
 
-```{r all splines, include=FALSE}
+
+
+<div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <br><br>
+  <h2>divider.</h2>
+  <hr class = "style-two"></hr>
+</div>
+
+
+Spline all
+
+
+
+
+<div class = "plot_description">
+  <h1> Spline all </h1>
+  <h2> Plot description <h2>
+<div>
+
+<section class="plotting_main">
+
+  
+<div class = "plot_3_description" style = "border:none">
+      describe
+</div>
+
+<div class = "plot_4_plot">
+```{r, warning = FALSE, message = FALSE, echo=FALSE}
+# plot part 
 all_sp_model <- organ_sp %>% 
   lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + year_sp_2016 + year_sp_2017 + opo + 
          (1 | county), data = ., REML = FALSE)
@@ -186,7 +371,7 @@ tbl_spline_all =
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped")) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16) %>% 
   footnote(general = "Splines correspond with dates in which 3 major policy changes were inacted. \nEstimates are adjusted for organ donor organization")
 
 plot_spline_all = 
@@ -206,12 +391,27 @@ plot_spline_all =
   labs(title = "Proportion of organ donors in NY counties", 
        x = "Days since start of data collection",
        y = "% enrolled as donors")
+plot_spline_all
+tbl_spline_all
 ```
+</div>
+</section>
 
 
 
-plots
-```{r}
+
+
+
+
+
+
+
+
+
+
+
+
+```{r plots, include=FALSE, eval=FALSE}
 plot_random_model
 plot_random_model_w_pred
 tbl_no_sp_model
@@ -233,7 +433,7 @@ tbl_spline_all
 
 Comparing nested models
 
-```{r}
+```{r , include=FALSE, eval=FALSE}
 mods <- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)
 
 names(mods) <- c("no_sp_model", "sp_12_model", "sp_16_model", "sp_17_model", "all_sp_model")
@@ -254,7 +454,7 @@ map(mods, rmse_fun) %>%
   rename("Model" = model, 
          "RMSE" = rmse) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 
 options(knitr.kable.NA = '')
 
@@ -266,7 +466,7 @@ anova(no_sp_model, sp_17_model) %>%
          p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>% 
   knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
                escape = F) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 
 anova(no_sp_model, all_sp_model) %>% 
   broom::tidy() %>% 
@@ -276,7 +476,7 @@ anova(no_sp_model, all_sp_model) %>%
          p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>%
   knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
                escape = F) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 
 anova(sp_17_model, all_sp_model) %>% 
   broom::tidy() %>% 
@@ -286,6 +486,6 @@ anova(sp_17_model, all_sp_model) %>%
          p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>%
   knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
                escape = F) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"), font_size = 16)
 ```
 

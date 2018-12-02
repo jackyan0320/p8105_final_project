@@ -1,0 +1,127 @@
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+
+
+.container-fluid.main-container{
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  padding:0;
+  background-color: white;
+}
+
+
+.cd-fixed-bg {  
+  min-height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width:100%;
+  text-align: center;
+}
+
+
+
+.cd-fixed-bg.cd-fixed-bg--1 {
+  background-image: url("website_img/hand_holding.jpg");
+  padding: 1px 1px 1px;
+}
+
+.cd-fixed-bg.cd-fixed-bg--2 {
+  background-image: url("website_img/organ_donation.jpg");
+  padding: 1px 1px 1px;
+}
+
+.cd-scrolling-bg {
+  min-height: 100%;
+}
+
+.front-page-title{
+  font-size: 6em;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+.index_section {
+  background-color: red;
+}
+
+.plot_description {
+  text-align: center;
+}
+
+.plotting_main {
+    width: 90%;
+    background: clear;
+    margin: auto;
+    padding: 10px;
+    border:0px; 
+}
+
+.plot_1_plot {
+    float: left;
+    width:60%;
+}
+.plot_1_description {
+    height: 100%;
+    width:40%;
+    float: right;
+    background: clear;
+    text-align: center;
+    vertical-align: middle;
+}
+.plot_1_2_description {
+    height: 100%;
+    width:40%;
+    float: right;
+    background: clear;
+    text-align: center;
+    vertical-align: middle;
+}
+  
+  
+.plot_2_plot {
+    float: right;
+    width:60%;
+}
+.plot_2_description {
+    height: 100%;
+    width:40%;
+    float: left;
+    background: clear;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+.plot_3_plot {
+    float: left;
+    width:50%;
+}
+.plot_3_1_plot {
+    float: right;
+    width:50%;
+}
+.plot_3_description {
+    height: 100%;
+    width:100%;
+    display: block;
+    background: clear;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.plot_4_plot {
+    display:block;
+    width:100%;
+}
+.lm_table {
+  text-align:left;
+}
