@@ -36,7 +36,7 @@ demo_ny =
 # EDA
 ## Data inspection
 
-The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset. 
+####The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset. 
 
 ```{r}
 county_enrollment_plot = 
