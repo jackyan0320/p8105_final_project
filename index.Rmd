@@ -91,7 +91,7 @@ state_map =
 <div class = "plot_description">
   <h1> Plot #1 Title </h1>
   <h2>sub description </h2>
-  <h4  style="margin-left: 60%;"> [For Detailed Findings](interesting_finding.html)<a href= "interesting_finding.html"> <i class="fab fa-wpexplorer"></i> </a> <h4>
+  <h4  style="margin-left: 60%;"> [READ MORE](interesting_finding.html)<a href= "interesting_finding.html"> <i class="fab fa-wpexplorer"></i> </a> <h4>
   
 <div>
 

@@ -1,32 +1,291 @@
 ---
-title: "nick_page"
+title: ""
 output: 
   html_document:
+    code_folding: hide
     theme:  united
     includes:
       after_body: footer.html
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, dpi = 300, out.width = "75%")
+
+library(tidyverse)
+library(lme4)
+library(modelr)
+library(kableExtra)
+#using data cleaned in api_pull.rmd file
+
+theme_set(theme_bw())
+
+organ_sp <- read_csv("data/organ_spline.csv") %>% 
+  filter(!(county %in% c("TOTAL NYS", "Cattauragus", "St Lawrence"))) %>% 
+  mutate(opo = as_factor(opo), 
+         opo = fct_relevel(opo, 
+                           "New York Organ Donor Network", 
+                           "Center for Donation and Transplant in New York", 
+                           "UNYTS", 
+                           "Finger Lakes Donor Recovery Network"))
 ```
 
-## R Markdown
+Random intercept models
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r overall time, include=FALSE}
+no_sp_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + opo + (1 | county), data = ., 
+       REML = FALSE)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+tbl_no_sp_model = 
+  no_sp_model %>% 
+  broom::tidy() %>% 
+  filter(term == "total_days") %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "$\\beta$" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3, escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
 
-```{r cars}
-summary(cars)
+plot_random_model = 
+  organ_sp %>% 
+  ggplot(aes(x = total_days, y = eligible_population_enrolled)) + 
+  geom_jitter()
+
+plot_random_model_w_pred = 
+  add_predictions(organ_sp, no_sp_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() + 
+  geom_jitter(aes(x = total_days, y = eligible_population_enrolled), color = "black", alpha = 0.1) +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
 ```
 
-## Including Plots
+```{r spline 2012, include=FALSE}
+sp_12_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + (1 | county), data = .)
 
-You can also embed plots, for example:
+tbl_spline_2012 = 
+  sp_12_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2012")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2012", "2012 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "$\\beta$" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+plot_spline_2012 = 
+  add_predictions(organ_sp, sp_12_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r spline 2016, include=FALSE}
+sp_16_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2016 + opo + (1 | county), data = .) 
+
+tbl_spline_2016 = 
+  sp_16_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2016")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2016", "2016 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "$\\beta$" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+
+plot_spline_2016 = 
+  add_predictions(organ_sp, sp_16_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() + 
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
+```
+
+```{r spline 2017, include=FALSE}
+sp_17_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2017 + opo + (1 | county), data = ., 
+       REML = FALSE)
+
+tbl_spline_2017 =
+  sp_17_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2017")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2017", "2017 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "$\\beta$" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+
+plot_spline_2017 = 
+  add_predictions(organ_sp, sp_17_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  theme(legend.position = "bottom")
+```
+
+```{r all splines, include=FALSE}
+all_sp_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + year_sp_2016 + year_sp_2017 + opo + 
+         (1 | county), data = ., REML = FALSE)
+
+tbl_spline_all = 
+  all_sp_model %>% 
+  broom::tidy() %>% 
+  filter(term %in% c("total_days", "year_sp_2012", "year_sp_2016", "year_sp_2017")) %>% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %>% 
+  mutate(term = ifelse(term == "total_days", "Time (year)", term), 
+         term = ifelse(term == "year_sp_2012", "2012 spline", term), 
+         term = ifelse(term == "year_sp_2016", "2016 spline", term), 
+         term = ifelse(term == "year_sp_2017", "2017 spline", term)) %>% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %>% 
+  rename("Term" = term, 
+         "$\\beta$" = estimate_year, 
+         "Standard error" = se_year, 
+         "Lower bound" = ci_low, 
+         "Upper bound" = ci_upper) %>% 
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped")) %>% 
+  footnote(general = "Splines correspond with dates in which 3 major policy changes were inacted. \nEstimates are adjusted for organ donor organization")
+
+plot_spline_all = 
+  add_predictions(organ_sp, all_sp_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  geom_vline(xintercept = 1491, linetype = "dashed") + 
+  geom_vline(xintercept = 2799, linetype = "dashed") + 
+  geom_vline(xintercept = 3088, linetype = "dashed") + 
+  annotate(geom = "text", x = 1720, y = 5, label = "2012") +
+  annotate(geom = "text", x = 2600, y = 5, label = "2016") +
+  annotate(geom = "text", x = 3300, y = 9, label = "2017") +
+  theme(legend.position = "bottom", 
+        legend.title = element_blank()) + 
+  guides(color = guide_legend(ncol = 2)) + 
+  labs(title = "Proportion of organ donors in NY counties", 
+       x = "Days since start of data collection",
+       y = "% enrolled as donors")
+```
+
+
+
+plots
+```{r}
+plot_random_model
+plot_random_model_w_pred
+tbl_no_sp_model
+
+plot_spline_2012
+tbl_spline_2012
+  
+plot_spline_2016
+tbl_spline_2016
+
+plot_spline_2017
+tbl_spline_2017
+
+plot_spline_all
+tbl_spline_all
+
+```
+
+
+Comparing nested models
+
+```{r}
+mods <- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)
+
+names(mods) <- c("no_sp_model", "sp_12_model", "sp_16_model", "sp_17_model", "all_sp_model")
+
+rmse_fun <- function(model) {
+  rmse(model, organ_sp)
+}
+
+map(mods, rmse_fun) %>% 
+  as_tibble() %>% 
+  gather(key = "model", 
+         value = "rmse") %>% 
+  mutate(model = ifelse(model == "no_sp_model", "No spline", model), 
+         model = ifelse(model == "sp_12_model", "2012 spline", model), 
+         model = ifelse(model == "sp_16_model", "2016 spline", model), 
+         model = ifelse(model == "sp_17_model", "2017 spline", model), 
+         model = ifelse(model == "all_sp_model", "All splines", model)) %>% 
+  rename("Model" = model, 
+         "RMSE" = rmse) %>% 
+  knitr::kable(digits = 3) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+
+options(knitr.kable.NA = '')
+
+anova(no_sp_model, sp_17_model) %>% 
+  broom::tidy() %>% 
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %>% 
+  mutate(term = ifelse(term == "no_sp_model", "No spline", term), 
+         term = ifelse(term == "sp_17_model", "2017 spline", term), 
+         p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>% 
+  knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
+               escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+
+anova(no_sp_model, all_sp_model) %>% 
+  broom::tidy() %>% 
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %>% 
+  mutate(term = ifelse(term == "no_sp_model", "No spline", term), 
+         term = ifelse(term == "all_sp_model", "All splines", term), 
+         p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>%
+  knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
+               escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+
+anova(sp_17_model, all_sp_model) %>% 
+  broom::tidy() %>% 
+  select(term, AIC, logLik, statistic, Chi.Df, p.value) %>% 
+  mutate(term = ifelse(term == "sp_17_model", "2017 Spline", term), 
+         term = ifelse(term == "all_sp_model", "All splines", term), 
+         p.value = ifelse(p.value < 0.001, "< 0.001", p.value)) %>%
+  knitr::kable(col.names = c("Model", "AIC", "Log-like", "$\\chi^2$", "df", "p-value"), 
+               escape = F) %>% 
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+```
+
