@@ -14,50 +14,10 @@ library(maps)
 library(mapdata)
 library(leaflet)
 library(httr)
+library(plotly)
 ```
 
-```{r}
-ny = map_data("state") %>% 
-  filter(region == "new york")
-
-ny_county = map_data("county")  %>% 
-  filter(region == "new york")
-
-```
-
-```{r}
-ggplot() + geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "gray") + 
-  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  theme_bw()
-  
-
-ggplot() + 
-  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgray") + 
-  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  theme_void()
-```
-
-```{r}
-# Trying to use library leaflet to make it interactive
-leaflet(ny) %>% 
-  addPolylines(lng = ny$long, lat = ny$lat, group = ny$order) %>% 
-  addPolygons(lng = ny$long, lat = ny$lat, group = ny$order, color = "#444444", weight = 1, smoothFactor = 0.5,
-    opacity = 1.0, fillOpacity = 0.5,
-    
-    highlightOptions = highlightOptions(color = "white", weight = 2,
-      bringToFront = TRUE))
-  
-```
-
-
-
-
-```{r}
-# Read variable names
-variable_names = 
-read_csv("./data/ahrf_selected_variables.csv") %>% 
-  janitor::clean_names() 
-```
+# Data loading
 
 ```{r}
 # use the API to pull data
@@ -77,7 +37,6 @@ organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %
 
 organ_tidy = 
   organ %>% 
-  mutate(registry_prop = registry_enrollments / population_18_estimate) %>% 
   separate(location, c("lat", "long"), sep = ",") %>% 
   mutate(long = str_replace(long, "\\)", ""),
          long = as.numeric(long)) %>% 
@@ -85,14 +44,59 @@ organ_tidy =
          lat = as.numeric(lat)) 
 ```
 
-Plot the registry proportion as points reflecting by size.
+# Mapping
+
 ```{r}
-ggplot() + 
-  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgray") + 
-  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  geom_point(data = organ_tidy, aes(x = long, y = lat, size = registry_prop)) +
-  theme_void()
+ny = map_data("state") %>% 
+  filter(region == "new york")
+
+ny_county = map_data("county")  %>% 
+  filter(region == "new york") %>% 
+  as.tibble() %>% 
+  rename(county = subregion)
+
+organ_df = 
+  organ_tidy %>% 
+  select(eligible_population_enrolled, county) %>% 
+  mutate(county = tolower(county)) %>% 
+  mutate(county = recode(county,  'cattauragus' = 'cattaraugus'))
+
+ny_county_combined = 
+full_join(organ_df, ny_county, by = 'county')
+
+df_1 = organ_df %>% distinct(county) 
+df_2 = ny_county %>% distinct(county) 
+
 ```
+
+```{r}
+p = 
+ggplot() + 
+  geom_polygon(data = ny_county_combined, 
+               aes(x = long, 
+                   y = lat, 
+                   group = group, 
+                   fill = eligible_population_enrolled)) +
+  geom_path(data = ny_county_combined, 
+            aes(x = long, 
+                y = lat,
+                group = group), 
+            color = "white", 
+            size = 0.1) +
+  geom_text(data = organ_tidy, 
+            aes(x = long, 
+                y = lat, 
+                label = county),
+            size = 2.5,
+            color = "white") +
+  labs(x = 'Longitude', y = 'Latitude', title = 'map', fill = '% Enrollment') +
+  coord_equal() +
+  viridis::scale_fill_viridis(option = "magma", direction = -1)
+
+ggplotly(p)
+
+```
+
 
 Plot the registry proportion with heat map
 ```{r}

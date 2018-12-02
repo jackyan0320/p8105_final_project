@@ -173,7 +173,8 @@ all_sp_model %>%
          "Lower bound" = ci_low, 
          "Upper bound" = ci_upper) %>% 
   knitr::kable(digits = 3) %>% 
-  kable_styling(full_width = F, bootstrap_options = c("hover", "striped"))
+  kable_styling(full_width = F, bootstrap_options = c("hover", "striped")) %>% 
+  footnote(general = "Splines correspond with dates in which 3 major policy changes were inacted. \nEstimates are adjusted for organ donor organization")
 
 add_predictions(organ_sp, all_sp_model) %>% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 

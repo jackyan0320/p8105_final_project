@@ -6,13 +6,13 @@ ahrf <- read_sas("C:/Users/niwi8/OneDrive - cumc.columbia.edu/Practicum/opioid_p
 
 ahrf_selected <- read_csv("data/ahrf_selected_variables.csv")
   
-check_label <- function(x) {
+check_label <- function(x){
   if (attr(ahrf[[x]], "label") %in% ahrf_selected$label) {
     return(x)
   }
 }
 
-check_label("f1529815")
+# check_label("f1529815")
 
 keep_var <- list()
 
@@ -25,6 +25,9 @@ keep_var <- names(keep_var)
 ahrf <- ahrf %>% 
   select(keep_var)
 
+<<<<<<< HEAD
+data.table::setnames(ahrf, old = keep_var, new = ahrf_selected$label)
+=======
 keep_names <- list()
 
 for (i in 1:ncol(ahrf)) {
@@ -40,6 +43,7 @@ keep_names <- data.frame(keep_names) %>%
   select(label)
 
 data.table::setnames(ahrf, old = keep_var, new = keep_names$label)
+>>>>>>> 552cbca9b4d51bf3aa73d83ff51f914f9fa736e7
 
 ahrf <- ahrf %>% 
   janitor::clean_names() %>% 

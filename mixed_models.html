@@ -190,11 +190,17 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="about.html">About</a>
+  <a href="interesting_finding.html">Fun Part</a>
 </li>
 <li>
-  <a href="mailto:&lt;you@youremail.com&gt;">
-    <span class="fa fa-envelope fa-lg"></span>
+  <a href="website_data_page.html">Data Part</a>
+</li>
+<li>
+  <a href="nick_page.html">Complex Part</a>
+</li>
+<li>
+  <a href="https://github.com/jackyan0320/p8105_final_project">
+    <span class="fab fa fab fa-youtube"></span>
      
   </a>
 </li>
@@ -564,7 +570,8 @@ all_sp_model %&gt;%
          &quot;Lower bound&quot; = ci_low, 
          &quot;Upper bound&quot; = ci_upper) %&gt;% 
   knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;)) %&gt;% 
+  footnote(general = &quot;Splines correspond with dates in which 3 major policy changes were inacted. \nEstimates are adjusted for organ donor organization&quot;)</code></pre>
 <table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -655,6 +662,18 @@ Time (year)
 </td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> Splines correspond with dates in which 3 major policy changes were inacted. <br>Estimates are adjusted for organ donor organization
+</td>
+</tr>
+</tfoot>
 </table>
 <pre class="r"><code>add_predictions(organ_sp, all_sp_model) %&gt;% 
   ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
