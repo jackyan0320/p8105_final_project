@@ -10,20 +10,21 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(httr)
 library(plotly)
+library(HH)
 ```
 
 # Data manipulation
 
-## Load organ registration data
+### Load organ registration data
 
-```{r}
+```{r, message = F}
 organ =
   read_csv("./data/organ.csv") %>% 
   filter(county != "TOTAL NYS") 
 
 ```
 
-## Load demographic data
+### Load demographic data
 
 ```{r}
 demo_ny = 
@@ -32,41 +33,51 @@ demo_ny =
   rename(county = county_name) 
 ```
 
-Note that there is a sudden leap in registry enrollments at 2017-10-1:
+# EDA
+## Data inspection
+
+The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset. 
 
 ```{r}
 county_enrollment_plot = 
   organ %>% 
   ggplot(aes(x = date, y = registry_enrollments, color = county)) +
-    geom_line() 
-ggplotly(county_enrollment_plot)
+    geom_line() +
+    labs(x = "Date", 
+         y = "Persons enrolled", 
+         title = "Registry enrollments across time")
 
+ggplotly(county_enrollment_plot)
+```
+
+This plot shows the trend of registration rate from 2008 to 2018 for counties in New York State. Note that the registration rates for Counties Cattauragus and St Lawrence were not updated throughout the years.
+
+```{r}
 county_enrollment_rate_plot = 
   organ %>% 
   ggplot(aes(x = date, y = eligible_population_enrolled, color = county)) +
-    geom_line() 
+    geom_line() +
+    labs(x = "Date", 
+         y = "% Persons enrolled", 
+         title = "Registration rate across time")
 ggplotly(county_enrollment_rate_plot)
-
-population_enrollment_plot =  
-  organ %>% 
-  ggplot(aes(y = registry_enrollments, x = population_18_estimate, color = county)) +
-    geom_point() 
-ggplotly(population_enrollment_plot)
+```
 
 
+```{r}
 # There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
 organ %>%
   # only use data after 2017-10-01
-  filter(date > '2017-10-01') %>% 
-  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ', registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
+  filter(date == '2018-09-01') %>% 
+  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ',  registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
   plot_ly(x = ~population_18_estimate, y = ~registry_enrollments, type = "scatter", mode = "markers",
-          #alpha = 0.5, 
           color = ~county,
           text = ~text_label)
 
 
 ```
 
+# Regression model
 
 To fit a regression model, use the data of Sep 2018 only.
 
@@ -76,38 +87,17 @@ organ_2018_sep =
   filter(date > '2017-10-01') %>% 
   filter(month == 9) 
 
-fit = lm(registry_enrollments ~ population_18_estimate, data = organ_2018_sep)
-organ_2018_sep %>% 
-  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ', registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
-  plot_ly(x = ~population_18_estimate, y = ~registry_enrollments, mode = "markers") %>% 
-  add_markers(y = ~registry_enrollments) %>% 
-  add_trace(x = ~population_18_estimate, y = fitted(fit), mode = "lines") %>%
-  layout(showlegend = F)
 
 ```
 
-This plot doesn't show much information.
-
-```{r, eval = F}
-organ_df_sep = 
-  organ %>% 
-  group_by(county, year) %>% 
-  arrange(county, date) %>% 
-  mutate(prop_reg_enroll = registry_enrollments / population_18_estimate)
- 
-organ_df_sep %>% 
-  ggplot(aes(x = year, y = prop_reg_enroll, group = county, color = county)) +
-  geom_line()
-```
-
-# combine the demo and donor datasets.
+# Combine the demo and donor datasets.
 
 ```{r}
 variables_list = read_csv("./data/ahrf_selected_variables.csv")$label
 
 regression_df = 
   inner_join(by = 'county', organ_2018_sep, demo_ny) %>% 
-  select(opo, population_18_estimate, registry_enrollments, eligible_population_enrolled,
+  dplyr::select(opo, population_18_estimate, registry_enrollments, eligible_population_enrolled,
          standardzd_per_capita_medcr_cost_fee_for_service_2015:percent_educ_hlth_care_soc_asst_2011_15) %>% 
   mutate(opo = fct_relevel(opo, "New York Organ Donor Network")) %>% 
   mutate(
@@ -118,25 +108,53 @@ regression_df =
     percent_asian_2015 = (100 * (pop_asian_female_2015 + pop_asian_male_2015) / pop_total_2015) %>% round(., digits = 2),
     percent_medicare_enrollment_2015 = (medicare_enrollment_aged_tot_2015 * 100 / pop_total_2015) %>% round(., digits = 2)
   ) %>% 
-  select(-(pop_total_male_2015:pop_asian_female_2015), -population_estimate_2016, -medicare_enrollment_aged_tot_2015) %>% 
-  select(eligible_population_enrolled, everything()) %>% 
+  dplyr::select(-(pop_total_male_2015:pop_asian_female_2015), -population_estimate_2016, -medicare_enrollment_aged_tot_2015) %>% 
+  dplyr::select(eligible_population_enrolled, everything()) %>% 
   rename(percent_enrolled = eligible_population_enrolled)
 
-# regression_df %>% View
-# regression_df %>% str
 ```
 
 # Fit a model
 
 ```{r}
-regression_df %>% 
-  select(-opo) %>% 
-  cor()
-lm(percent_enrolled ~ ., regression_df) %>% summary
-  # use 'New York Organ Donor Network' as the reference group for opo
-lm(percent_enrolled ~ opo + percent_medicare_enrollment_2015 + percent_male_2015 + percent_white_2015*percent_persons_25_w_hs_diploma_2011_15 + percent_persons_25_w_4_yrs_college_2011_15, data = regression_df) %>% 
-  summary()
 
+lm(percent_enrolled ~ ., regression_df) %>% broom::tidy()
+
+  # use 'New York Organ Donor Network' as the reference group for opo
+fit_final = 
+  lm(percent_enrolled ~ opo + percent_medicare_enrollment_2015 + percent_male_2015 + percent_white_2015*percent_persons_25_w_hs_diploma_2011_15 + percent_persons_25_w_4_yrs_college_2011_15, data = regression_df) 
+ 
+fit_final %>%  broom::tidy()
+fit_final %>% summary
+par(mfrow = c(2,2))
+plot(fit_final)
 ```
 
+This model 
+
+```{r}
+## Bootstrapping
+regression_df %>% 
+  modelr::bootstrap(n = 1000) %>% 
+  mutate(models = map(strap, ~lm(percent_enrolled ~ opo + percent_medicare_enrollment_2015 + percent_male_2015 + percent_white_2015*percent_persons_25_w_hs_diploma_2011_15 + percent_persons_25_w_4_yrs_college_2011_15, data = .x)),
+         results = map(models, broom::tidy)) %>% 
+  dplyr::select(-strap, -models) %>% 
+  unnest() %>% filter(term != "(Intercept)") %>% 
+  group_by(term) %>% 
+  summarize(boot_mean = mean(estimate),
+            boot_se = sd(estimate)) %>% 
+  mutate(cv = boot_se/boot_mean)
+
+## Cross Validation
+library(modelr)
+cv_df = 
+  crossv_mc(regression_df, 100) 
+
+cv_df = 
+  cv_df %>% 
+  mutate(model = map(train, ~lm(percent_enrolled ~ opo + percent_medicare_enrollment_2015 + percent_male_2015 + percent_white_2015*percent_persons_25_w_hs_diploma_2011_15 + percent_persons_25_w_4_yrs_college_2011_15, data = .x))) %>% 
+  mutate(rmse = map2_dbl(model, test, ~rmse(model = .x, data = .y)))
+cv_df %>% 
+  ggplot(aes(x = 'model', y = rmse)) + geom_violin()
+```
 
