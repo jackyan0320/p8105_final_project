@@ -18,7 +18,7 @@ donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
   janitor::clean_names() %>%
   rename(state = x)
 plot_1 = 
-ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
+  ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
   geom_point() +
   geom_smooth()
 ```
@@ -134,7 +134,6 @@ state_map =
 
 
 
-
 <div class = "plot_description">
   <h1> Plot #1 Title </h1>
   <h2>sub description </h2>
@@ -150,16 +149,7 @@ state_map =
 ```{r}
 
 ```
-<div class = "divider" 
-     style = "padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-  <br><br>
-  <h2>divider.</h2>
-  <hr class = "style-two"></hr>
-</div>
+
 
 <div>
  <section class="plotting_main">
