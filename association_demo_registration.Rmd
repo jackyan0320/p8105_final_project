@@ -63,9 +63,9 @@ county_enrollment_rate_plot =
 ggplotly(county_enrollment_rate_plot)
 ```
 
+## Relationship between population size and registration enrollment (rate) in 2017-10-01
 
 ```{r}
-# There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
 organ %>%
   # only use data after 2017-10-01
   filter(date == '2018-09-01') %>% 
@@ -73,7 +73,6 @@ organ %>%
   plot_ly(x = ~population_18_estimate, y = ~registry_enrollments, type = "scatter", mode = "markers",
           color = ~county,
           text = ~text_label)
-
 
 ```
 
@@ -90,14 +89,14 @@ organ_2018_sep =
 
 ```
 
-# Combine the demo and donor datasets.
+## Combine the demo and donor datasets.
 
 ```{r}
 variables_list = read_csv("./data/ahrf_selected_variables.csv")$label
 
-regression_df = 
+regression_df_county = 
   inner_join(by = 'county', organ_2018_sep, demo_ny) %>% 
-  dplyr::select(opo, population_18_estimate, registry_enrollments, eligible_population_enrolled,
+  dplyr::select(county, opo, population_18_estimate, registry_enrollments, eligible_population_enrolled,
          standardzd_per_capita_medcr_cost_fee_for_service_2015:percent_educ_hlth_care_soc_asst_2011_15) %>% 
   mutate(opo = fct_relevel(opo, "New York Organ Donor Network")) %>% 
   mutate(
@@ -109,12 +108,24 @@ regression_df =
     percent_medicare_enrollment_2015 = (medicare_enrollment_aged_tot_2015 * 100 / pop_total_2015) %>% round(., digits = 2)
   ) %>% 
   dplyr::select(-(pop_total_male_2015:pop_asian_female_2015), -population_estimate_2016, -medicare_enrollment_aged_tot_2015) %>% 
-  dplyr::select(eligible_population_enrolled, everything()) %>% 
+  dplyr::select(county, eligible_population_enrolled, everything()) %>% 
   rename(percent_enrolled = eligible_population_enrolled)
 
+regression_df =
+  regression_df_county %>% 
+  dplyr::select(-county)
+  
+regression_df_county
 ```
 
-# Fit a model
+## Plots btw association rate and county demographics
+
+```{r}
+regression_df_county 
+  
+```
+
+## Fit a model
 
 ```{r}
 
@@ -126,11 +137,12 @@ fit_final =
  
 fit_final %>%  broom::tidy()
 fit_final %>% summary
-par(mfrow = c(2,2))
-plot(fit_final)
+
 ```
 
 This model 
+
+## Model validation 
 
 ```{r}
 ## Bootstrapping
@@ -156,5 +168,12 @@ cv_df =
   mutate(rmse = map2_dbl(model, test, ~rmse(model = .x, data = .y)))
 cv_df %>% 
   ggplot(aes(x = 'model', y = rmse)) + geom_violin()
+```
+
+## Diagnostics
+
+```{r}
+par(mfrow = c(2,2))
+plot(fit_final)
 ```
 
