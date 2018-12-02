@@ -93,95 +93,11 @@ state_map =
   <h2>sub description </h2>
   <h4  style="margin-left: 60%;"> [READ MORE](interesting_finding.html)<a href= "interesting_finding.html"> <i class="fab fa-wpexplorer"></i> </a> <h4>
   
-<div>
-
-
-
-
-<section class="plotting_main">
-  <div class = "plot_1_plot">
-```{r, warning = FALSE, message = FALSE, echo=FALSE}
-  # plot part
-plot_1
-```
-  </div>
-  
-  <div class = "plot_1_description">
-      <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus.
-      </h1>
-  </div>
-</section>
-
-
-<div class = "divider" 
-     style = "padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-  <br><br>
-  <h2>divider.</h2>
-  <hr class = "style-two"></hr>
-</div>
-
-<div class = "plot_description">
-  <h1> Plot #2 Title </h1>
-  <h2> Plot description <h2>
-<div>
-
-<section class="plotting_main">
-  <div class = "plot_2_plot">
-```{r, warning = FALSE, message = FALSE, echo=FALSE}
-  # plot part 
-  plot_1   
-```
-  </div>
-  
-<div class = "plot_2_description" style = "border:none">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
-</div>
-</section>
-
-test 11
-#test 2
-#test 3
-
-<div class = "divider" 
-     style = "padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-  <br><br>
-  <h2>divider.</h2>
-  <hr class = "style-two"></hr>
 </div>
 
 
-# plot #3 
-
-</section>
 
 
-<div class = "plot_description">
-  <h1> Plot #3 Title </h1>
-  <h2> Plot description <h2>
-<div>
-
-<section class="plotting_main">
-
-  
-<div class = "plot_3_description" style = "border:none">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
-</div>
-
-<div class = "plot_3_plot">
-```{r, warning = FALSE, message = FALSE, echo=FALSE}
-# plot part 
-state_map   
-```
-</div>
-</section>
 
 
 ```{r}

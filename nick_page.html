@@ -11,7 +11,7 @@
 
 
 
-<title>nick_page</title>
+<title>nick_page.utf8</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -73,6 +73,7 @@ h6 {
 }
 </style>
 
+<link rel="stylesheet" href="nick_page.css" type="text/css" />
 
 </head>
 
@@ -234,19 +235,67 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">nick_page</h1>
 
 </div>
 
 
-<p>Random intercept models</p>
-<p>plots</p>
-<pre class="r"><code>plot_random_model</code></pre>
-<p><img src="nick_page_files/figure-html/unnamed-chunk-1-1.png" width="75%" /></p>
-<pre class="r"><code>plot_random_model_w_pred</code></pre>
-<p><img src="nick_page_files/figure-html/unnamed-chunk-1-2.png" width="75%" /></p>
-<pre class="r"><code>tbl_no_sp_model</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<div class="plot_description">
+<h1>
+Fantastic Plots
+</h1>
+<h2>
+Mixed Models and Where to Find Them
+</h2>
+</div>
+<div class="divider" style="padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+<br><br>
+<h2>
+</h2>
+<hr class="style-two">
+</hr>
+</div>
+<div class = "plot_description">
+<h1>
+Random Model
+</h1>
+<h2>
+Plot description
+<h2>
+<div>
+<div id="random-model" class="section level3">
+<h3>Random Model</h3>
+<div class="plotting_main">
+<div class="plot_1_plot">
+<img src="nick_page_files/figure-html/unnamed-chunk-1-1.png" width="75%" /><img src="nick_page_files/figure-html/unnamed-chunk-1-2.png" width="75%" />
+</div>
+<div class = "plot_1_description">
+<pre><code>  &lt;h2 style=&quot;font-size: 1.5em;&quot;&gt;top plot description&lt;/h2&gt;</code></pre>
+##bottom plot description
+<div style= "text-align:left">
+
+<pre class="r"><code>tbl_no_sp_model = 
+  no_sp_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term == &quot;total_days&quot;) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3, escape = F) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;), font_size = 16)
+tbl_no_sp_model</code></pre>
+<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -286,10 +335,58 @@ Time (year)
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_spline_2012</code></pre>
-<p><img src="nick_page_files/figure-html/unnamed-chunk-1-3.png" width="75%" /></p>
-<pre class="r"><code>tbl_spline_2012</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+</div>
+</div>
+</div>
+<div class="divider" style="padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+<br><br>
+<h2>
+Spline 2012
+</h2>
+<hr class="style-two">
+</hr>
+</div>
+<div class = "plot_description">
+<h1>
+Spline 2012
+</h1>
+<h2>
+Plot description
+<h2>
+<div>
+
+<section class="plotting_main">
+<div class="plot_2_plot">
+<img src="nick_page_files/figure-html/unnamed-chunk-3-1.png" width="75%" />
+</div>
+<div class = "plot_2_description" style = "border:none">
+<pre><code>  describe plot 2012 </code></pre>
+<div class = "lm_table">
+
+<pre class="r"><code>tbl_spline_2012 = 
+  sp_12_model %&gt;% 
+  broom::tidy() %&gt;% 
+  filter(term %in% c(&quot;total_days&quot;, &quot;year_sp_2012&quot;)) %&gt;% 
+  mutate(estimate_year = estimate * 365, 
+         se_year = std.error * 365, 
+         ci_low = estimate_year - 1.96*se_year, 
+         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
+  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term), 
+         term = ifelse(term == &quot;year_sp_2012&quot;, &quot;2012 spline&quot;, term)) %&gt;% 
+  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
+  rename(&quot;Term&quot; = term, 
+         &quot;$\\beta$&quot; = estimate_year, 
+         &quot;Standard error&quot; = se_year, 
+         &quot;Lower bound&quot; = ci_low, 
+         &quot;Upper bound&quot; = ci_upper) %&gt;% 
+  knitr::kable(digits = 3) %&gt;% 
+  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;), font_size = 16)
+tbl_spline_2012</code></pre>
+<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -346,10 +443,38 @@ Time (year)
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_spline_2016</code></pre>
-<p><img src="nick_page_files/figure-html/unnamed-chunk-1-4.png" width="75%" /></p>
-<pre class="r"><code>tbl_spline_2016</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+</div>
+</div>
+</section>
+<div class="divider" style="padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+<br><br>
+<h2>
+divider.
+</h2>
+<hr class="style-two">
+</hr>
+</div>
+<p>Spline 2016</p>
+<div class = "plot_description">
+<h1>
+Spline 2016 2017
+</h1>
+<h2>
+Plot description
+<h2>
+<div>
+
+<section class="plotting_main">
+<div class="plot_3_description" style="border:none">
+<pre><code>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.</code></pre>
+</div>
+<div class = "plot_3_plot">
+<img src="nick_page_files/figure-html/unnamed-chunk-5-1.png" width="75%" />
+<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -406,10 +531,10 @@ Time (year)
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_spline_2017</code></pre>
-<p><img src="nick_page_files/figure-html/unnamed-chunk-1-5.png" width="75%" /></p>
-<pre class="r"><code>tbl_spline_2017</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+</div>
+<div class = "plot_3_1_plot">
+<img src="nick_page_files/figure-html/unnamed-chunk-6-1.png" width="75%" />
+<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -466,10 +591,37 @@ Time (year)
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_spline_all</code></pre>
-<p><img src="nick_page_files/figure-html/unnamed-chunk-1-6.png" width="75%" /></p>
-<pre class="r"><code>tbl_spline_all</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+</div>
+</section>
+<div class="divider" style="padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+<br><br>
+<h2>
+divider.
+</h2>
+<hr class="style-two">
+</hr>
+</div>
+<p>Spline all</p>
+<div class = "plot_description">
+<h1>
+Spline all
+</h1>
+<h2>
+Plot description
+<h2>
+<div>
+
+<section class="plotting_main">
+<div class="plot_3_description" style="border:none">
+<pre><code>  describe</code></pre>
+</div>
+<div class = "plot_4_plot">
+<img src="nick_page_files/figure-html/unnamed-chunk-7-1.png" width="75%" />
+<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -572,300 +724,10 @@ Time (year)
 </tr>
 </tfoot>
 </table>
+</div>
+</section>
 <p>Comparing nested models</p>
-<pre class="r"><code>mods &lt;- list(no_sp_model, sp_12_model, sp_16_model, sp_17_model, all_sp_model)
-
-names(mods) &lt;- c(&quot;no_sp_model&quot;, &quot;sp_12_model&quot;, &quot;sp_16_model&quot;, &quot;sp_17_model&quot;, &quot;all_sp_model&quot;)
-
-rmse_fun &lt;- function(model) {
-  rmse(model, organ_sp)
-}
-
-map(mods, rmse_fun) %&gt;% 
-  as_tibble() %&gt;% 
-  gather(key = &quot;model&quot;, 
-         value = &quot;rmse&quot;) %&gt;% 
-  mutate(model = ifelse(model == &quot;no_sp_model&quot;, &quot;No spline&quot;, model), 
-         model = ifelse(model == &quot;sp_12_model&quot;, &quot;2012 spline&quot;, model), 
-         model = ifelse(model == &quot;sp_16_model&quot;, &quot;2016 spline&quot;, model), 
-         model = ifelse(model == &quot;sp_17_model&quot;, &quot;2017 spline&quot;, model), 
-         model = ifelse(model == &quot;all_sp_model&quot;, &quot;All splines&quot;, model)) %&gt;% 
-  rename(&quot;Model&quot; = model, 
-         &quot;RMSE&quot; = rmse) %&gt;% 
-  knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Model
-</th>
-<th style="text-align:right;">
-RMSE
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-No spline
-</td>
-<td style="text-align:right;">
-1.915
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2012 spline
-</td>
-<td style="text-align:right;">
-1.902
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2016 spline
-</td>
-<td style="text-align:right;">
-1.883
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2017 spline
-</td>
-<td style="text-align:right;">
-1.855
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-All splines
-</td>
-<td style="text-align:right;">
-1.770
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>options(knitr.kable.NA = &#39;&#39;)
-
-anova(no_sp_model, sp_17_model) %&gt;% 
-  broom::tidy() %&gt;% 
-  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
-  mutate(term = ifelse(term == &quot;no_sp_model&quot;, &quot;No spline&quot;, term), 
-         term = ifelse(term == &quot;sp_17_model&quot;, &quot;2017 spline&quot;, term), 
-         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;% 
-  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
-               escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Model
-</th>
-<th style="text-align:right;">
-AIC
-</th>
-<th style="text-align:right;">
-Log-like
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\chi^2\)</span>
-</th>
-<th style="text-align:right;">
-df
-</th>
-<th style="text-align:left;">
-p-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-No spline
-</td>
-<td style="text-align:right;">
-30768.94
-</td>
-<td style="text-align:right;">
--15377.47
-</td>
-<td style="text-align:right;">
-</td>
-<td style="text-align:right;">
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2017 spline
-</td>
-<td style="text-align:right;">
-30306.86
-</td>
-<td style="text-align:right;">
--15145.43
-</td>
-<td style="text-align:right;">
-464.084
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-&lt; 0.001
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>anova(no_sp_model, all_sp_model) %&gt;% 
-  broom::tidy() %&gt;% 
-  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
-  mutate(term = ifelse(term == &quot;no_sp_model&quot;, &quot;No spline&quot;, term), 
-         term = ifelse(term == &quot;all_sp_model&quot;, &quot;All splines&quot;, term), 
-         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
-  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
-               escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Model
-</th>
-<th style="text-align:right;">
-AIC
-</th>
-<th style="text-align:right;">
-Log-like
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\chi^2\)</span>
-</th>
-<th style="text-align:right;">
-df
-</th>
-<th style="text-align:left;">
-p-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-No spline
-</td>
-<td style="text-align:right;">
-30768.94
-</td>
-<td style="text-align:right;">
--15377.47
-</td>
-<td style="text-align:right;">
-</td>
-<td style="text-align:right;">
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-All splines
-</td>
-<td style="text-align:right;">
-29630.95
-</td>
-<td style="text-align:right;">
--14805.47
-</td>
-<td style="text-align:right;">
-1143.996
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-&lt; 0.001
-</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>anova(sp_17_model, all_sp_model) %&gt;% 
-  broom::tidy() %&gt;% 
-  select(term, AIC, logLik, statistic, Chi.Df, p.value) %&gt;% 
-  mutate(term = ifelse(term == &quot;sp_17_model&quot;, &quot;2017 Spline&quot;, term), 
-         term = ifelse(term == &quot;all_sp_model&quot;, &quot;All splines&quot;, term), 
-         p.value = ifelse(p.value &lt; 0.001, &quot;&lt; 0.001&quot;, p.value)) %&gt;%
-  knitr::kable(col.names = c(&quot;Model&quot;, &quot;AIC&quot;, &quot;Log-like&quot;, &quot;$\\chi^2$&quot;, &quot;df&quot;, &quot;p-value&quot;), 
-               escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;))</code></pre>
-<table class="table table-hover table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Model
-</th>
-<th style="text-align:right;">
-AIC
-</th>
-<th style="text-align:right;">
-Log-like
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\chi^2\)</span>
-</th>
-<th style="text-align:right;">
-df
-</th>
-<th style="text-align:left;">
-p-value
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-2017 Spline
-</td>
-<td style="text-align:right;">
-30306.86
-</td>
-<td style="text-align:right;">
--15145.43
-</td>
-<td style="text-align:right;">
-</td>
-<td style="text-align:right;">
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-All splines
-</td>
-<td style="text-align:right;">
-29630.95
-</td>
-<td style="text-align:right;">
--14805.47
-</td>
-<td style="text-align:right;">
-679.912
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-&lt; 0.001
-</td>
-</tr>
-</tbody>
-</table>
+</div>
 
 &nbsp;
 <hr />
