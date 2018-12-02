@@ -15,16 +15,26 @@ library(tidyverse)
 ```
 
 ## This is a page we describe Our Data 
+```{r ,include=FALSE}
+organ = read_csv("data/organ.csv")
+organ_tidy = 
+  organ %>% 
+  separate(location, c("lat", "long"), sep = ",") %>% 
+  mutate(long = str_replace(long, "\\)", ""),
+         long = as.numeric(long)) %>% 
+  mutate(lat = str_replace(lat, "\\(", ""),
+         lat = as.numeric(lat))
+```
 
 
 
 ## Sample data 
-```{r echo=FALSE}
+```{r echo=FALSE, }
 
 donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
   janitor::clean_names() %>%
   rename(state = x)
 
-datatable(donor_share_time_compare, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+datatable(organ_tidy, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T, autoWidth = TRUE) )
 ```
       
