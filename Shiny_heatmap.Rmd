@@ -1,0 +1,108 @@
+---
+title: "Shiny Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    theme: cosmo
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(ggplot2)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(leaflet)
+library(httr)
+library(plotly)
+```
+
+```{r}
+organ <- GET("https://health.data.ny.gov/resource/km5a-7zrs.csv?$limit=10000") %>% 
+  content("parsed") %>%
+  janitor::clean_names() %>%
+  filter(county != "TOTAL NYS" & county != "Out of State" & county != "Unknown") %>%
+  mutate(year = as.character(year)) %>%
+  mutate(month = as.character(month)) %>%
+  mutate(dummy_day = as.character("01")) %>%
+  mutate(date = (str_c(year, month, dummy_day, sep = "-"))) %>%
+  mutate(date = as.Date(date, "%Y-%m-%d"))
+
+organ_tidy = 
+  organ %>% 
+  separate(location, c("lat", "long"), sep = ",") %>% 
+  mutate(long = str_replace(long, "\\)", ""),
+         long = as.numeric(long)) %>% 
+  mutate(lat = str_replace(lat, "\\(", ""),
+         lat = as.numeric(lat)) 
+
+ny_county = map_data("county")  %>% 
+  filter(region == "new york") %>% 
+  as.tibble() %>% 
+  rename(county = subregion)
+
+organ_df = 
+  organ_tidy %>% 
+  select(eligible_population_enrolled, county, date) %>% 
+  mutate(county = tolower(county)) %>% 
+  mutate(county = recode(county,  'cattauragus' = 'cattaraugus'))
+
+
+ny_county_combined = 
+full_join(organ_df, ny_county, by = 'county')
+```
+
+Column {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+dates = ny_county_combined %>% distinct(date) %>% pull()
+
+# selectInput widget
+selectInput("date_choice", label = h3("Select date"),
+            choices = dates, selected = "2018-09-01")
+```
+
+
+
+Column {data-width=1000}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+renderPlotly({
+  ny_county_combined =
+    ny_county_combined %>% 
+    filter(date == input$date_choice)
+  p = 
+  ggplot() + 
+  geom_polygon(data = ny_county_combined, 
+               aes(x = long, 
+                   y = lat, 
+                   group = group, 
+                   fill = eligible_population_enrolled)) +
+  geom_path(data = ny_county_combined, 
+            aes(x = long, 
+                y = lat,
+                group = group), 
+            color = "white", 
+            size = 0.1) +
+  geom_text(data = organ_tidy, 
+            aes(x = long, 
+                y = lat, 
+                label = county),
+            size = 2.5,
+            color = "white") +
+  labs(x = 'Longitude', y = 'Latitude', title = 'map', fill = '% Enrollment') +
+  coord_equal() +
+  viridis::scale_fill_viridis(option = "magma", direction = -1)
+  ggplotly(p)
+})
+
+```
+
+
