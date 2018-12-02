@@ -97,27 +97,6 @@ ggplotly(p)
 
 ```
 
-```{r}
-# Trying to use library leaflet to make it interactive
-leaflet(ny) %>% 
-  addPolylines(lng = ny$long, lat = ny$lat, group = ny$order) %>% 
-  addPolygons(lng = ny$long, lat = ny$lat, group = ny$order, color = "#444444", weight = 1, smoothFactor = 0.5,
-    opacity = 1.0, fillOpacity = 0.5,
-    
-    highlightOptions = highlightOptions(color = "white", weight = 2,
-      bringToFront = TRUE))
-  
-```
-
-
-Plot the registry proportion as points reflecting by size.
-```{r}
-ggplot() + 
-  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgray") + 
-  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  geom_point(data = organ_tidy, aes(x = long, y = lat, size = eligible_population_enrolled, color = eligible_population_enrolled)) +
-  theme_void()
-```
 
 Plot the registry proportion with heat map
 ```{r}
