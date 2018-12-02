@@ -13,14 +13,28 @@ knitr::opts_chunk$set(echo = TRUE)
 library(DT)
 library(tidyverse)
 ```
-### About the data
-This is a page we describe Our Data. For our exploratory study we used two datasets.
 
-* Data from [New York State organ donation data](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE) is used extract registry porportion of each county to do the model fitting.
+<div style="margin-bottom:30px;">
+</div>
 
-* Data from ... is used to extract the demographic data of the New York State.
+# About Our data
 
-The following chart is a brief overview of the New York State organ donation data.
+<div style="margin-bottom:20px;"> </div>
+
+### This is a page we describe Our Data. For our exploratory study we used two datasets.
+
+<div style="margin-bottom:20px;"> </div>
+
+##### * Data from [New York State organ donation data](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE) is used extract registry porportion of each county to do the model fitting.
+
+##### * Data from ... is used to extract the demographic data of the New York State.
+
+<div style="margin-bottom:50px;"> </div>
+
+### The following chart is a brief overview of the New York State organ donation data.
+
+<div style="margin-bottom:50px;"> </div>
+
 ```{r ,include=FALSE}
 organ = read_csv("data/organ.csv")
 organ_tidy = 

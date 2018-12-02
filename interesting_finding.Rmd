@@ -89,6 +89,9 @@ There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all t
 
 ### More populated state has more people enroll but less percentage of people enroll
 
+<div style="margin-bottom:20px;">
+</div>
+
 <div style = "float: left; width : 50%; margin-left: -20%">
 ```{r message = F, warning= F}
 lowest_3_counties = organ %>% 
