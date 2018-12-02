@@ -87,7 +87,7 @@ There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all t
 <div style="margin-bottom:20px;">
 </div>
 
-More populated state has more people enroll but less percentage of people enroll
+### More populated state has more people enroll but less percentage of people enroll
 
 <div style = "float: left; width : 50%; margin-left: -20%">
 ```{r message = F, warning= F}
@@ -109,6 +109,16 @@ trend_1 =
           color = ~county,
           text = ~text_label) 
 trend_1 
+
+plot_enrollments_population = 
+  organ %>%
+  filter(date == '2018-09-01') %>% 
+  ggplot(aes(x = population_18_estimate, y = registry_enrollments)) +
+  geom_point(aes(group = county)) +
+  geom_smooth(method = 'auto', se = FALSE) +
+  theme_bw() 
+ggplotly(plot_enrollments_population)
+
 ```
 </div>
 
@@ -130,17 +140,20 @@ trend_2 =
                   y = lowest_3_counties$eligible_population_enrolled, 
                   text = lowest_3_counties$county)
 trend_2
+
+plot_enrollments_population = 
+  organ %>%
+  filter(date == '2018-09-01') %>% 
+  ggplot(aes(x = population_18_estimate, y = eligible_population_enrolled)) +
+  geom_point(aes(group = county)) +
+  geom_smooth(method = 'auto', se = FALSE) +
+  theme_bw()
+ggplotly(plot_enrollments_population)
 ```
 </div>
 
 ```{r message = F, warning= F}
-plot_enrollments_population = 
-  organ %>%
-  filter(date == '2018-09-01') %>% 
-  ggplot(aes(x = population_18_estimate, y = registry_enrollments)) +
-  geom_point(aes(group = county)) +
-  geom_smooth(method = 'auto', se = FALSE) 
-ggplotly(plot_enrollments_population)
+
 ```
 
 ## Education
