@@ -46,7 +46,7 @@ organ %>%
 ```{r}
 
 
-diff_diff_organ = organ %>%
+diff_diff_organ_2012 = organ %>%
   filter(date == as.Date("2014-07-01") | date == as.Date("2012-07-01") | date == as.Date("2010-07-01")) %>%
   select(county, date, eligible_population_enrolled) %>%
   group_by(county) %>%
@@ -59,14 +59,22 @@ diff_diff_organ = organ %>%
   mutate(county = fct_reorder(county, slope_diff)) %>%
   mutate(is_total_nys = ifelse(county == "TOTAL NYS", 1, 0))
 
-diff_diff_organ_ny = filter(diff_diff_organ, county %in% c("TOTAL NYS"))
+diff_diff_organ_ny_2012 = filter(diff_diff_organ, county %in% c("TOTAL NYS"))
 
-  ggplot(diff_diff_organ, aes(x = county, y = slope_diff, color = is_total_nys)) +
+library(ggrepel)
+
+  ggplot(diff_diff_organ_2012, aes(x = county, y = slope_diff)) +
     geom_point() +
+    theme_bw() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    theme(legend.position = "none")
-
-  
+    theme(legend.position = "none") +
+    geom_text_repel(data = diff_diff_organ_ny_2012, 
+                    aes(x = county, 
+                        y = slope_diff, 
+                        label = county), nudge_x = -2.5, nudge_y = .001) +
+    labs(title = "Slope Change After 2012 Policy",
+         y = "Slope Change")
+    
 
 ```
 
@@ -90,11 +98,20 @@ diff_diff_organ_2017 = organ %>%
   mutate(county = fct_reorder(county, slope_diff)) %>%
   mutate(is_total_nys = ifelse(county == "TOTAL NYS", 1, 0))
 
+diff_diff_organ_ny_2017 = filter(diff_diff_organ_2017, county %in% c("TOTAL NYS"))
 
-  ggplot(diff_diff_organ_2017, aes(x = county, y = slope_diff, color = is_total_nys)) +
+
+  ggplot(diff_diff_organ_2017, aes(x = county, y = slope_diff)) +
     geom_point() +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-    theme(legend.position = "none")
+    theme(legend.position = "none") +
+    geom_text_repel(data = diff_diff_organ_ny_2017, 
+                    aes(x = county, 
+                        y = slope_diff, 
+                        label = county), nudge_x = -2.5, nudge_y = .01) +
+    labs(title = "Slope Change After 2017 Policy",
+         y = "Slope Change")
+    
 
 
 ```
