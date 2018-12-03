@@ -289,6 +289,7 @@ ggplotly(county_enrollment_rate_plot)
 ```
 
 There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
+
 </div>
   
       
