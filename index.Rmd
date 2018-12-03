@@ -94,23 +94,15 @@ p =
             aes(x = long, 
                 y = lat, 
                 label = county),
-            size = 2.5,
+            size = 5,
             color = "white") +
   labs(x = '', y = '', title = '', fill = '% Enrollment') +
   theme(legend.position = "bottom", legend.title = element_text(size = 20)) +
+  theme_void()+
   coord_equal() +
   viridis::scale_fill_viridis(option = "magma", direction = -1)
 
 
-state_map = 
-  ggplot() + 
-  geom_polygon(data = ny, aes(x = long, y = lat, group = group), fill = "darkgrey") + 
-  geom_polygon(data = ny_county, aes(x = long, y = lat, group = group), fill = NA, color = "white") +
-  stat_density2d(data = organ_tidy, aes(x = long, y = lat, fill = ..level.., alpha = 0.25), size = 0.2, bins = 10, geom = "polygon") +
-  geom_density2d(data = organ_tidy, aes(x = long, y = lat), size = 0.3) +
-  coord_fixed(1.4) +
-  theme_bw() +
-  scale_fill_gradient(low = "light blue", high = "dark blue")
 
 ```
 
@@ -119,29 +111,28 @@ state_map =
 
 
 <div class="cd-fixed-bg cd-fixed-bg--1"> 
-  <h1 class = "front-page-title" style = "padding-top:20%">
+  <h1 class = "front-page-title" style = "padding-top:10%">
     P8105 Final Project - NY Organ Donation 
   <h1>
 </div> 
 
-<div class="cd-fixed-bg cd-fixed-bg--2"> 
-  <h1 class = "front-page-title" style = "padding-top:5%">
-    In need of donation
-  <h1>
-</div> 
+<div >
+</br>
+</div>
+
 
 <div class = "plot_description">
   <h1>   </h1>
   <h1>   </h1>
   <h1> New York State </h1>
   <h2>Registration Rate 2018 
-      <h4  style="margin-left: 60%;"> [Explore Change by Years](interesting_finding.html)<a href= "interesting_finding.html"> <i class="fas fa-exchange-alt"></i> </a> <h4> 
+      <h4  style="margin-left: 70%;"> [Explore Change by Years](https://sijiayue.shinyapps.io/shinny_heatmap/)<a href= "interesting_finding.html"> <i class="fas fa-exchange-alt"></i> </a> <h4> 
   </h2>
 
 </div>
 
  <div class = "single_map_plot">
-```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 10, fig.width = 22}
+```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 14, fig.width = 25}
 # plot part 
 p
 ```

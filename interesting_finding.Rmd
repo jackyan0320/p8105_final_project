@@ -190,7 +190,7 @@ cv_df %>%
 <div style="margin-bottom:20px;">
 </div>
 
-<div style = "float: left; width : 50%; margin-left: -20%">
+<div style = "float: left; width : 40%; margin-left: -1%">
 ```{r message = F, warning= F}
 lowest_3_counties = organ %>% 
   filter(date == as.Date("2018-09-01")) %>% 
@@ -223,7 +223,7 @@ ggplotly(plot_enrollments_population)
 ```
 </div>
 
-<div style = "float: right; width : 50%"> 
+<div style = "float: right; width : 40%"> 
 ```{r message = F, warning= F}
 trend_2 = 
   organ %>%
@@ -251,7 +251,7 @@ plot_enrollments_population =
 ggplotly(plot_enrollments_population)
 ```
 
-## Registration Over Time 
+# Registration Over Time 
 
 <div style = "float: left; width : 50%; margin-left: -20%">
 </div>
