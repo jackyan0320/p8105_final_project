@@ -24,8 +24,6 @@ plot_1 =
 ```
 
 ```{r map part, include=FALSE, warning = FALSE, message = FALSE }
-library(tidyverse)
-library(ggplot2)
 library(ggmap)
 library(maps)
 library(mapdata)
