@@ -3,11 +3,11 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Fun Part"
+    - text: "County characteristics"
       href: interesting_finding.html
-    - text: "Data Part"
+    - text: "Data"
       href: website_data_page.html
-    - text: "Complex Part"
+    - text: "Policy analysis"
       href: nick_page.html
     - icon: fab fa-youtube
       href: website_screen_cast.html

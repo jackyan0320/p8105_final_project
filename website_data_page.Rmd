@@ -17,23 +17,19 @@ library(tidyverse)
 <div style="margin-bottom:30px;">
 </div>
 
-# About Our data
+# Our data
 
 <div style="margin-bottom:20px;"> </div>
 
-### This is a page we describe Our Data. For our exploratory study we used two datasets.
+New York State organ donor data was pulled from New York's official public data [API](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE). 
 
-<div style="margin-bottom:20px;"> </div>
+Extra county level data came from Area Health Resources Files (AHRF). AHRF data collects healthcare related information and demographics at the county level for every county in the United States. Specific variables were chosen from AHRF to be included in this analysis. AHRF data is available online. 
 
-##### * Data from [New York State organ donation data](https://health.data.ny.gov/Health/Donate-Life-Organ-and-Tissue-Donor-Registry-Enroll/sqk8-8a2h/data?fbclid=IwAR0DjHPMd3up76Cq1bMH0z12f_vr4rLz5YwtMPcT2kc_a5nP-nVJlDEinNE) is used extract registry porportion of each county to do the model fitting.
+[Click here for all cleaned data used for analyses](https://www.dropbox.com/sh/grlugs9hrksvkqr/AAAwILSg5UyMrW1CD7dWmHPNa?dl=0)
 
-##### * Data from ... is used to extract the demographic data of the New York State.
+Organ donor data used for analyses can be viewed below:
 
-<div style="margin-bottom:50px;"> </div>
-
-### The following chart is a brief overview of the New York State organ donation data.
-
-<div style="margin-bottom:50px;"> </div>
+<div style="margin-bottom:30px;"> </div>
 
 ```{r ,include=FALSE}
 organ = read_csv("data/organ.csv")
@@ -48,18 +44,24 @@ organ_tidy =
   rename(registry_proportion = eligible_population_enrolled) %>% 
   mutate(opo = as.factor(opo),
          county = as.factor(county)) %>% 
+  mutate(opo = fct_recode(opo, 
+                          NYODN = "New York Organ Donor Network", 
+                          CDTNY = "Center for Donation and Transplant in New York", 
+                          FLDRN = "Finger Lakes Donor Recovery Network")) %>% 
   rename(OPO = opo)
+  
 ```
+
 <div class="cd-fixed-bg cd-fixed-bg--1"> 
 </br>
 </div>
-
  
 ```{r echo=FALSE, }
 donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
   janitor::clean_names() %>%
   rename(state = x)
 
-datatable(organ_tidy, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T, autoWidth = TRUE) )
+datatable(organ_tidy, rownames = FALSE, filter = "top", 
+          options = list(pageLength = 5, scrollX = T, autoWidth = TRUE))
 ```
      
