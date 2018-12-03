@@ -58,7 +58,7 @@ ny_county = map_data("county")  %>%
 organ_df = 
   organ_tidy %>% 
   filter(date == "2018-09-01") %>% 
-  select(eligible_population_enrolled, county) %>% 
+  dplyr::select(eligible_population_enrolled, county) %>% 
   mutate(county = tolower(county)) %>% 
   mutate(county = recode(county,  'cattauragus' = 'cattaraugus'))
 

@@ -9,9 +9,11 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Alina Levine" />
 
+<meta name="date" content="2018-11-19" />
 
-<title></title>
+<title>Trends</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,6 +24,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.0.13/css/fa-svg-with-js.css" rel="stylesheet" />
+<script src="site_libs/font-awesome-5.0.13/js/fontawesome-all.min.js"></script>
+<script src="site_libs/font-awesome-5.0.13/js/fa-v4-shims.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -216,14 +221,87 @@ $(document).ready(function () {
 
 
 
+<h1 class="title toc-ignore">Trends</h1>
+<h4 class="author"><em>Alina Levine</em></h4>
+<h4 class="date"><em>November 19, 2018</em></h4>
 
 </div>
 
 
-<div id="p8105_final_project" class="section level1">
-<h1>p8105_final_project</h1>
-<p><a href="https://jackyan0320.github.io/p8105_final_project/" class="uri">https://jackyan0320.github.io/p8105_final_project/</a></p>
-</div>
+<pre class="r"><code>knitr::opts_chunk$set(eval = FALSE)
+
+library(tidyverse)
+library(ggplot2)
+
+donor_share_time_compare = read.csv(&quot;data/state_donor_share.csv&quot;) %&gt;%
+  janitor::clean_names() %&gt;%
+  rename(state = x)
+
+ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
+  geom_point() +
+  geom_smooth()</code></pre>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<pre><code>## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6
+
+## Warning in simpleLoess(y, x, w, span, degree = degree, parametric =
+## parametric, : Chernobyl! trL&gt;n 6</code></pre>
+<pre><code>## Warning in sqrt(sum.squares/one.delta): NaNs produced</code></pre>
+<pre><code>## Warning in stats::qt(level/2 + 0.5, pred$df): NaNs produced</code></pre>
+<p><img src="state_comparisons_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>ny_donor = read_csv(&quot;data/organ.csv&quot;) %&gt;%
+  janitor::clean_names()</code></pre>
+<pre class="r"><code>ny_donor %&gt;%
+  mutate(year = as.character(year)) %&gt;%
+  mutate(month = as.character(month)) %&gt;%
+  mutate(dummy_day = as.character(&quot;01&quot;)) %&gt;%
+  mutate(date = (str_c(year, month, dummy_day, sep = &quot;-&quot;))) %&gt;%
+  mutate(date = as.Date(date, &quot;%Y-%m-%d&quot;)) %&gt;% 
+  filter(county == &quot;Bronx&quot;) %&gt;%
+  ggplot(aes(x = date, y = eligible_population_enrolled)) +
+    geom_line()</code></pre>
 
 
 
