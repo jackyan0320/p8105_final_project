@@ -77,29 +77,32 @@ hr.style-two {
 
 .plot_1_plot {
     float: left;
-    width:60%;
+    width:75%;
 }
 .plot_1_description {
     height: 100%;
-    width:40%;
+    width:25%;
     float: right;
     background: clear;
     text-align: center;
-    vertical-align: middle;
+    margin-top:7%;
 }
-  
+ 
+.html-widget.html-widget-static-bound.js-plotly-plot{
+
+} 
   
 .plot_2_plot {
     float: right;
-    width:60%;
+    width:75%;
 }
 .plot_2_description {
     height: 100%;
-    width:40%;
+    width:25%;
     float: left;
     background: clear;
     text-align: center;
-    vertical-align: middle;
+    margin-top:7%;
 }
 
 

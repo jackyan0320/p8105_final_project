@@ -30,6 +30,8 @@ library(mapdata)
 library(leaflet)
 library(httr)
 library(plotly)
+library(lme4)
+library(modelr)
 #install.packages(c("leaflet", "plotly"))
 # use the API to pull data
 
@@ -126,7 +128,7 @@ p =
   <h1>   </h1>
   <h1> New York State </h1>
   <h2>Registration Rate 2018 
-      <h4  style="margin-left: 70%;"> [Explore Change by Years](https://sijiayue.shinyapps.io/shinny_heatmap/)<a href= "interesting_finding.html"> <i class="fas fa-exchange-alt"></i> </a> <h4> 
+      <h4  style="margin-left: 70%;"> [Explore Change by Years](https://sijiayue.shinyapps.io/shinny_heatmap/)<a href= "interesting_finding.html"> <i class="fa fa-space-shuttle" aria-hidden="true"></i> </a> <h4> 
   </h2>
 
 </div>
@@ -141,42 +143,54 @@ p
 
 
 
-***
-
-
-
-
-<div class = "plot_description">
-  <h1> Plot #1 Title </h1>
-  <h2>sub description </h2>
-  <h4  style="margin-left: 60%;"> [READ MORE](interesting_finding.html)<a href= "interesting_finding.html"> <i class="fab fa-wpexplorer"></i> </a> <h4>
-  
+<div class = "divider" 
+     style = "padding-top: 50px;
+              padding-right: 30px;
+              padding-bottom: 50px;
+              padding-left: 80px;
+              clear : both">
+  <hr class = "style-two"></hr>
 </div>
 
 
 
 
-
-
-```{r}
-
-```
-
+<div class = "plot_description">
+  <h1> Registration Over Time </h1>
+  <h2> a generally increasing trend across the years  </h2>
+  <h4  style="margin-left: 60%;"> [READ MORE](interesting_finding.html)<a href= "interesting_finding.html"> <i class="fab fa-wpexplorer"></i> </a> <h4>
+  
+</div>
 
 <div>
  <section class="plotting_main">
   <div class = "plot_1_plot">
-```{r, warning = FALSE, message = FALSE, echo=FALSE}
+```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 6.5, fig.width = 9}
   # plot part
-plot_1
+county_enrollment_plot = 
+  organ %>% 
+  ggplot(aes(x = date, y = registry_enrollments, color = county)) +
+    geom_line() +
+    labs(x = "Date", 
+         y = "Persons enrolled", 
+         title = " ") + 
+  viridis::scale_color_viridis(discrete = TRUE)
+
+ggplotly(county_enrollment_plot)
 ```
   </div>
   
-  <div class = "plot_1_description">
-      <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus.
-      </h1>
-  </div>
+<div class = "plot_1_description">
+
+<h3>The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset.
+</h3>
+
+</div>
 </section>
+
+
+
+
  <div class = "divider" 
      style = "padding-top: 50px;
               padding-right: 30px;
@@ -184,28 +198,62 @@ plot_1
               padding-left: 80px;
               clear : both">
   <br><br>
-  <h2>divider.</h2>
+  <h2></h2>
   <hr class = "style-two"></hr>
 </div>
+
+
  <div class = "plot_description">
-  <h1> Plot #2 Title </h1>
-  <h2> Plot description <h2>
+  <h1> Policy Analysis </h1>
+  <h2> Legislative policy that affect donnor registration rate <h2>
+  <h4  style="margin-left: 60%;"> [READ MORE](nick_page.html)<a href= "nick_page.html"> <i class="fab fa-wpexplorer"></i> </a> <h4>
 <div>
  <section class="plotting_main">
   <div class = "plot_2_plot">
-```{r, warning = FALSE, message = FALSE, echo=FALSE}
-  # plot part 
-  plot_1   
+```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 6.5, fig.width = 9}
+organ_sp <- read_csv("data/organ_spline.csv") %>% 
+  filter(!(county %in% c("TOTAL NYS", "Cattauragus", "St Lawrence"))) %>% 
+  mutate(opo = as_factor(opo), 
+         opo = fct_relevel(opo, 
+                           "New York Organ Donor Network", 
+                           "Center for Donation and Transplant in New York", 
+                           "UNYTS", 
+                           "Finger Lakes Donor Recovery Network")) 
+all_sp_model <- organ_sp %>% 
+  lmer(eligible_population_enrolled ~ total_days + year_sp_2012 + year_sp_2016 + year_sp_2017 + opo + 
+         (1 | county), data = ., REML = FALSE)
+
+add_predictions(organ_sp, all_sp_model) %>% 
+  ggplot(aes(x = total_days, y = pred, color = opo, type = county)) + 
+  geom_line() +
+  viridis::scale_color_viridis(discrete = TRUE) + 
+  geom_vline(xintercept = 1491, linetype = "dashed") + 
+  geom_vline(xintercept = 2799, linetype = "dashed") + 
+  geom_vline(xintercept = 3088, linetype = "dashed") + 
+  annotate(geom = "text", x = 1720, y = 5, label = "2012") +
+  annotate(geom = "text", x = 2600, y = 5, label = "2016") +
+  annotate(geom = "text", x = 3300, y = 9, label = "2017") +
+  theme(legend.position = "bottom", 
+        legend.title = element_blank()) + 
+  guides(color = guide_legend(ncol = 2)) + 
+  labs(title = "", 
+       subtitle = "Modeling all splines", 
+       x = "Time as total days", 
+       y = "Eligible population enrolled (%)")
 ```
   </div>
   
-<div class = "plot_2_description" style = "border:none">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.
+<div class = "plot_2_description">
+
+<h3>2012 policy INSERT WHAT THIS POLICY WAS; a model including a term for a spline corresponding with a 2016 policy INSERT WHAT THIS POLICY WAS; a model including a term for a spline corresponding with a 2017 policy that lowered the age from eligible enrollees from 18 to 16 years old
+</h3>
 </div>
 </section>
- test 11
-#test 2
-#test 3
+
+
+
+
+
  <div class = "divider" 
      style = "padding-top: 50px;
               padding-right: 30px;

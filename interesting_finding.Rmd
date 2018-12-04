@@ -251,10 +251,15 @@ plot_enrollments_population =
 ggplotly(plot_enrollments_population)
 ```
 
-# Registration Over Time 
-
-<div style = "float: left; width : 50%; margin-left: -20%">
 </div>
+
+
+<div style = "display :block; margin-bottom:120%;"></div>
+
+<div>   
+### Registration Over Time 
+
+
 
 The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset.
 ```{r}
@@ -289,8 +294,5 @@ ggplotly(county_enrollment_rate_plot)
 ```
 
 There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
-
-</div>
-  
-      
+</div>      
       
