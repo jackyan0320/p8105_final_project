@@ -7,6 +7,8 @@ navbar:
       href: interesting_finding.html
     - text: "Policy analysis"
       href: nick_page.html
+    - text: "Exploratory"
+      href: website_explore_page.html
     - text: "Data"
       href: website_data_page.html
     - icon: fab fa-youtube

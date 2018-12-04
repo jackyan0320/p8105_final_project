@@ -128,7 +128,7 @@ p =
   <h1>   </h1>
   <h1> New York State </h1>
   <h2>Registration Rate 2008 - 2018 
-      <h4  style="margin-left: 70%;"> [Explore Change by Years Shiny](https://sijiayue.shinyapps.io/shinny_heatmap/)<a href= "interesting_finding.html"> <i class="fa fa-space-shuttle" aria-hidden="true"></i> </a> <h4> 
+      <h4  style="margin-left: 70%;"> [Explore Change by Years in Shiny](https://sijiayue.shinyapps.io/shinny_heatmap/)<a href= "interesting_finding.html"> <i class="fa fa-space-shuttle" aria-hidden="true"></i> </a> <h4> 
   </h2>
 </div>
 

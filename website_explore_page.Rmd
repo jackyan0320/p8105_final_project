@@ -3,7 +3,7 @@ title: ""
 output: 
   html_document:
     theme:  united
-    css: interesting_finding.css
+    css: website_explore_page.css
     number_sections: FALSE
     includes:
       after_body: footer.html
@@ -35,20 +35,6 @@ demo_ny =
   rename(county = county_name) 
 ```
 
-<div style="margin-bottom:50px;">
-</div>
-
-# County characteristics {.tabset .tabset-fade .tabset-pills}
-
-<div style="margin-bottom:30px;">
-</div>
-
-## Regression analysis
-
-<div style="margin-bottom:20px;">
-</div>
-
-When analyzing county level factors, we limited data to September, 2018. 
 
 ```{r message = F, warning= F, echo = FALSE}
 organ_2018_09 <- 
@@ -95,95 +81,132 @@ regression_df <-
          percent_medcr_2015 = percent_medicare_enrollment_2015)
 ```
 
-The final model included the following variables: organ procurement organization, percent of population enrolled in Medicare, percent of county that is males, percent of county that is White, percent of adults over 25 with a high school diploma, percent of adults over the age of 25 that have a college degree, and an interaction between the percent of the county that is white and the percent of adults over 25 with a high school diploma.
-
-```{r final county model, echo = FALSE}
-county_final <- regression_df %>%  
-  lm(percent_enrolled ~ opo + percent_medcr_2015 + percent_male_2015 + percent_white_2015*percent_hs_diploma +
-       percent_college, data = .)
-
-county_final %>%
-  broom::tidy() %>% 
-  kable(digits = 3)
-```
-
-We found that type of OPO that conducts the registration affects registration rate. Percentage of medicare enrollment, percentage of persons finishing high school education and finishing 4-year college education are positively associated with registration rate. This finding agrees with our hypothesis. Also, the sex `male` and race `white` are positively associated with registration rate. 
-
-
-Here we compare the candidate models
-
-|Model       |Adjusted r-squared  | AIC         |
-|-------------|-----------------------|---------|
-|Final model        |0.81  |331.97            |
-|Model 1      |     0.76  |   345.46     |
-|Model 2      |  0.74     |     348.62  |
-
-
-
-```{r bootstrap, eval = FALSE}
-bootstrap_df <-  
-  regression_df %>% 
-  modelr::bootstrap(n = 100) %>% 
-  mutate(
-    model_1 = purrr::map(strap, ~lm(percent_enrolled ~ opo + percent_hs_diploma + percent_college + percent_male_2015 +
-                                      percent_asian_2015 + percent_medcr_2015, data = .x)),
-    model_2 = purrr::map(strap, ~lm(percent_enrolled ~ opo + percent_medcr_2015 + percent_male_2015 +
-                                      percent_white_2015 + percent_hs_diploma + percent_college, data = .x)),
-    model_3 = purrr::map(strap, ~lm(percent_enrolled ~ opo + percent_medcr_2015 + percent_male_2015 +
-                                      percent_white_2015*percent_hs_diploma + percent_college, data = .x))) 
-
-bootstrap_df %>% 
-  mutate(
-    result_1 = purrr::map(model_1, broom::tidy),
-    result_2 = purrr::map(model_2, broom::tidy),
-    result_3 = purrr::map(model_3, broom::tidy)) %>% 
-  select(-strap, -(model_1:model_3))  %>% 
-  gather(key = model, value = result, result_1:result_3) %>% 
-  unnest() %>% 
-  filter(term != "(Intercept)") %>% 
-  group_by(model, term) %>% 
-  summarize(boot_se = sd(estimate)) %>% 
-  spread(key = model, value = boot_se) %>% 
-  kable()
-```
-
-```{r cross validation}
-set.seed(10)
-
-cv_df <- crossv_mc(regression_df, 100) 
-
-cv_df <-  
-  cv_df %>% 
-  mutate(
-    model_1 = purrr::map(train, ~lm(percent_enrolled ~ opo + percent_hs_diploma + percent_college + percent_male_2015 +
-                                      percent_asian_2015 + percent_medcr_2015, data = .x)),
-    model_2 = purrr::map(train, ~lm(percent_enrolled ~ opo + percent_medcr_2015 + percent_male_2015 +
-                                      percent_white_2015 + percent_hs_diploma + percent_college, data = .x)),
-    model_3 = purrr::map(train, ~lm(percent_enrolled ~ opo + percent_medcr_2015 + percent_male_2015 +
-                                      percent_white_2015*percent_hs_diploma + percent_college, data = .x))) %>% 
-  mutate(rmse_1 = purrr::map2_dbl(model_1, test, ~rmse(model = .x, data = .y)),
-         rmse_2 = purrr::map2_dbl(model_2, test, ~rmse(model = .x, data = .y)),
-         rmse_3 = purrr::map2_dbl(model_3, test, ~rmse(model = .x, data = .y))) %>% 
-  select(-train, -test, -(model_1:model_3)) %>% 
-  gather(key = model, value = rmse, rmse_1:rmse_3)
-
-cv_df %>% 
-  ggplot(aes(x = model, y = rmse)) + 
-  geom_violin() + 
-  labs(x = "Model", 
-       y = "RMSE")
-```
-
-<br />
-<br />
-<br />
-<br />
 
 <div style="margin-bottom:50px;">
 </div>
+
+# Exploratory plots {.tabset .tabset-fade .tabset-pills}
+
+<div style="margin-bottom:30px;">
+</div>
+
+## Enroll Number vs State Pop
+
+<div style="margin-bottom:20px;">
+</div>
+
+When analyzing 
+
+<div style = "">
+```{r message = F, warning= F}
+lowest_3_counties = organ %>% 
+  filter(date == as.Date("2018-09-01")) %>% 
+  filter(county != "TOTAL NYS") %>%
+  arrange(eligible_population_enrolled) %>%
+  top_n(n = -3, eligible_population_enrolled)
+
+trend_1 = 
+  organ %>%
+  # only use data after 2017-10-01
+  filter(date == '2018-09-01') %>% 
+  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ',  registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
+  plot_ly(x = ~population_18_estimate, 
+          y = ~registry_enrollments, 
+          type = "scatter", 
+          mode = "markers",
+          color = ~county,
+          text = ~text_label) 
+trend_1 
+
+plot_enrollments_population = 
+  organ %>%
+  filter(date == '2018-09-01') %>% 
+  ggplot(aes(x = population_18_estimate, y = registry_enrollments)) +
+  geom_point(aes(group = county)) +
+  geom_smooth(method = 'auto', se = FALSE) +
+  theme_bw() 
+ggplotly(plot_enrollments_population)
+
+```
+
+</div>
+
+## Percent Enroll vs State Pop
 
 <div style="margin-bottom:20px;">
 </div>
 
 
-      
+
+<div style = ""> 
+```{r message = F, warning= F}
+trend_2 = 
+  organ %>%
+  # only use data after 2017-10-01
+  filter(date == '2018-09-01') %>% 
+  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ',  registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
+  plot_ly(x = ~population_18_estimate, 
+          y = ~eligible_population_enrolled, 
+          type = "scatter", 
+          mode = "markers",
+          color = ~county,
+          text = ~text_label) %>% 
+  add_annotations(x = lowest_3_counties$population_18_estimate , 
+                  y = lowest_3_counties$eligible_population_enrolled, 
+                  text = lowest_3_counties$county)
+trend_2
+
+plot_enrollments_population = 
+  organ %>%
+  filter(date == '2018-09-01') %>% 
+  ggplot(aes(x = population_18_estimate, y = eligible_population_enrolled)) +
+  geom_point(aes(group = county)) +
+  geom_smooth(method = 'auto', se = FALSE) +
+  theme_bw()
+ggplotly(plot_enrollments_population)
+```
+
+</div>
+
+
+<div style = "display :block; margin-bottom:120%;"></div>
+
+
+## Registration Over Time 
+
+
+
+The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset.
+```{r}
+county_enrollment_plot = 
+  organ %>% 
+  ggplot(aes(x = date, y = registry_enrollments, color = county)) +
+    geom_line() +
+    labs(x = "Date", 
+         y = "Persons enrolled", 
+         title = "Registry enrollments across time") + 
+  viridis::scale_color_viridis(discrete = TRUE)
+
+ggplotly(county_enrollment_plot)
+```
+
+<div style = "float: right; width: 50%"> 
+</div>
+
+This plot shows the trend of registration rate from 2008 to 2018 for counties in New York State. Note that the registration rates for Counties Cattauragus and St Lawrence were not updated throughout the years.
+     
+```{r message = F, warning= F}
+county_enrollment_rate_plot = 
+  organ %>% 
+  ggplot(aes(x = date, y = eligible_population_enrolled, color = county)) +
+    geom_line() +
+    labs(x = "Date", 
+         y = "% Persons enrolled", 
+         title = "Registration rate across time") + 
+  viridis::scale_color_viridis(discrete = TRUE)
+
+ggplotly(county_enrollment_rate_plot)
+```
+
+There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
+</div>      
