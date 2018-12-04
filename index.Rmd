@@ -339,13 +339,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 </head>
 <body>
 
-<h1>Custom Range Slider</h1>
-<p>Drag the slider to display the current value.</p>
+<h1></h1>
+<p></p>
 
 <div class="slidecontainer">
-  <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-  <p>Value: <span id="demo"></span></p>
+  <input type="range" min="2008" max="2018" value="2013" class="slider" id="myRange">
+  <p>Year: <span id="demo"></span></p>
+  <img id="mapImg" src="website_img_maps/2013.png">
 </div>
+
+
 
 <script>
 var slider = document.getElementById("myRange");
@@ -354,6 +357,8 @@ output.innerHTML = slider.value;
 
 slider.oninput = function() {
   output.innerHTML = this.value;
+  document.getElementById("mapImg").src = 'website_img_maps/' + this.value + '.png';
 }
+
 </script>
 
