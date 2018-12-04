@@ -175,14 +175,13 @@ cv_df <-
 cv_df %>% 
   ggplot(aes(x = model, y = rmse)) + 
   geom_violin() + 
-  labs(x = "Model", 
-       y = "RMSE")
+  labs(title = "Distribution of RMSE for candidate models", 
+       x = "Model", 
+       y = "RMSE") + 
+  scale_x_discrete(labels = c("rmse_1" = "Model 1",
+                              "rmse_2" = "Model 2",
+                              "rmse_3" = "Final model"))
 ```
-
-<br />
-<br />
-<br />
-<br />
 
 <div style="margin-bottom:50px;">
 </div>
