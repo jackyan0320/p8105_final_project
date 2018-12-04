@@ -278,13 +278,13 @@ add_predictions(organ_sp, all_sp_model) %>%
 
  </section>
  <div class = "plot_description">
-  <h1> Plot #3 Title </h1>
-  <h2> Plot description <h2>
+  <h1> Web Cast </h1>
+  <h2><h2>
 <div>
  <section class="plotting_main">
    
 <div class = "plot_3_description" style = "border:none">
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+ 
 </div>
  <div class = "plot_3_plot">
 ```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 10, fig.width = 10}
@@ -310,41 +310,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 
 <style>
-.slidecontainer {
-    width: 90%;
-    margin:auto;
-}
 
-.slider {
-    -webkit-appearance: none;
-    width: 80%;
-    height: 35px;
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-}
-
-.slider:hover {
-    opacity: 1;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 25px;
-    height: 25px;
-    background: #4CAF50;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    background: #4CAF50;
-    cursor: pointer;
-}
 </style>
 
 
