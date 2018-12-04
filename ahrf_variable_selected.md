@@ -3,7 +3,8 @@ ahrf\_variable\_selected
 Jack Yan
 11/19/2018
 
-## select ahrf variables
+select ahrf variables
+---------------------
 
 ### Explore variables
 
@@ -52,16 +53,16 @@ read_csv("./data/ahrf_variables.csv") %>%
     ## # A tibble: 973 x 2
     ##    truncated       data             
     ##    <chr>           <list>           
-    ##  1 Blank           <tibble [1 × 1]> 
-    ##  2 Date of Crea... <tibble [1 × 1]> 
-    ##  3 CBSA County ... <tibble [1 × 1]> 
-    ##  4 Contiguous C... <tibble [14 × 1]>
-    ##  5 Phys,Primary... <tibble [12 × 1]>
-    ##  6 MD's,Primary... <tibble [12 × 1]>
-    ##  7 DO's,Primary... <tibble [12 × 1]>
-    ##  8 Tot Active M... <tibble [3 × 1]> 
-    ##  9 Total Active... <tibble [22 × 1]>
-    ## 10 Total M.D.'s... <tibble [35 × 1]>
+    ##  1 Blank           <tibble [1 x 1]> 
+    ##  2 Date of Crea... <tibble [1 x 1]> 
+    ##  3 CBSA County ... <tibble [1 x 1]> 
+    ##  4 Contiguous C... <tibble [14 x 1]>
+    ##  5 Phys,Primary... <tibble [12 x 1]>
+    ##  6 MD's,Primary... <tibble [12 x 1]>
+    ##  7 DO's,Primary... <tibble [12 x 1]>
+    ##  8 Tot Active M... <tibble [3 x 1]> 
+    ##  9 Total Active... <tibble [22 x 1]>
+    ## 10 Total M.D.'s... <tibble [35 x 1]>
     ## # ... with 963 more rows
 
 ### select variable names of interest
@@ -247,8 +248,8 @@ read_csv("./data/ahrf_selected_variables.csv")
     ## # A tibble: 16 x 2
     ##    label                                       topic                      
     ##    <chr>                                       <chr>                      
-    ##  1 Standardzd PerCapita Medcr Cost Fee for Se… Medical Cost & Medicare En…
-    ##  2 Medicare Enrollment, Aged Tot 2015          Medical Cost & Medicare En…
+    ##  1 Standardzd PerCapita Medcr Cost Fee for Se~ Medical Cost & Medicare En~
+    ##  2 Medicare Enrollment, Aged Tot 2015          Medical Cost & Medicare En~
     ##  3 Population Estimate 2016                    Population Size            
     ##  4 Pop Total Male 2015                         Gender & Ethnicity         
     ##  5 Pop Total Female 2015                       Gender & Ethnicity         

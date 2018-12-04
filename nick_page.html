@@ -11,7 +11,7 @@
 
 
 
-<title>nick_page.utf8</title>
+<title></title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,7 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
@@ -168,14 +167,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 
 
@@ -198,13 +189,13 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="interesting_finding.html">Fun Part</a>
+  <a href="interesting_finding.html">County characteristics</a>
 </li>
 <li>
-  <a href="website_data_page.html">Data Part</a>
+  <a href="website_data_page.html">Data</a>
 </li>
 <li>
-  <a href="nick_page.html">Complex Part</a>
+  <a href="nick_page.html">Policy analysis</a>
 </li>
 <li>
   <a href="website_screen_cast.html">
@@ -218,20 +209,15 @@ $(document).ready(function () {
      
   </a>
 </li>
+<li>
+  <a href="https://sijiayue.shinyapps.io/shinny_heatmap/">Shiny</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
-
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
 
@@ -241,386 +227,12 @@ $(document).ready(function () {
 
 <div class="plot_description">
 <h1>
-Fantastic Plots
+Modeling the effects targeted policies on organ donor registration
 </h1>
-<h2>
-Mixed Models and Where to Find Them
-</h2>
 </div>
-<div class="divider" style="padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-<br><br>
-<h2>
-</h2>
-<hr class="style-two">
-</hr>
-</div>
-<div class = "plot_description">
-<h1>
-Random Model
-</h1>
-<h2>
-Plot description
-<h2>
-<div>
-<div id="random-model" class="section level3">
-<h3>Random Model</h3>
-<div class="plotting_main">
-<div class="plot_1_plot">
-<img src="nick_page_files/figure-html/unnamed-chunk-1-1.png" width="75%" /><img src="nick_page_files/figure-html/unnamed-chunk-1-2.png" width="75%" />
-</div>
-<div class = "plot_1_description">
-<pre><code>  &lt;h2 style=&quot;font-size: 1.5em;&quot;&gt;top plot description&lt;/h2&gt;</code></pre>
-##bottom plot description
-<div style= "text-align:left">
-
-<pre class="r"><code>tbl_no_sp_model = 
-  no_sp_model %&gt;% 
-  broom::tidy() %&gt;% 
-  filter(term == &quot;total_days&quot;) %&gt;% 
-  mutate(estimate_year = estimate * 365, 
-         se_year = std.error * 365, 
-         ci_low = estimate_year - 1.96*se_year, 
-         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
-  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term)) %&gt;% 
-  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  rename(&quot;Term&quot; = term, 
-         &quot;$\\beta$&quot; = estimate_year, 
-         &quot;Standard error&quot; = se_year, 
-         &quot;Lower bound&quot; = ci_low, 
-         &quot;Upper bound&quot; = ci_upper) %&gt;% 
-  knitr::kable(digits = 3, escape = F) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;), font_size = 16)
-tbl_no_sp_model</code></pre>
-<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Term
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\beta\)</span>
-</th>
-<th style="text-align:right;">
-Standard error
-</th>
-<th style="text-align:right;">
-Lower bound
-</th>
-<th style="text-align:right;">
-Upper bound
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Time (year)
-</td>
-<td style="text-align:right;">
-2.675
-</td>
-<td style="text-align:right;">
-0.008
-</td>
-<td style="text-align:right;">
-2.66
-</td>
-<td style="text-align:right;">
-2.69
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="divider" style="padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-<br><br>
-<h2>
-Spline 2012
-</h2>
-<hr class="style-two">
-</hr>
-</div>
-<div class = "plot_description">
-<h1>
-Spline 2012
-</h1>
-<h2>
-Plot description
-<h2>
-<div>
-
-<section class="plotting_main">
-<div class="plot_2_plot">
-<img src="nick_page_files/figure-html/unnamed-chunk-3-1.png" width="75%" />
-</div>
-<div class = "plot_2_description" style = "border:none">
-<pre><code>  describe plot 2012 </code></pre>
-<div class = "lm_table">
-
-<pre class="r"><code>tbl_spline_2012 = 
-  sp_12_model %&gt;% 
-  broom::tidy() %&gt;% 
-  filter(term %in% c(&quot;total_days&quot;, &quot;year_sp_2012&quot;)) %&gt;% 
-  mutate(estimate_year = estimate * 365, 
-         se_year = std.error * 365, 
-         ci_low = estimate_year - 1.96*se_year, 
-         ci_upper = estimate_year + 1.96*se_year) %&gt;% 
-  mutate(term = ifelse(term == &quot;total_days&quot;, &quot;Time (year)&quot;, term), 
-         term = ifelse(term == &quot;year_sp_2012&quot;, &quot;2012 spline&quot;, term)) %&gt;% 
-  select(term, estimate_year, se_year, ci_low, ci_upper) %&gt;% 
-  rename(&quot;Term&quot; = term, 
-         &quot;$\\beta$&quot; = estimate_year, 
-         &quot;Standard error&quot; = se_year, 
-         &quot;Lower bound&quot; = ci_low, 
-         &quot;Upper bound&quot; = ci_upper) %&gt;% 
-  knitr::kable(digits = 3) %&gt;% 
-  kable_styling(full_width = F, bootstrap_options = c(&quot;hover&quot;, &quot;striped&quot;), font_size = 16)
-tbl_spline_2012</code></pre>
-<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Term
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\beta\)</span>
-</th>
-<th style="text-align:right;">
-Standard error
-</th>
-<th style="text-align:right;">
-Lower bound
-</th>
-<th style="text-align:right;">
-Upper bound
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Time (year)
-</td>
-<td style="text-align:right;">
-2.883
-</td>
-<td style="text-align:right;">
-0.022
-</td>
-<td style="text-align:right;">
-2.840
-</td>
-<td style="text-align:right;">
-2.926
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2012 spline
-</td>
-<td style="text-align:right;">
--0.326
-</td>
-<td style="text-align:right;">
-0.032
-</td>
-<td style="text-align:right;">
--0.389
-</td>
-<td style="text-align:right;">
--0.262
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<div class="divider" style="padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-<br><br>
-<h2>
-divider.
-</h2>
-<hr class="style-two">
-</hr>
-</div>
-<p>Spline 2016</p>
-<div class = "plot_description">
-<h1>
-Spline 2016 2017
-</h1>
-<h2>
-Plot description
-<h2>
-<div>
-
-<section class="plotting_main">
-<div class="plot_3_description" style="border:none">
-<pre><code>  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra maximus faucibus. Phasellus eu elit ut velit pretium tincidunt eu non ipsum. Nullam ultrices, enim sed feugiat ullamcorper, erat nisl pretium risus, sed sodales orci eros quis urna. In pulvinar ipsum vitae rutrum accumsan. Phasellus eleifend, ex vel mollis laoreet, erat libero convallis quam, vel malesuada quam enim non ante. Vestibulum ornare dictum metus, vitae accumsan ligula iaculis tincidunt. Aliquam posuere a lectus in posuere. Curabitur sed volutpat metus. Curabitur finibus vestibulum turpis, eu interdum mi viverra nec. Nam tempus scelerisque neque ut commodo. Nullam in lacus consequat, scelerisque ante non, interdum nunc. Vestibulum ultricies sollicitudin cursus. Praesent eget varius libero, sit amet mattis arcu. Suspendisse iaculis faucibus erat.</code></pre>
-</div>
-<div class = "plot_3_plot">
-<img src="nick_page_files/figure-html/unnamed-chunk-5-1.png" width="75%" />
-<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Term
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\beta\)</span>
-</th>
-<th style="text-align:right;">
-Standard error
-</th>
-<th style="text-align:right;">
-Lower bound
-</th>
-<th style="text-align:right;">
-Upper bound
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Time (year)
-</td>
-<td style="text-align:right;">
-2.563
-</td>
-<td style="text-align:right;">
-0.01
-</td>
-<td style="text-align:right;">
-2.542
-</td>
-<td style="text-align:right;">
-2.583
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2016 spline
-</td>
-<td style="text-align:right;">
-0.789
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-<td style="text-align:right;">
-0.692
-</td>
-<td style="text-align:right;">
-0.886
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class = "plot_3_1_plot">
-<img src="nick_page_files/figure-html/unnamed-chunk-6-1.png" width="75%" />
-<table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Term
-</th>
-<th style="text-align:right;">
-<span class="math inline">\(\beta\)</span>
-</th>
-<th style="text-align:right;">
-Standard error
-</th>
-<th style="text-align:right;">
-Lower bound
-</th>
-<th style="text-align:right;">
-Upper bound
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Time (year)
-</td>
-<td style="text-align:right;">
-2.561
-</td>
-<td style="text-align:right;">
-0.009
-</td>
-<td style="text-align:right;">
-2.543
-</td>
-<td style="text-align:right;">
-2.579
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2017 spline
-</td>
-<td style="text-align:right;">
-1.700
-</td>
-<td style="text-align:right;">
-0.078
-</td>
-<td style="text-align:right;">
-1.548
-</td>
-<td style="text-align:right;">
-1.852
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<div class="divider" style="padding-top: 50px;
-              padding-right: 30px;
-              padding-bottom: 50px;
-              padding-left: 80px;
-              clear : both">
-<br><br>
-<h2>
-divider.
-</h2>
-<hr class="style-two">
-</hr>
-</div>
-<p>Spline all</p>
-<div class = "plot_description">
-<h1>
-Spline all
-</h1>
-<h2>
-Plot description
-<h2>
-<div>
-
-<section class="plotting_main">
-<div class="plot_3_description" style="border:none">
-<pre><code>  describe</code></pre>
-</div>
-<div class = "plot_4_plot">
-<img src="nick_page_files/figure-html/unnamed-chunk-7-1.png" width="75%" />
+<p>Formal analyses of the effect of major policy changes were conducted using mixed-effects linear models with a random intercept; counties were treated as the clustering variable. The outcome was analyzed was the proportion of eligible adults registered with one of four organ donor organizations. Four successive models were created: a model only analyzing a linear effect of time; a model including a term for a spline corresponding with a 2012 policy INSERT WHAT THIS POLICY WAS; a model including a term for a spline corresponding with a 2016 policy INSERT WHAT THIS POLICY WAS; a model including a term for a spline corresponding with a 2017 policy that lowered the age from eligible enrollees from 18 to 16 years old; and a model that included all splines. All models were adjusted for the specific organization used in each county; models were compared using likelihood ratio tests.</p>
+<p><img src="nick_page_files/figure-html/no%20model%20plot-1.png" width="65%" style="display: block; margin: auto;" /></p>
+<p>The above plot shows the increasing trend of organ donor enrollment over time. The dashed lines represent the beginning of the 3 policies we analyzed in this project.</p>
 <table class="table table-hover table-striped" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -724,10 +336,8 @@ Time (year)
 </tr>
 </tfoot>
 </table>
-</div>
-</section>
-<p>Comparing nested models</p>
-</div>
+<p>The final model analyzed accounted for all three separate policy changes. Main effects were found for all three splines. This model found that after the 2012 policy was enacted, the estimated rate of increase in population enrollment decreased by .98 percentage points (95% CI: -1.06, -0.90). However, after the 2016 policy went into effect the rate of enrollment increased again by 0.33 percentage points (95% CI: 0.039, 0.627). Lastly, after the 2017 policy went into effect the rate of enrollment increased again by 2.47 percentage points (95% CI: 2.05, 2.88). Ultimately, after all three policies came into effect the estimated increase in organ donor enrollment is 4.9 percentage points per year (an estimated net effect of 1.82 percentage points).</p>
+<p><img src="nick_page_files/figure-html/spline%20plot-1.png" width="65%" style="display: block; margin: auto;" /></p>
 
 &nbsp;
 <hr />

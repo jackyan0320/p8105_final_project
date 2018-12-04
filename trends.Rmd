@@ -7,6 +7,7 @@ output: html_document
 
 
 ```{r}
+knitr::opts_chunk$set(eval = FALSE)
 
 library(tidyverse)
 library(ggplot2)

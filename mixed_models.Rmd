@@ -2,7 +2,9 @@
 title: "Mixed Model"
 author: "Nick Williams"
 date: "November 21, 2018"
-output: github_document
+output: 
+  github_document:
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -205,7 +207,7 @@ rmse_fun <- function(model) {
   rmse(model, organ_sp)
 }
 
-map(mods, rmse_fun) %>% 
+purrr::map(mods, rmse_fun) %>% 
   as_tibble() %>% 
   gather(key = "model", 
          value = "rmse") %>% 

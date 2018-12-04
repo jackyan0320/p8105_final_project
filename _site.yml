@@ -3,15 +3,19 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "Fun Part"
+    - text: "County characteristics"
       href: interesting_finding.html
-    - text: "Data Part"
-      href: website_data_page.html
-    - text: "Complex Part"
+    - text: "Policy analysis"
       href: nick_page.html
+    - text: "Exploratory"
+      href: website_explore_page.html
+    - text: "Data"
+      href: website_data_page.html
     - icon: fab fa-youtube
       href: website_screen_cast.html
     - icon: fa-github fa-lg
       href: https://github.com/jackyan0320/p8105_final_project
+    - text: "Shiny"
+      href: https://sijiayue.shinyapps.io/shinny_heatmap/
 output:
   html_document

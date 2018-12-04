@@ -16,13 +16,14 @@ hr.style-two {
 
 
 .cd-fixed-bg {  
-  min-height: 100vh;
+  min-height: 50vh;
   background-size: cover;
-  background-attachment: fixed;
+  background-attachment: center;
   background-repeat: no-repeat;
   background-position: center center;
   width:100%;
   text-align: center;
+  resize: both;
 }
 
 
@@ -32,17 +33,19 @@ hr.style-two {
   padding: 1px 1px 1px;
 }
 
+/*
 .cd-fixed-bg.cd-fixed-bg--2 {
   background-image: url("website_img/organ_donation.jpg");
   padding: 1px 1px 1px;
 }
+*/
 
 .cd-scrolling-bg {
   min-height: 100%;
 }
 
 .front-page-title{
-  font-size: 6em;
+  font-size: 4em;
   color: white;
   font-weight: bold;
 }
@@ -65,31 +68,41 @@ hr.style-two {
     border:0px; 
 }
 
+.single_map_plot{
+  display: block
+  width:100%;
+}
+
+
+
 .plot_1_plot {
     float: left;
-    width:60%;
+    width:75%;
 }
 .plot_1_description {
     height: 100%;
-    width:40%;
+    width:25%;
     float: right;
     background: clear;
     text-align: center;
-    vertical-align: middle;
+    margin-top:7%;
 }
-  
+ 
+.html-widget.html-widget-static-bound.js-plotly-plot{
+
+} 
   
 .plot_2_plot {
     float: right;
-    width:60%;
+    width:75%;
 }
 .plot_2_description {
     height: 100%;
-    width:40%;
+    width:25%;
     float: left;
     background: clear;
     text-align: center;
-    vertical-align: middle;
+    margin-top:7%;
 }
 
 
@@ -105,4 +118,44 @@ hr.style-two {
     background: clear;
     text-align: center;
     vertical-align: middle;
+}
+
+
+.slidecontainer {
+    width: 90%;
+    margin:auto;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 80%;
+    height: 35px;
+    background: #d3d3d3;
+    border-radius: 25px;
+    outline: none;
+    opacity: 0.6;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #bf3e11;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #bf3e11;
+    border-radius: 25px;
+    cursor: pointer;
 }
