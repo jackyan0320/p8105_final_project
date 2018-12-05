@@ -165,6 +165,8 @@ trend_2
 
 ```
 
+The counties with the lowest enrollment tend to be in the New York City area. The larger counties have lower registration rates, which is problematic, since larger counties have the potential to provide the most organs. 
+
 </div>
 
 <div style = "display :block; margin-bottom:120%;"></div>
