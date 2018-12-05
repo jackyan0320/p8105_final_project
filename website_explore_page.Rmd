@@ -180,7 +180,7 @@ The counties with the lowest enrollment tend to be in the New York City area. Th
 ```{r state comparison, echo = FALSE, message = FALSE, warning =FALSE}
 read_csv("data/state_donor_share.csv") %>%
   janitor::clean_names() %>%
-  ggplot(aes(x = year, y = donor_designation_share, color = x1)) +
+  ggplot(aes(x = year, y = donor_designation_share, color = state)) +
     geom_point() +
     geom_smooth() +
     labs(title = "State Percentage Enrolled Comparison",
