@@ -16,7 +16,7 @@ library(tidyverse)
 library(ggplot2)
 donor_share_time_compare = read.csv("data/state_donor_share.csv") %>%
   janitor::clean_names() %>%
-  rename(state = x)
+  rename(state = state)
 plot_1 = 
   ggplot(donor_share_time_compare, aes(x = year, y = donor_designation_share, color = state)) +
   geom_point() +
@@ -318,7 +318,7 @@ New York, however, has the lowest proportion of eligible people enrolled on the 
 
 <div style = "width : 85%; margin: auto;">
 <div class="embed-responsive embed-responsive-16by9" >
-<iframe width="560" height="315" src="https://www.youtube.com/embed/aJOTlE1K90k?start=9" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="1280" height="720" src="https://www.youtube.com/embed/umOJ-M9jJfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
 
