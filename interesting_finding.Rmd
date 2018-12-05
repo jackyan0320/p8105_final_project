@@ -38,7 +38,7 @@ demo_ny =
 <div style="margin-bottom:50px;">
 </div>
 
-# County characteristics {.tabset .tabset-fade .tabset-pills}
+# County characteristics affecting registration share 
 
 <div style="margin-bottom:30px;">
 </div>
@@ -95,7 +95,7 @@ regression_df <-
          percent_medcr_2015 = percent_medicare_enrollment_2015)
 ```
 
-The final model included the following variables: organ procurement organization, percent of population enrolled in Medicare, percent of county that is males, percent of county that is White, percent of adults over 25 with a high school diploma, percent of adults over the age of 25 that have a college degree, and an interaction between the percent of the county that is white and the percent of adults over 25 with a high school diploma.
+Our final model included the following variables: organ procurement organization, percent of population enrolled in Medicare, percent of county that is males, percent of county that is White, percent of adults over 25 with a high school diploma, percent of adults over the age of 25 that have a college degree, and an interaction between the percent of the county that is white and the percent of adults over 25 with a high school diploma.
 
 ```{r final county model, echo = FALSE}
 county_final <- regression_df %>%  
@@ -115,7 +115,7 @@ county_final %>%
 We found that type of OPO that conducts the registration affects registration rate. Percentage of medicare enrollment, percentage of persons finishing high school education and finishing 4-year college education are positively associated with registration rate. This finding agrees with our hypothesis. Also, the sex `male` and race `white` are positively associated with registration rate. 
 
 
-Here we compare the candidate models
+Here we compare the candidate models:
 
 |Model       |Adjusted r-squared  | AIC         |
 |-------------|-----------------------|---------|
