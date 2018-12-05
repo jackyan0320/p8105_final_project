@@ -171,6 +171,27 @@ The counties with the lowest enrollment tend to be in the New York City area. Th
 
 <div style = "display :block; margin-bottom:120%;"></div>
 
+## State Comparison
+
+<div style="margin-bottom:20px;">
+</div>
+
+
+```{r state comparison, echo = FALSE, message = FALSE, warning =FALSE}
+read_csv("data/state_donor_share.csv") %>%
+  janitor::clean_names() %>%
+  ggplot(aes(x = year, y = donor_designation_share, color = x1)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title = "State Percentage Enrolled Comparison",
+         x = "Year",
+         y = "Percent Eligible Enrolled")
+```
+  
+This plot includes states near New York. New York's percentage of eligible people enrolled in 2017 was 8 percentage points lower than the next lowest of these states.  
+
+
+
 ## Registration Over Time 
 
 The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset.
@@ -209,23 +230,6 @@ ggplotly(county_enrollment_rate_plot)
 There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
 </div>   
 
-## Percent Enroll vs State Pop
 
-<div style="margin-bottom:20px;">
-</div>
-
-
-```{r state comparison, echo = FALSE, message = FALSE}
-read_csv("data/state_donor_share.csv") %>%
-  janitor::clean_names() %>%
-  ggplot(aes(x = year, y = donor_designation_share, color = state)) +
-    geom_point() +
-    geom_smooth() +
-    labs(title = "State Percentage Enrolled Comparison",
-         x = "Year",
-         y = "Percent Eligible Enrolled")
-```
-  
-This plot includes states near New York. New York's percentage of eligible people enrolled in 2017 was 8 percentage points lower than the next lowest of these states.  
 
 
