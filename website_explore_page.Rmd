@@ -18,6 +18,7 @@ library(httr)
 library(plotly)
 library(knitr)
 library(modelr)
+library(ggrepel)
 # library(HH)
 
 theme_set(theme_bw())
@@ -142,6 +143,7 @@ ggplotly(plot_enrollments_population)
 
 <div style = ""> 
 ```{r message = F, warning= F}
+
 trend_2 = 
   organ %>%
   # only use data after 2017-10-01
@@ -155,18 +157,12 @@ trend_2 =
           text = ~text_label) %>% 
   add_annotations(x = lowest_3_counties$population_18_estimate , 
                   y = lowest_3_counties$eligible_population_enrolled, 
-                  text = lowest_3_counties$county)
+                  text = lowest_3_counties$county) %>%
+  layout(xaxis = list(title = "Population 18 and Over"),
+         yaxis = list(title = "Percent of Eligible Population Enrolled"))
 trend_2
 
-plot_enrollments_population = 
-  organ %>%
-  filter(date == '2018-09-01') %>% 
-  ggplot(aes(x = population_18_estimate, y = eligible_population_enrolled)) +
-  geom_point(aes(group = county)) +
-  geom_smooth(method = 'auto', se = FALSE) +
-  theme_bw()
 
-ggplotly(plot_enrollments_population)
 ```
 
 </div>
