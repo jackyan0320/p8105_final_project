@@ -287,7 +287,6 @@ add_predictions(organ_sp, all_sp_model) %>%
  <div class = "plot_3_plot">
 ```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 10, fig.width = 10}
 # plot part 
-
 ```
 </div>
 </section>
