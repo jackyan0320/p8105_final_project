@@ -272,6 +272,18 @@ add_predictions(organ_sp, all_sp_model) %>%
 </div>
 </div>
 
+<div class = "plot_description">
+
+<h2> Analyzing Trends of Organ Donor Enrollment in New York State </h1>
+<h4></h4>
+
+</div>
+
+
+
+
+
+
 
 
  <div class = "divider" 
@@ -285,36 +297,26 @@ add_predictions(organ_sp, all_sp_model) %>%
   <hr class = "style-two"></hr>
 </div>
 
-
-
-
- </section>
- <div class = "plot_description">
-  <h1> Web Cast </h1>
-  <h2><h2>
+</section>
+<div class = "plot_description">
+<h1> Web Cast </h1>
+<h2><h2>
 <div>
- <section class="plotting_main">
-   
+<section class="plotting_main">
 <div class = "plot_3_description" style = "border:none">
- 
 </div>
- <div class = "plot_3_plot">
+<div class = "plot_3_plot">
 ```{r, warning = FALSE, message = FALSE, echo=FALSE, fig.height = 10, fig.width = 10}
 # plot part 
 ```
 </div>
 </section>
 
-
-
-
-
-
-
+<div style = "width : 85%; margin: auto;">
 <div class="embed-responsive embed-responsive-16by9" >
 <iframe width="560" height="315" src="https://www.youtube.com/embed/aJOTlE1K90k?start=9" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
-
+</div>
 
 <div style = "text-align: left;">
   <h6>Image sources :</h6> 
@@ -326,7 +328,6 @@ add_predictions(organ_sp, all_sp_model) %>%
 
 
 <style>
-
 </style>
 
 
