@@ -135,7 +135,7 @@ p =
 
 <div class="slidecontainer">
   <img id="mapImg" src="website_img_maps/2008.png">
-  <p>Year: <span id="demo"></span></p>
+  <p style= "text-align: center; font-size: 30px;">Year: <span id="demo"></span></p>
   <input type="range" min="2008" max="2018" value="2008" class="slider" id="myRange">
 
 </div>
@@ -160,7 +160,7 @@ p =
 </div>
 
 
-
+<div style="display: none;">
 
 <div class = "plot_description">
   <h1> Registration Over Time </h1>
@@ -259,7 +259,18 @@ add_predictions(organ_sp, all_sp_model) %>%
 </div>
 </section>
 
-
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 
@@ -273,6 +284,9 @@ add_predictions(organ_sp, all_sp_model) %>%
   <h2></h2>
   <hr class = "style-two"></hr>
 </div>
+
+
+
 
  </section>
  <div class = "plot_description">
@@ -290,6 +304,11 @@ add_predictions(organ_sp, all_sp_model) %>%
 ```
 </div>
 </section>
+
+
+
+
+
 
 
 <div class="embed-responsive embed-responsive-16by9" >
