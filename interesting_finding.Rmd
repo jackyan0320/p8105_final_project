@@ -104,7 +104,12 @@ county_final <- regression_df %>%
 
 county_final %>%
   broom::tidy() %>% 
-  kable(digits = 3)
+  kable(digits = 3, 
+        col.names = c("Term", 
+                      "Estimate", 
+                      "Std. Error", 
+                      "Statistic", 
+                      "p-value"))
 ```
 
 We found that type of OPO that conducts the registration affects registration rate. Percentage of medicare enrollment, percentage of persons finishing high school education and finishing 4-year college education are positively associated with registration rate. This finding agrees with our hypothesis. Also, the sex `male` and race `white` are positively associated with registration rate. 
@@ -170,14 +175,13 @@ cv_df <-
 cv_df %>% 
   ggplot(aes(x = model, y = rmse)) + 
   geom_violin() + 
-  labs(x = "Model", 
-       y = "RMSE")
+  labs(title = "Distribution of RMSE for candidate models", 
+       x = "Model", 
+       y = "RMSE") + 
+  scale_x_discrete(labels = c("rmse_1" = "Model 1",
+                              "rmse_2" = "Model 2",
+                              "rmse_3" = "Final model"))
 ```
-
-<br />
-<br />
-<br />
-<br />
 
 <div style="margin-bottom:50px;">
 </div>

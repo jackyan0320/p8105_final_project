@@ -29,6 +29,7 @@ theme_set(theme_bw())
 organ =
   read_csv("./data/organ.csv") %>% 
   filter(county != "TOTAL NYS") 
+
 demo_ny = 
   read.csv("./data/ahrf_select_data.csv") %>% as.tibble() %>% 
   janitor::clean_names() %>% 
@@ -81,7 +82,6 @@ regression_df <-
          percent_medcr_2015 = percent_medicare_enrollment_2015)
 ```
 
-
 <div style="margin-bottom:50px;">
 </div>
 
@@ -109,7 +109,8 @@ trend_1 =
   organ %>%
   # only use data after 2017-10-01
   filter(date == '2018-09-01') %>% 
-  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ',  registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
+  mutate(text_label = str_c("Eligible pop:", population_18_estimate, '\nregistry_enrollments: ',
+                            registry_enrollments, "\nCounty:", county, "\ndate:", date)) %>% 
   plot_ly(x = ~population_18_estimate, 
           y = ~registry_enrollments, 
           type = "scatter", 
@@ -125,6 +126,7 @@ plot_enrollments_population =
   geom_point(aes(group = county)) +
   geom_smooth(method = 'auto', se = FALSE) +
   theme_bw() 
+
 ggplotly(plot_enrollments_population)
 
 ```
@@ -163,20 +165,18 @@ plot_enrollments_population =
   geom_point(aes(group = county)) +
   geom_smooth(method = 'auto', se = FALSE) +
   theme_bw()
+
 ggplotly(plot_enrollments_population)
 ```
 
 </div>
 
-
 <div style = "display :block; margin-bottom:120%;"></div>
-
 
 ## Registration Over Time 
 
-
-
 The registry enrollments showed a generally increasing trend across the years. However, note that there is a sudden change in registry enrollments on 2009-06-01 and 2017-10-1. Curiously, the enrollment even declined for some counties on 2017-10-1, which indicates an aspect of limitation of the dataset.
+
 ```{r}
 county_enrollment_plot = 
   organ %>% 
