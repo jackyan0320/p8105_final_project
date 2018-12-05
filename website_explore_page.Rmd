@@ -207,4 +207,25 @@ ggplotly(county_enrollment_rate_plot)
 ```
 
 There was a huge leap in pupulation_18_estimate at 2017-10-01 among almost all the counties
-</div>      
+</div>   
+
+## Percent Enroll vs State Pop
+
+<div style="margin-bottom:20px;">
+</div>
+
+
+```{r state comparison, echo = FALSE, message = FALSE}
+read_csv("data/state_donor_share.csv") %>%
+  janitor::clean_names() %>%
+  ggplot(aes(x = year, y = donor_designation_share, color = state)) +
+    geom_point() +
+    geom_smooth() +
+    labs(title = "State Percentage Enrolled Comparison",
+         x = "Year",
+         y = "Percent Eligible Enrolled")
+```
+  
+This plot includes states near New York. New York's percentage of eligible people enrolled in 2017 was 8 percentage points lower than the next lowest of these states.  
+
+
