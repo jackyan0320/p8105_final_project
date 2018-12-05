@@ -321,7 +321,7 @@ We were interested in exploring how NY donor designation share (percent of eligi
 
 <div style = "width : 85%; margin: auto;">
 <div class="embed-responsive embed-responsive-16by9" >
-<iframe width="1280" height="720" src="https://www.youtube.com/embed/umOJ-M9jJfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YtjB_mr_fpo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 </div>
 
@@ -348,5 +348,7 @@ slider.oninput = function() {
   output.innerHTML = this.value;
   document.getElementById("mapImg").src = 'website_img_maps/' + this.value + '.png';
 }
+
+document.title = "P8105 Project"
 </script>
 

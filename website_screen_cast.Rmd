@@ -19,17 +19,8 @@ knitr::opts_chunk$set(echo = TRUE)
 # Screen Cast
 
 <div class="embed-responsive embed-responsive-16by9">
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/aJOTlE1K90k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/YtjB_mr_fpo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
-# Subsititue material {.tabset .tabset-fade .tabset-pills}
-Follow by small sections
+#  {.tabset .tabset-fade .tabset-pills}
 
-## First
-      Lorem ipsum 
-
-## Second
-      Lorem ipsum dolor
-
-## Third
-      Lorem ipsum dolor sit 
